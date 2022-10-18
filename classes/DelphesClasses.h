@@ -429,6 +429,13 @@ class Track: public SortableObject
 {
 public:
   Int_t PID; // HEP ID number
+  Double_t Chi_k;
+  Double_t Chi_pi;
+  Double_t Counting_eff;
+  Double_t L_DC;
+  // Double_t h_dndx;
+  Int_t Truth_PID;//True ID number
+  Float_t Truth_P;
 
   Int_t Charge; // track charge
 
@@ -437,9 +444,10 @@ public:
   Float_t Eta; // track pseudorapidity
   Float_t Phi; // track azimuthal angle
   Float_t CtgTheta; // track cotangent of theta
+  Float_t CosTheta; // track cosangent of theta
   Float_t C; // track curvature inverse
   Float_t Mass; // particle mass
-
+  Float_t Prob[5];
   Float_t EtaOuter; // track pseudorapidity at the tracker edge
   Float_t PhiOuter; // track azimuthal angle at the tracker edge
 
@@ -461,6 +469,7 @@ public:
   Float_t D0; // track transverse impact parameter
   Float_t DZ; // track longitudinal impact parameter
   Float_t Nclusters; // Number of ionization clusters
+  Float_t Nclusters_err; 
   Float_t dNdx; // Number of ionization clusters
 
   Float_t ErrorP; // track momentum error
@@ -568,6 +577,7 @@ public:
   Float_t D0; // track transverse impact parameter
   Float_t DZ; // track longitudinal impact parameter
   Float_t Nclusters; // Number of ionization clusters
+  Float_t Nclusters_err;
   Float_t dNdx; // Number of ionization clusters
 
   Float_t ErrorP; // track momentum error
@@ -648,11 +658,18 @@ public:
   Candidate();
 
   Int_t PID;
-
+  Double_t Chi_k;
+  Double_t Chi_pi;
+  Double_t Counting_eff;
+  Double_t L_DC;
+  Double_t TOF;
+  Double_t Prob[5];
+  Int_t PID_meas;
   Int_t Status;
   Int_t M1, M2, D1, D2;
 
   Int_t Charge;
+  Float_t CosTheta,Eta;
 
   Float_t Mass;
 
@@ -701,6 +718,7 @@ public:
   Float_t ErrorPhi;
 
   Float_t Nclusters; // Number of ionization clusters
+  Float_t Nclusters_err;
   Float_t dNdx; // Number of ionization clusters per unit length
 
   Float_t Xd;

@@ -1,0 +1,10 @@
+root -l draw_invar_mass.C'("PATH/*.root")'
+root -l FitTwoMuons'("PATH/*.root")'
+
+when use the d0_reso_cos
+you can "root -l *.root";
+"Delphes->MakeClass("d0_reso_cos");"
+Then copy the D0_reso_cos.C to the d0_reso_cos.C.
+Or just change to your rootfile in *.h file.
+then root -l D0_reso_cos.C
+ 

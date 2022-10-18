@@ -39,7 +39,8 @@ class IdentificationMap: public DelphesModule
 public:
   IdentificationMap();
   ~IdentificationMap();
-
+  Double_t Eff(Double_t ,Double_t );
+  Double_t dNdxSigma(Double_t, Double_t, Double_t, Double_t, Double_t);
   void Init();
   void Process();
   void Finish();

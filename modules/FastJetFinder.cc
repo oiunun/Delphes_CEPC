@@ -127,7 +127,7 @@ void FastJetFinder::Init()
   //-- Exclusive clustering for e+e- collisions --
 
   fNJets = GetInt("NJets", 2);
-  fExclusiveClustering = GetBool("ExclusiveClustering", false);
+  fExclusiveClustering = GetBool("ExclusiveClustering", true);
 
   //-- Valencia Linear Collider algorithm
 
