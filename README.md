@@ -5,11 +5,11 @@ Delphes is a C++ framework, performing a fast multipurpose detector response sim
 
 More details can be found on the Delphes website http://cp3.irmp.ucl.ac.be/projects/delphes
 
-this is simulation of 4th detector at CEPC with Delphes 
+This is simulation of 4th detector at CEPC with Delphes 
 
 The changes are recorded in CEPC_CHANGELOG
 
-draw pictures path: drawcode/ 
+Draw pictures path: drawcode/ 
 
 
 
