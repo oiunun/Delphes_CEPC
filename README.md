@@ -13,7 +13,7 @@ Draw pictures path: drawcode/
 
 
 
-Quick start with Delphes
+Quick start with Delphes_CEPC
 ========================
 
    download Delphes_CEPC first
@@ -24,7 +24,6 @@ Quick start with Delphes
 Configure Delphes
 ```
 source /cvmfs/sft.cern.ch/lcg/views/LCG_99/x86_64-centos7-gcc10-opt/setup.sh
-
 ```
 Commands to compile the code:
 
