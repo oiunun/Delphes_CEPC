@@ -34,7 +34,7 @@ add -----------------------------------------------------
     add Chi_k, Chi_pi, Counting_eff, L_DC, Truth_PID, Prob[] to Track and Candidate 
     add PID_meas and TOF to Candidate 
 
- - change card: cards/delphes_card_card_CEPC_4th.tcl(from base.tcl)
+ - change card: cards/delphes_card_CEPC_4th.tcl(from base.tcl)
 
  stdhep path:/cefs/data/stdhep/CEPC240/higgs/update_from_LiangHao_1M/data/
  
