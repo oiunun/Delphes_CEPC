@@ -1,0 +1,43 @@
+------------------------------------------------------------
+24/05/2022 by yunyouhui
+
+- change PdgCodeFilter.cc and PdgCodeFilter.h in modules/ 
+  select the two muons that Z boson decays to
+
+- change classes/DelphesClasses.h and modules/TreeWriter.cc
+  to add CosTheta leaf into the Track Branch
+
+changed card: cards/base.tcl(from delphes_card_CEPC_4th.tcl)
+- change the DetectorGeometry in TrackSmearing
+- remove MuonIsolation and change MuonFilter
+  (The filterParticles are writen to the WoMuonPair branch)
+- set ExclusiveClustering true in JetFinder to get exactly two jets
+
+
+
+
+some stdhep path:
+H->gg: /cefs/data/stdhep/CEPC240/higgs/exclusive/E240.Pnnh_gg_wo_ISR.e0.p0.whizard195/
+H->rr: /cefs/data/stdhep/CEPC240/higgs/exclusive/E240.Pnnh_aa_wo_ISR.e0.p0.whizard195/
+e+e-(E = 240): /cefs/data/stdhep/CEPC240/higgs/E240.Pe2e2h_X.e0.p0.whizard195/
+
+draw pictures path: drawcode/
+
+add ----------------------------------------------------- 
+
+ - change /external/TrackCovariance/TrkUtil.cc and ClusterCounting.cc to add cluster counting efficiency
+
+ - change IdentificationMap.cc 
+    add PID using tof and dN/dx 
+
+ - change classes/DelphesClasses.h, classes/DelphesClass.C and modules/TreeWriter.cc
+    add Chi_k, Chi_pi, Counting_eff, L_DC, Prob[] to Track and Candidate 
+    add PID_meas and TOF to Candidate 
+    add Truth_PID Truth_CosTheta to Track Branch
+    add Truth_E,Truth_CosTheta,Truth_Phi to Photon Branch
+
+ - change card: cards/delphes_card_card_CEPC_4th.tcl(from base.tcl)
+
+ stdhep path:/cefs/data/stdhep/CEPC240/higgs/update_from_LiangHao_1M/data/
+ 
+

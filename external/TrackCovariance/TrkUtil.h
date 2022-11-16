@@ -76,7 +76,7 @@ public:
 	// Gas mixture selection
 	void SetGasMix(Int_t Opt);
 	// Get number of ionization clusters
-	Bool_t IonClusters(Double_t &Ncl, Double_t mass, TVectorD Par);
+	Bool_t IonClusters(Double_t &Ncl, Double_t mass, TVectorD Par, Double_t &eff);
 	Double_t Nclusters(Double_t bgam);	// mean clusters/meter vs beta*gamma
 	static Double_t Nclusters(Double_t bgam, Int_t Opt);	// mean clusters/meter vs beta*gamma
 	Double_t funcNcl(Double_t *xp, Double_t *par);

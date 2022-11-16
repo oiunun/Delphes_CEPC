@@ -207,6 +207,9 @@ TMatrixDSym ParticleFlowCandidate::CovarianceMatrix() const
 //------------------------------------------------------------------------------
 
 Candidate::Candidate() :
+//add------------------------------------------------------------------------------
+  Chi_pi(0.), Chi_k(0.), Counting_eff(0.), L_DC(-1.), TOF(-1.), PID_meas(0.), Prob_K(0.), Prob_Pi(0.), Prob_P(0.),
+//------------------------------------------------------------------------------
   PID(0), Status(0), M1(-1), M2(-1), D1(-1), D2(-1),
   Charge(0), Mass(0.0),
   IsPU(0), IsRecoPU(0), IsConstituent(0), IsFromConversion(0),
@@ -230,6 +233,7 @@ Candidate::Candidate() :
   Phi(0), ErrorPhi(0),
   Xd(0), Yd(0), Zd(0),
   Nclusters(0.0),
+  Nclusters_err(-1.), 
   dNdx(0.0),
   TrackResolution(0),
   NCharged(0),
@@ -348,7 +352,19 @@ void Candidate::Copy(TObject &obj) const
   Candidate &object = static_cast<Candidate &>(obj);
   Candidate *candidate;
 
+  object.Chi_k = Chi_k;
+  object.Chi_pi = Chi_pi;
+  object.Counting_eff = Counting_eff;
+  object.L_DC = L_DC;
   object.PID = PID;
+  object.TOF = TOF;
+  object.PID_meas = PID_meas;
+  object.Prob_Pi = Prob_Pi;
+  object.Prob_K = Prob_K;
+  object.Prob_P = Prob_P;
+
+  object.Eta = Eta;
+  object.CosTheta=CosTheta;
   object.Status = Status;
   object.M1 = M1;
   object.M2 = M2;
@@ -409,6 +425,7 @@ void Candidate::Copy(TObject &obj) const
   object.Yd = Yd;
   object.Zd = Zd;
   object.Nclusters = Nclusters;
+  object.Nclusters_err = Nclusters_err;  
   object.dNdx = dNdx;
   object.TrackResolution = TrackResolution;
   object.NCharged = NCharged;
@@ -488,6 +505,18 @@ void Candidate::Copy(TObject &obj) const
 void Candidate::Clear(Option_t *option)
 {
   int i;
+  //---------------------------Add-------------
+//  Double_t Eta = 0.0; 
+
+  Chi_k = 0.0;
+  Chi_pi = 0.0;
+  Counting_eff = 0.0;
+  L_DC = -1.;
+  TOF = 0.0;
+  PID_meas = 0.0;
+  Prob_K = 0.0;
+  Prob_Pi = 0.0;
+  Prob_P = 0.0;
   SetUniqueID(0);
   ResetBit(kIsReferenced);
   PID = 0;
@@ -497,6 +526,8 @@ void Candidate::Clear(Option_t *option)
   D1 = -1;
   D2 = -1;
   Charge = 0;
+  CosTheta=-2;
+  Eta=-5;
   Mass = 0.0;
   IsPU = 0;
   IsRecoPU = 0;
@@ -544,6 +575,7 @@ void Candidate::Clear(Option_t *option)
   Yd = 0.0;
   Zd = 0.0;
   Nclusters = 0.0;
+  Nclusters_err = -1., 
   dNdx = 0.0;
   TrackResolution = 0.0;
   NCharged = 0;

@@ -168,6 +168,7 @@ void TimeOfFlight::Process()
 
     // calculate time-of-flight
     tof = tf - ti;
+     candidate->TOF = tof;
     // path length of the full helix
     l = candidate->L * 1.0E-3;
 

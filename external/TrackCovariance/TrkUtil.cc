@@ -245,7 +245,7 @@ void TrkUtil::SetDchBoundaries(Double_t Rmin, Double_t Rmax, Double_t Zmin, Doub
 	fZmax = Zmax;				// Higher	DCH z
 }
 //
-// Get Trakck length inside DCH volume
+// Get Track length inside DCH volume
 Double_t TrkUtil::TrkLen(TVectorD Par)
 {
 	Double_t tLength = 0.0;
@@ -345,11 +345,12 @@ Double_t TrkUtil::TrkLen(TVectorD Par)
 }
 //
 // Return number of ionization clusters
-Bool_t TrkUtil::IonClusters(Double_t& Ncl, Double_t mass, TVectorD Par)
+Bool_t TrkUtil::IonClusters(Double_t& Ncl, Double_t mass, TVectorD Par, Double_t& eff)
 {
 	//
 	// Units are meters/Tesla/GeV
 	//
+	eff = 0.0;
 	Ncl = 0.0;
 	Bool_t Signal = kFALSE;
 	Double_t tLen = 0;
@@ -383,8 +384,15 @@ Bool_t TrkUtil::IonClusters(Double_t& Ncl, Double_t mass, TVectorD Par)
 			TVector3 p = ParToP(Par);
 			bg = p.Mag() / mass;
 			muClu = Nclusters(bg) * tLen;				// Avg. number of clusters
+			Double_t N;
+			N = gRandom->Gaus(muClu,TMath::Sqrt(muClu));
+			// N = gRandom->PoissonD(muClu);			// Actual number of clusters
+  		Double_t E = N *(-0.007309)*0.01/(tLen*TMath::Sqrt(1-pow(p.CosTheta(),2)))+ 1.245497;
+    	Double_t counting_sigma = 0.02;
+	    eff = gRandom->Gaus(E,counting_sigma);
+			// eff = 1;
+			Ncl = eff*N;
 
-			Ncl = gRandom->PoissonD(muClu);			// Actual number of clusters
 		}
 
 	}
@@ -445,6 +453,7 @@ Double_t TrkUtil::Nclusters(Double_t begam, Int_t Opt) {
 	Double_t interp = 0.0;
 	TSpline3* sp3 = new TSpline3("sp3", bg, ncl, Npt);
 	if (begam > bg[0] && begam < bg[Npt - 1]) interp = sp3->Eval(begam);
+	delete sp3;
 	return 100 * interp;
 }
 //

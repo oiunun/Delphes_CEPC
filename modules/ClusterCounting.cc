@@ -102,7 +102,7 @@ void ClusterCounting::Finish()
 void ClusterCounting::Process()
 {
   Candidate *candidate, *mother, *particle;
-  Double_t mass, trackLength, Ncl;
+  Double_t mass, trackLength, Ncl, eff;
 
   fItInputArray->Reset();
   while((candidate = static_cast<Candidate *>(fItInputArray->Next())))
@@ -124,10 +124,13 @@ void ClusterCounting::Process()
     candidate = static_cast<Candidate*>(candidate->Clone());
 
     Ncl = 0.;
-    if (fTrackUtil->IonClusters(Ncl, mass, Par))
+    if (fTrackUtil->IonClusters(Ncl, mass, Par, eff))
     {
+      candidate->L_DC = trackLength;
       candidate->Nclusters = Ncl;
       candidate->dNdx = (trackLength > 0.) ? Ncl/trackLength : -1;
+      candidate->Counting_eff = eff;
+      candidate->Nclusters_err = TMath::Sqrt(Ncl*eff);
     }
 
     candidate->AddCandidate(mother);
