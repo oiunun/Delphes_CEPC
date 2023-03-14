@@ -1,0 +1,186 @@
+** INFO: adding module        TruthVertexFinder        TruthVertexFinder        
+** INFO: adding module        ParticlePropagator       ParticlePropagator       
+** INFO: adding module        Efficiency               ChargedHadronTrackingEfficiency
+** INFO: adding module        Efficiency               ElectronTrackingEfficiency
+** INFO: adding module        Efficiency               MuonTrackingEfficiency   
+** INFO: adding module        Merger                   TrackMergerPre           
+** INFO: adding module        TrackCovariance          TrackSmearing            
+** INFO: adding module        ClusterCounting          ClusterCounting          
+** INFO: adding module        TimeSmearing             TimeSmearing             
+** INFO: adding module        TimeOfFlight             TimeOfFlight             
+** INFO: adding module        Merger                   TrackMerger              
+** INFO: adding module        DualReadoutCalorimeter   Calorimeter              
+** INFO: adding module        IdentificationMap        IdentificationMap        
+** INFO: adding module        TimeSmearing             TimeSmearingNeutrals     
+** INFO: adding module        TimeOfFlight             TimeOfFlightNeutralHadron
+** INFO: adding module        Merger                   EFlowMerger              
+** INFO: adding module        Efficiency               PhotonEfficiency         
+** INFO: adding module        Isolation                PhotonIsolation          
+** INFO: adding module        PdgCodeFilter            PhotonFilter             
+** INFO: adding module        PdgCodeFilter            ElectronFilter           
+** INFO: adding module        Efficiency               ElectronEfficiency       
+** INFO: adding module        Isolation                ElectronIsolation        
+** INFO: adding module        PdgCodeFilter            MuonFilter               
+** INFO: adding module        Efficiency               MuonEfficiency           
+** INFO: adding module        Merger                   MissingET                
+** INFO: adding module        Merger                   ScalarHT                 
+** INFO: adding module        PdgCodeFilter            NeutrinoFilter           
+** INFO: adding module        FastJetFinder            GenJetFinder             
+** INFO: adding module        Merger                   GenMissingET             
+** INFO: adding module        FastJetFinder            FastJetFinder            
+** INFO: adding module        EnergyScale              JetEnergyScale           
+** INFO: adding module        JetFlavorAssociation     JetFlavorAssociation     
+** INFO: adding module        BTagging                 BTagging                 
+** INFO: adding module        TauTagging               TauTagging               
+** INFO: adding module        TreeWriter               TreeWriter               
+** INFO: initializing module  Delphes                  
+** INFO: initializing module  TruthVertexFinder        
+** INFO: initializing module  ParticlePropagator       
+** INFO: initializing module  ChargedHadronTrackingEfficiency
+** INFO: initializing module  ElectronTrackingEfficiency
+** INFO: initializing module  MuonTrackingEfficiency   
+** INFO: initializing module  TrackMergerPre           
+** INFO: initializing module  TrackSmearing            
+AcceptanceClx:: Acceptance generation completed after 2 cycles and a total number of 21 splits
+AcceptanceClx:: Acceptance encoding with 8 pt nodes and 33 theta nodes
+** INFO: initializing module  ClusterCounting          
+** INFO: initializing module  TimeSmearing             
+** INFO: initializing module  TimeOfFlight             
+** INFO: initializing module  TrackMerger              
+** INFO: initializing module  IdentificationMap        
+** INFO: initializing module  Calorimeter              
+** INFO: initializing module  TimeSmearingNeutrals     
+** INFO: initializing module  TimeOfFlightNeutralHadron
+** INFO: initializing module  EFlowMerger              
+** INFO: initializing module  PhotonFilter             
+** INFO: initializing module  PhotonEfficiency         
+** INFO: initializing module  PhotonIsolation          
+** INFO: initializing module  ElectronFilter           
+** INFO: initializing module  ElectronEfficiency       
+** INFO: initializing module  ElectronIsolation        
+** INFO: initializing module  MuonFilter               
+** INFO: initializing module  MuonEfficiency           
+** INFO: initializing module  MissingET                
+** INFO: initializing module  NeutrinoFilter           
+** INFO: initializing module  GenJetFinder             
+#--------------------------------------------------------------------------
+#                         FastJet release 3.3.4
+#                 M. Cacciari, G.P. Salam and G. Soyez                  
+#     A software package for jet finding and analysis at colliders      
+#                           http://fastjet.fr                           
+#	                                                                      
+# Please cite EPJC72(2012)1896 [arXiv:1111.6097] if you use this package
+# for scientific work and optionally PLB641(2006)57 [hep-ph/0512210].   
+#                                                                       
+# FastJet is provided without warranty under the GNU GPL v2 or higher.  
+# It uses T. Chan's closest pair algorithm, S. Fortune's Voronoi code
+# and 3rd party plugin jet algorithms. See COPYING file for details.
+#--------------------------------------------------------------------------
+** INFO: initializing module  GenMissingET             
+** INFO: initializing module  FastJetFinder            
+** INFO: initializing module  JetEnergyScale           
+** INFO: initializing module  JetFlavorAssociation     
+** INFO: initializing module  BTagging                 
+** INFO: initializing module  TauTagging               
+** INFO: initializing module  TreeWriter               
+** Reading ../pythia8307/code/cc/cc_001.hepmc
+** Reading ../pythia8307/code/cc/cc_002.hepmc
+** Reading ../pythia8307/code/cc/cc_003.hepmc
+** Reading ../pythia8307/code/cc/cc_004.hepmc
+** Reading ../pythia8307/code/cc/cc_005.hepmc
+** Reading ../pythia8307/code/cc/cc_006.hepmc
+** Reading ../pythia8307/code/cc/cc_007.hepmc
+** Reading ../pythia8307/code/cc/cc_008.hepmc
+** Reading ../pythia8307/code/cc/cc_009.hepmc
+** Reading ../pythia8307/code/cc/cc_010.hepmc
+** Reading ../pythia8307/code/cc/cc_011.hepmc
+** Reading ../pythia8307/code/cc/cc_012.hepmc
+** Reading ../pythia8307/code/cc/cc_013.hepmc
+** Reading ../pythia8307/code/cc/cc_014.hepmc
+** Reading ../pythia8307/code/cc/cc_015.hepmc
+** Reading ../pythia8307/code/cc/cc_016.hepmc
+** Reading ../pythia8307/code/cc/cc_017.hepmc
+** Reading ../pythia8307/code/cc/cc_018.hepmc
+** Reading ../pythia8307/code/cc/cc_019.hepmc
+** Reading ../pythia8307/code/cc/cc_020.hepmc
+** Reading ../pythia8307/code/cc/cc_021.hepmc
+** Reading ../pythia8307/code/cc/cc_022.hepmc
+** Reading ../pythia8307/code/cc/cc_023.hepmc
+** Reading ../pythia8307/code/cc/cc_024.hepmc
+** Reading ../pythia8307/code/cc/cc_025.hepmc
+** Reading ../pythia8307/code/cc/cc_026.hepmc
+** Reading ../pythia8307/code/cc/cc_027.hepmc
+** Reading ../pythia8307/code/cc/cc_028.hepmc
+** Reading ../pythia8307/code/cc/cc_029.hepmc
+** Reading ../pythia8307/code/cc/cc_030.hepmc
+** Reading ../pythia8307/code/cc/cc_031.hepmc
+** Reading ../pythia8307/code/cc/cc_032.hepmc
+** Reading ../pythia8307/code/cc/cc_033.hepmc
+** Reading ../pythia8307/code/cc/cc_034.hepmc
+** Reading ../pythia8307/code/cc/cc_035.hepmc
+** Reading ../pythia8307/code/cc/cc_036.hepmc
+** Reading ../pythia8307/code/cc/cc_037.hepmc
+** Reading ../pythia8307/code/cc/cc_038.hepmc
+** Reading ../pythia8307/code/cc/cc_039.hepmc
+** Reading ../pythia8307/code/cc/cc_040.hepmc
+** Reading ../pythia8307/code/cc/cc_041.hepmc
+** Reading ../pythia8307/code/cc/cc_042.hepmc
+** Reading ../pythia8307/code/cc/cc_043.hepmc
+** Reading ../pythia8307/code/cc/cc_044.hepmc
+** Reading ../pythia8307/code/cc/cc_045.hepmc
+** Reading ../pythia8307/code/cc/cc_046.hepmc
+** Reading ../pythia8307/code/cc/cc_047.hepmc
+** Reading ../pythia8307/code/cc/cc_048.hepmc
+** Reading ../pythia8307/code/cc/cc_049.hepmc
+** Reading ../pythia8307/code/cc/cc_050.hepmc
+** Reading ../pythia8307/code/cc/cc_051.hepmc
+** Reading ../pythia8307/code/cc/cc_052.hepmc
+** Reading ../pythia8307/code/cc/cc_053.hepmc
+** Reading ../pythia8307/code/cc/cc_054.hepmc
+** Reading ../pythia8307/code/cc/cc_055.hepmc
+** Reading ../pythia8307/code/cc/cc_056.hepmc
+** Reading ../pythia8307/code/cc/cc_057.hepmc
+** Reading ../pythia8307/code/cc/cc_058.hepmc
+** Reading ../pythia8307/code/cc/cc_059.hepmc
+** Reading ../pythia8307/code/cc/cc_060.hepmc
+** Reading ../pythia8307/code/cc/cc_061.hepmc
+** Reading ../pythia8307/code/cc/cc_062.hepmc
+** Reading ../pythia8307/code/cc/cc_063.hepmc
+** Reading ../pythia8307/code/cc/cc_064.hepmc
+** Reading ../pythia8307/code/cc/cc_065.hepmc
+** Reading ../pythia8307/code/cc/cc_066.hepmc
+** Reading ../pythia8307/code/cc/cc_067.hepmc
+** Reading ../pythia8307/code/cc/cc_068.hepmc
+** Reading ../pythia8307/code/cc/cc_069.hepmc
+** Reading ../pythia8307/code/cc/cc_070.hepmc
+** Reading ../pythia8307/code/cc/cc_071.hepmc
+** Reading ../pythia8307/code/cc/cc_072.hepmc
+** Reading ../pythia8307/code/cc/cc_073.hepmc
+** Reading ../pythia8307/code/cc/cc_074.hepmc
+** Reading ../pythia8307/code/cc/cc_075.hepmc
+** Reading ../pythia8307/code/cc/cc_076.hepmc
+** Reading ../pythia8307/code/cc/cc_077.hepmc
+** Reading ../pythia8307/code/cc/cc_078.hepmc
+** Reading ../pythia8307/code/cc/cc_079.hepmc
+** Reading ../pythia8307/code/cc/cc_080.hepmc
+** Reading ../pythia8307/code/cc/cc_081.hepmc
+** Reading ../pythia8307/code/cc/cc_082.hepmc
+** Reading ../pythia8307/code/cc/cc_083.hepmc
+** Reading ../pythia8307/code/cc/cc_084.hepmc
+** Reading ../pythia8307/code/cc/cc_085.hepmc
+** Reading ../pythia8307/code/cc/cc_086.hepmc
+** Reading ../pythia8307/code/cc/cc_087.hepmc
+** Reading ../pythia8307/code/cc/cc_088.hepmc
+** Reading ../pythia8307/code/cc/cc_089.hepmc
+** Reading ../pythia8307/code/cc/cc_090.hepmc
+** Reading ../pythia8307/code/cc/cc_091.hepmc
+** Reading ../pythia8307/code/cc/cc_092.hepmc
+** Reading ../pythia8307/code/cc/cc_093.hepmc
+** Reading ../pythia8307/code/cc/cc_094.hepmc
+** Reading ../pythia8307/code/cc/cc_095.hepmc
+** Reading ../pythia8307/code/cc/cc_096.hepmc
+** Reading ../pythia8307/code/cc/cc_097.hepmc
+** Reading ../pythia8307/code/cc/cc_098.hepmc
+** Reading ../pythia8307/code/cc/cc_099.hepmc
+** Reading ../pythia8307/code/cc/cc_100.hepmc
+** Exiting...

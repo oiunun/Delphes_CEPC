@@ -442,7 +442,14 @@ void DualReadoutCalorimeter::Process()
           energyGuess = momentum.E();
 
         fTrackSigma += (track->TrackResolution)*energyGuess*(track->TrackResolution)*energyGuess;
+
+        //add-----------------------------------------------------
+        track->Eem = ecalEnergy;
+        track->Ehad = hcalEnergy;
+        //----------------------------------------------------------
+
         fTowerTrackArray->Add(track);
+
 
       }
       else
@@ -626,6 +633,16 @@ void DualReadoutCalorimeter::FinalizeTower()
       mother = track;
       track = static_cast<Candidate*>(track->Clone());
       track->AddCandidate(mother);
+      
+      //add-------------------------------------------------------------------
+      Double_t Eema = track->Eem;
+      Double_t Ehada = track->Ehad;
+      Double_t EcalSigma = fECalResolutionFormula->Eval(0.0, fTowerEta, 0.0, Eema);
+      Double_t HcalSigma = fHCalResolutionFormula->Eval(0.0, fTowerEta, 0.0, Ehada);
+      track->Eem = LogNormal(Eema, EcalSigma);
+      track->Ehad = LogNormal(Ehada, HcalSigma);
+      //-------------------------------------------------------------------
+
       fEFlowTrackOutputArray->Add(track);
     }
   }
@@ -648,7 +665,23 @@ void DualReadoutCalorimeter::FinalizeTower()
       mother = track;
       track = static_cast<Candidate *>(track->Clone());
       track->AddCandidate(mother);
+
+      //add-------------------------------------------------
+      Double_t ecalf = track->Eem/track->Momentum.E();
+      Double_t hcalf = track->Ehad/track->Momentum.E();
+      //----------------------------------------------------------
+
       track->Momentum.SetPtEtaPhiM(track->Momentum.Pt()*rescaleFactor, track->Momentum.Eta(), track->Momentum.Phi(), track->Momentum.M());
+
+
+      //add-------------------------------------------------------------
+      Double_t Eema = ecalf*track->Momentum.E();
+      Double_t Ehada = hcalf*track->Momentum.E();
+      Double_t EcalSigma = fECalResolutionFormula->Eval(0.0, fTowerEta, 0.0, Eema);
+      Double_t HcalSigma = fHCalResolutionFormula->Eval(0.0, fTowerEta, 0.0, Ehada);
+      track->Eem = LogNormal(Eema, EcalSigma);
+      track->Ehad = LogNormal(Ehada, HcalSigma);
+      //---------------------------------------------------------------
       fEFlowTrackOutputArray->Add(track);
     }
   }

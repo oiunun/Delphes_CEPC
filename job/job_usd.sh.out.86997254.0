@@ -1,0 +1,186 @@
+** INFO: adding module        TruthVertexFinder        TruthVertexFinder        
+** INFO: adding module        ParticlePropagator       ParticlePropagator       
+** INFO: adding module        Efficiency               ChargedHadronTrackingEfficiency
+** INFO: adding module        Efficiency               ElectronTrackingEfficiency
+** INFO: adding module        Efficiency               MuonTrackingEfficiency   
+** INFO: adding module        Merger                   TrackMergerPre           
+** INFO: adding module        TrackCovariance          TrackSmearing            
+** INFO: adding module        ClusterCounting          ClusterCounting          
+** INFO: adding module        TimeSmearing             TimeSmearing             
+** INFO: adding module        TimeOfFlight             TimeOfFlight             
+** INFO: adding module        Merger                   TrackMerger              
+** INFO: adding module        DualReadoutCalorimeter   Calorimeter              
+** INFO: adding module        IdentificationMap        IdentificationMap        
+** INFO: adding module        TimeSmearing             TimeSmearingNeutrals     
+** INFO: adding module        TimeOfFlight             TimeOfFlightNeutralHadron
+** INFO: adding module        Merger                   EFlowMerger              
+** INFO: adding module        Efficiency               PhotonEfficiency         
+** INFO: adding module        Isolation                PhotonIsolation          
+** INFO: adding module        PdgCodeFilter            PhotonFilter             
+** INFO: adding module        PdgCodeFilter            ElectronFilter           
+** INFO: adding module        Efficiency               ElectronEfficiency       
+** INFO: adding module        Isolation                ElectronIsolation        
+** INFO: adding module        PdgCodeFilter            MuonFilter               
+** INFO: adding module        Efficiency               MuonEfficiency           
+** INFO: adding module        Merger                   MissingET                
+** INFO: adding module        Merger                   ScalarHT                 
+** INFO: adding module        PdgCodeFilter            NeutrinoFilter           
+** INFO: adding module        FastJetFinder            GenJetFinder             
+** INFO: adding module        Merger                   GenMissingET             
+** INFO: adding module        FastJetFinder            FastJetFinder            
+** INFO: adding module        EnergyScale              JetEnergyScale           
+** INFO: adding module        JetFlavorAssociation     JetFlavorAssociation     
+** INFO: adding module        BTagging                 BTagging                 
+** INFO: adding module        TauTagging               TauTagging               
+** INFO: adding module        TreeWriter               TreeWriter               
+** INFO: initializing module  Delphes                  
+** INFO: initializing module  TruthVertexFinder        
+** INFO: initializing module  ParticlePropagator       
+** INFO: initializing module  ChargedHadronTrackingEfficiency
+** INFO: initializing module  ElectronTrackingEfficiency
+** INFO: initializing module  MuonTrackingEfficiency   
+** INFO: initializing module  TrackMergerPre           
+** INFO: initializing module  TrackSmearing            
+AcceptanceClx:: Acceptance generation completed after 2 cycles and a total number of 21 splits
+AcceptanceClx:: Acceptance encoding with 8 pt nodes and 33 theta nodes
+** INFO: initializing module  ClusterCounting          
+** INFO: initializing module  TimeSmearing             
+** INFO: initializing module  TimeOfFlight             
+** INFO: initializing module  TrackMerger              
+** INFO: initializing module  IdentificationMap        
+** INFO: initializing module  Calorimeter              
+** INFO: initializing module  TimeSmearingNeutrals     
+** INFO: initializing module  TimeOfFlightNeutralHadron
+** INFO: initializing module  EFlowMerger              
+** INFO: initializing module  PhotonFilter             
+** INFO: initializing module  PhotonEfficiency         
+** INFO: initializing module  PhotonIsolation          
+** INFO: initializing module  ElectronFilter           
+** INFO: initializing module  ElectronEfficiency       
+** INFO: initializing module  ElectronIsolation        
+** INFO: initializing module  MuonFilter               
+** INFO: initializing module  MuonEfficiency           
+** INFO: initializing module  MissingET                
+** INFO: initializing module  NeutrinoFilter           
+** INFO: initializing module  GenJetFinder             
+#--------------------------------------------------------------------------
+#                         FastJet release 3.3.4
+#                 M. Cacciari, G.P. Salam and G. Soyez                  
+#     A software package for jet finding and analysis at colliders      
+#                           http://fastjet.fr                           
+#	                                                                      
+# Please cite EPJC72(2012)1896 [arXiv:1111.6097] if you use this package
+# for scientific work and optionally PLB641(2006)57 [hep-ph/0512210].   
+#                                                                       
+# FastJet is provided without warranty under the GNU GPL v2 or higher.  
+# It uses T. Chan's closest pair algorithm, S. Fortune's Voronoi code
+# and 3rd party plugin jet algorithms. See COPYING file for details.
+#--------------------------------------------------------------------------
+** INFO: initializing module  GenMissingET             
+** INFO: initializing module  FastJetFinder            
+** INFO: initializing module  JetEnergyScale           
+** INFO: initializing module  JetFlavorAssociation     
+** INFO: initializing module  BTagging                 
+** INFO: initializing module  TauTagging               
+** INFO: initializing module  TreeWriter               
+** Reading ../pythia8307/code/usd/usd_001.hepmc
+** Reading ../pythia8307/code/usd/usd_002.hepmc
+** Reading ../pythia8307/code/usd/usd_003.hepmc
+** Reading ../pythia8307/code/usd/usd_004.hepmc
+** Reading ../pythia8307/code/usd/usd_005.hepmc
+** Reading ../pythia8307/code/usd/usd_006.hepmc
+** Reading ../pythia8307/code/usd/usd_007.hepmc
+** Reading ../pythia8307/code/usd/usd_008.hepmc
+** Reading ../pythia8307/code/usd/usd_009.hepmc
+** Reading ../pythia8307/code/usd/usd_010.hepmc
+** Reading ../pythia8307/code/usd/usd_011.hepmc
+** Reading ../pythia8307/code/usd/usd_012.hepmc
+** Reading ../pythia8307/code/usd/usd_013.hepmc
+** Reading ../pythia8307/code/usd/usd_014.hepmc
+** Reading ../pythia8307/code/usd/usd_015.hepmc
+** Reading ../pythia8307/code/usd/usd_016.hepmc
+** Reading ../pythia8307/code/usd/usd_017.hepmc
+** Reading ../pythia8307/code/usd/usd_018.hepmc
+** Reading ../pythia8307/code/usd/usd_019.hepmc
+** Reading ../pythia8307/code/usd/usd_020.hepmc
+** Reading ../pythia8307/code/usd/usd_021.hepmc
+** Reading ../pythia8307/code/usd/usd_022.hepmc
+** Reading ../pythia8307/code/usd/usd_023.hepmc
+** Reading ../pythia8307/code/usd/usd_024.hepmc
+** Reading ../pythia8307/code/usd/usd_025.hepmc
+** Reading ../pythia8307/code/usd/usd_026.hepmc
+** Reading ../pythia8307/code/usd/usd_027.hepmc
+** Reading ../pythia8307/code/usd/usd_028.hepmc
+** Reading ../pythia8307/code/usd/usd_029.hepmc
+** Reading ../pythia8307/code/usd/usd_030.hepmc
+** Reading ../pythia8307/code/usd/usd_031.hepmc
+** Reading ../pythia8307/code/usd/usd_032.hepmc
+** Reading ../pythia8307/code/usd/usd_033.hepmc
+** Reading ../pythia8307/code/usd/usd_034.hepmc
+** Reading ../pythia8307/code/usd/usd_035.hepmc
+** Reading ../pythia8307/code/usd/usd_036.hepmc
+** Reading ../pythia8307/code/usd/usd_037.hepmc
+** Reading ../pythia8307/code/usd/usd_038.hepmc
+** Reading ../pythia8307/code/usd/usd_039.hepmc
+** Reading ../pythia8307/code/usd/usd_040.hepmc
+** Reading ../pythia8307/code/usd/usd_041.hepmc
+** Reading ../pythia8307/code/usd/usd_042.hepmc
+** Reading ../pythia8307/code/usd/usd_043.hepmc
+** Reading ../pythia8307/code/usd/usd_044.hepmc
+** Reading ../pythia8307/code/usd/usd_045.hepmc
+** Reading ../pythia8307/code/usd/usd_046.hepmc
+** Reading ../pythia8307/code/usd/usd_047.hepmc
+** Reading ../pythia8307/code/usd/usd_048.hepmc
+** Reading ../pythia8307/code/usd/usd_049.hepmc
+** Reading ../pythia8307/code/usd/usd_050.hepmc
+** Reading ../pythia8307/code/usd/usd_051.hepmc
+** Reading ../pythia8307/code/usd/usd_052.hepmc
+** Reading ../pythia8307/code/usd/usd_053.hepmc
+** Reading ../pythia8307/code/usd/usd_054.hepmc
+** Reading ../pythia8307/code/usd/usd_055.hepmc
+** Reading ../pythia8307/code/usd/usd_056.hepmc
+** Reading ../pythia8307/code/usd/usd_057.hepmc
+** Reading ../pythia8307/code/usd/usd_058.hepmc
+** Reading ../pythia8307/code/usd/usd_059.hepmc
+** Reading ../pythia8307/code/usd/usd_060.hepmc
+** Reading ../pythia8307/code/usd/usd_061.hepmc
+** Reading ../pythia8307/code/usd/usd_062.hepmc
+** Reading ../pythia8307/code/usd/usd_063.hepmc
+** Reading ../pythia8307/code/usd/usd_064.hepmc
+** Reading ../pythia8307/code/usd/usd_065.hepmc
+** Reading ../pythia8307/code/usd/usd_066.hepmc
+** Reading ../pythia8307/code/usd/usd_067.hepmc
+** Reading ../pythia8307/code/usd/usd_068.hepmc
+** Reading ../pythia8307/code/usd/usd_069.hepmc
+** Reading ../pythia8307/code/usd/usd_070.hepmc
+** Reading ../pythia8307/code/usd/usd_071.hepmc
+** Reading ../pythia8307/code/usd/usd_072.hepmc
+** Reading ../pythia8307/code/usd/usd_073.hepmc
+** Reading ../pythia8307/code/usd/usd_074.hepmc
+** Reading ../pythia8307/code/usd/usd_075.hepmc
+** Reading ../pythia8307/code/usd/usd_076.hepmc
+** Reading ../pythia8307/code/usd/usd_077.hepmc
+** Reading ../pythia8307/code/usd/usd_078.hepmc
+** Reading ../pythia8307/code/usd/usd_079.hepmc
+** Reading ../pythia8307/code/usd/usd_080.hepmc
+** Reading ../pythia8307/code/usd/usd_081.hepmc
+** Reading ../pythia8307/code/usd/usd_082.hepmc
+** Reading ../pythia8307/code/usd/usd_083.hepmc
+** Reading ../pythia8307/code/usd/usd_084.hepmc
+** Reading ../pythia8307/code/usd/usd_085.hepmc
+** Reading ../pythia8307/code/usd/usd_086.hepmc
+** Reading ../pythia8307/code/usd/usd_087.hepmc
+** Reading ../pythia8307/code/usd/usd_088.hepmc
+** Reading ../pythia8307/code/usd/usd_089.hepmc
+** Reading ../pythia8307/code/usd/usd_090.hepmc
+** Reading ../pythia8307/code/usd/usd_091.hepmc
+** Reading ../pythia8307/code/usd/usd_092.hepmc
+** Reading ../pythia8307/code/usd/usd_093.hepmc
+** Reading ../pythia8307/code/usd/usd_094.hepmc
+** Reading ../pythia8307/code/usd/usd_095.hepmc
+** Reading ../pythia8307/code/usd/usd_096.hepmc
+** Reading ../pythia8307/code/usd/usd_097.hepmc
+** Reading ../pythia8307/code/usd/usd_098.hepmc
+** Reading ../pythia8307/code/usd/usd_099.hepmc
+** Reading ../pythia8307/code/usd/usd_100.hepmc
+** Exiting...

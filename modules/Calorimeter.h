@@ -88,6 +88,7 @@ private:
   std::vector<Double_t> fECalTrackFractions;
   std::vector<Double_t> fHCalTrackFractions;
 
+
   DelphesFormula *fECalResolutionFormula; //!
   DelphesFormula *fHCalResolutionFormula; //!
 

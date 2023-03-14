@@ -232,7 +232,7 @@ void IdentificationMap::Process()
     Double_t L_DC = candidate->L_DC;//m
     //gas proportion 
     int Opt = 0; 
-    if(pdgCodeIn==211||pdgCodeIn==-211||pdgCodeIn==321||pdgCodeIn==-321||pdgCodeIn==2212||pdgCodeIn==-2212){
+    // if(pdgCodeIn==211||pdgCodeIn==-211||pdgCodeIn==321||pdgCodeIn==-321||pdgCodeIn==2212||pdgCodeIn==-2212){
     if(dndx_meas!=0 && l>0 && L_DC>0/* &&  L_DC<10  && p_meas>5*/){
 
       for(int i=2;i<5;i++){
@@ -284,7 +284,7 @@ void IdentificationMap::Process()
       }
 	
     }
-    }
+    // }
 
     // loop over sub-map for this PID
     for(TMisIDMap::iterator it = range.first; it != range.second; ++it)

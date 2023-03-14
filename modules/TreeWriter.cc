@@ -430,6 +430,7 @@ void TreeWriter::ProcessTracks(ExRootTreeBranch *branch, TObjArray *array)
     entry->Truth_PID = particle->PID;
     entry->Truth_CosTheta = (particle->Momentum).CosTheta();
     entry->Truth_P = particle->P;
+    entry->Truth_Phi =(particle->Momentum).Phi();
 
     entry->Prob_Pi = candidate->Prob_Pi;
     entry->Prob_K = candidate->Prob_K;
@@ -514,7 +515,7 @@ void TreeWriter::ProcessParticleFlowCandidates(ExRootTreeBranch *branch, TObjArr
     entry->SetBit(kIsReferenced);
     entry->SetUniqueID(candidate->GetUniqueID());
 
-    entry->PID = candidate->PID;
+    entry->PID = candidate->PID_meas;
 
     entry->Charge = candidate->Charge;
 
@@ -602,7 +603,13 @@ void TreeWriter::ProcessParticleFlowCandidates(ExRootTreeBranch *branch, TObjArr
 
     //entry->T = position.T() * 1.0E-3 / c_light;
     entry->NTimeHits = candidate->NTimeHits;
-
+    //add------------------------------
+    entry->Prob_Pi = candidate->Prob_Pi;
+    entry->Prob_K = candidate->Prob_K;
+    entry->Prob_P = candidate->Prob_P;
+    entry->truth_PID = candidate->PID;
+    entry->CosTheta = momentum.CosTheta();
+    //-------------------------------------
     FillParticles(candidate, &entry->Particles);
 
   }

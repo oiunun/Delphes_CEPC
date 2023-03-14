@@ -1,34 +1,27 @@
-Delphes_CEPC
+[![CI](https://github.com/delphes/delphes/actions/workflows/ci.yml/badge.svg)](https://github.com/delphes/delphes/actions/workflows/ci.yml) [![DOI](https://zenodo.org/badge/21390046.svg)](https://zenodo.org/badge/latestdoi/21390046)
+
+Delphes
 =======
 
 Delphes is a C++ framework, performing a fast multipurpose detector response simulation.
 
 More details can be found on the Delphes website http://cp3.irmp.ucl.ac.be/projects/delphes
 
-This is simulation of 4th detector at CEPC with Delphes 
-
-The changes are recorded in CEPC_CHANGELOG
-
-Draw pictures path: drawcode/ 
-
-
-
-Quick start with Delphes_CEPC
+Quick start with Delphes
 ========================
 
-   download Delphes_CEPC first
-   then
+Commands to get the code:
+
 ```
-   tar -zxf Delphes_CEPC-1.0.tar.gz
+   wget http://cp3.irmp.ucl.ac.be/downloads/Delphes-3.5.0.tar.gz
+
+   tar -zxf Delphes-3.5.0.tar.gz
 ```
-Configure Delphes
-```
-source /cvmfs/sft.cern.ch/lcg/views/LCG_99/x86_64-centos7-gcc10-opt/setup.sh
-```
+
 Commands to compile the code:
 
 ```
-   cd Delphes_CEPC-1.0
+   cd Delphes-3.5.0
 
    make
 ```
@@ -36,24 +29,47 @@ Commands to compile the code:
 Finally, we can run Delphes:
 
 ```
-   ./DelphesSTDHEP
+   ./DelphesHepMC3
 ```
 
 Command line parameters:
 
 ```
-   ./DelphesSTDHEP config_file output_file [input_file(s)]
+   ./DelphesHepMC3 config_file output_file [input_file(s)]
      config_file - configuration file in Tcl format
      output_file - output file in ROOT format,
-     input_file(s) - input file(s) in STDHEP format,
+     input_file(s) - input file(s) in HepMC format,
      with no input_file, or when input_file is -, read standard input.
 ```
-some stdhep path:
-/cefs/data/stdhep/CEPC240/higgs/update_from_LiangHao_1M/data/
 
+Let's simulate some Z->ee events:
+
+```
+   wget http://cp3.irmp.ucl.ac.be/downloads/z_ee.hep.gz
+   gunzip z_ee.hep.gz
+   ./DelphesSTDHEP cards/delphes_card_CMS.tcl delphes_output.root z_ee.hep
+```
+
+or
+
+```
+   curl -s http://cp3.irmp.ucl.ac.be/downloads/z_ee.hep.gz | gunzip | ./DelphesSTDHEP cards/delphes_card_CMS.tcl delphes_output.root
+```
 
 For more detailed documentation, please visit https://cp3.irmp.ucl.ac.be/projects/delphes/wiki/WorkBook
 
+Configure Delphes on lxplus.cern.ch
+====================================
+
+```
+git clone git://github.com/delphes/delphes.git Delphes
+
+cd Delphes
+
+source /cvmfs/sft.cern.ch/lcg/views/LCG_99/x86_64-centos7-gcc10-opt/setup.sh
+
+make 
+```
 
 Simple analysis using TTree::Draw
 =================================

@@ -441,6 +441,7 @@ public:
   Int_t Truth_PID;//True ID number
   Float_t Truth_P;
   Float_t Truth_CosTheta;
+  Float_t Truth_Phi;
 
   Int_t Charge; // track charge
 
@@ -551,6 +552,7 @@ class ParticleFlowCandidate: public SortableObject
 
 public:
   Int_t PID; // HEP ID number
+  
 
   Int_t Charge; // track charge
 
@@ -624,6 +626,14 @@ public:
   Float_t Etrk; // total charged energy hitting tower
 
   Float_t Edges[4]; // calorimeter tower edges
+  
+//add-----------------------------------------
+  Float_t Prob_Pi;
+  Float_t Prob_K;
+  Float_t Prob_P;
+  Float_t CosTheta;
+  Int_t truth_PID; 
+//--------------------------------------------
 
   TRefArray Particles; // references to generated particles
 

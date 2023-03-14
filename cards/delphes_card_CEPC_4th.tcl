@@ -116,9 +116,10 @@ module Efficiency ChargedHadronTrackingEfficiency {
     set EfficiencyFormula {
         (abs(eta) > 3.0)                               * (0.000) +
         (pt >= 0.5) * (abs(eta) <= 3.0)                * (0.997) +
-        (pt <  0.5 && pt >= 0.3) * (abs(eta) <= 3.0)   * (0.650) +
-        (pt <  0.3) * (abs(eta) <= 3.0)                * (0.060)
+        (pt <  0.5 && pt >= 0.1) * (abs(eta) <= 3.0)   * (0.900) +
+        (pt <  0.1) * (abs(eta) <= 3.0)                * (0.060)
     }
+
 }
 
 ##############################
@@ -134,9 +135,10 @@ module Efficiency ElectronTrackingEfficiency {
     set EfficiencyFormula {
         (abs(eta) > 3.0)                               * (0.000) +
         (pt >= 0.5) * (abs(eta) <= 3.0)                * (0.997) +
-        (pt <  0.5 && pt >= 0.3) * (abs(eta) <= 3.0)   * (0.650) +
-        (pt <  0.3) * (abs(eta) <= 3.0)                * (0.060)
+        (pt <  0.5 && pt >= 0.1) * (abs(eta) <= 3.0)   * (0.900) +
+        (pt <  0.1) * (abs(eta) <= 3.0)                * (0.060)
     }
+
 }
 
 
@@ -153,11 +155,10 @@ module Efficiency MuonTrackingEfficiency {
     set EfficiencyFormula {
         (abs(eta) > 3.0)                               * (0.000) +
         (pt >= 0.5) * (abs(eta) <= 3.0)                * (0.997) +
-        (pt < 0.5 && pt >= 0.3) * (abs(eta) <= 3.0)    * (0.650) +
-        (pt < 0.3) * (abs(eta) <= 3.0)                 * (0.060)
+        (pt < 0.5 && pt >= 0.1) * (abs(eta) <= 3.0)    * (0.900) +
+        (pt < 0.1) * (abs(eta) <= 3.0)                 * (0.060)
     }
 }
-
 ##############
 # Track merger
 ##############
@@ -394,7 +395,7 @@ module Merger TrackMerger {
 #############
 module DualReadoutCalorimeter Calorimeter {
   set ParticleInputArray ParticlePropagator/stableParticles
-  set TrackInputArray    TrackMerger/tracks
+  set TrackInputArray    IdentificationMap/tracks
 
   set TowerOutputArray   towers
   set PhotonOutputArray  photons
@@ -423,29 +424,29 @@ module DualReadoutCalorimeter Calorimeter {
 
     #barrel:
     set PhiBins {}
-    for {set i -360} {$i <= 360} {incr i} {
-        add PhiBins [expr {$i * $pi/360}]
+    for {set i -120} {$i <= 120} {incr i} {
+        add PhiBins [expr {$i * $pi/120}]
     }
     #deta=0.01 units for |eta| <= 0.88
-    for {set i -88} {$i < 89} {incr i} {
-        set eta [expr {$i * 0.01}]
+    for {set i -44} {$i < 45} {incr i} {
+        set eta [expr {$i * 0.02}]
         add EtaPhiBins $eta $PhiBins
     }
 
     #endcaps:
     set PhiBins {}
-    for {set i -360} {$i <= 360} {incr i} {
-        add PhiBins [expr {$i* $pi/360}]
+    for {set i -120} {$i <= 120} {incr i} {
+        add PhiBins [expr {$i* $pi/120}]
     }
     #deta=0.01 units for 0.88 < |eta| <= 3.0
     #first, from -3.0 to -0.88
-    for {set i 1} {$i <=212} {incr i} {
-        set eta [expr {-3.00 + $i * 0.01}]
+    for {set i 0} {$i <106} {incr i} {
+        set eta [expr {-3.00 + $i * 0.02}]
         add EtaPhiBins $eta $PhiBins
     }
     #same for 0.88 to 3.0
-    for  {set i 1} {$i <=212} {incr i} {
-        set eta [expr {0.88 + $i * 0.01}]
+    for  {set i 1} {$i <=106} {incr i} {
+        set eta [expr {0.88 + $i * 0.02}]
         add EtaPhiBins $eta $PhiBins
     }
 
@@ -457,7 +458,7 @@ module DualReadoutCalorimeter Calorimeter {
     add EnergyFraction {111} {1.0 0.0}
     # energy fractions for muon, neutrinos and neutralinos
     add EnergyFraction {12} {0.0 0.0}
-    add EnergyFraction {13} {0.0 0.0}
+    add EnergyFraction {13} {0.1 0.2}
     add EnergyFraction {14} {0.0 0.0}
     add EnergyFraction {16} {0.0 0.0}
     add EnergyFraction {1000022} {0.0 0.0}
@@ -469,8 +470,10 @@ module DualReadoutCalorimeter Calorimeter {
     add EnergyFraction {310} {0.3 0.7}
     add EnergyFraction {130} {0.3 0.7}
     add EnergyFraction {3122} {0.3 0.7}
-
-
+    # energy fractions for pi
+    add EnergyFraction {211} {0.3 0.7}
+    add EnergyFraction {321} {0.3 0.7}
+    add EnergyFraction {2212} {0.3 0.7}
     # set ECalResolutionFormula {resolution formula as a function of eta and energy}
     set ECalResolutionFormula {
     (abs(eta) <= 0.88 )                     * sqrt(energy^2*0.01^2 + energy*0.03^2)+
@@ -638,12 +641,14 @@ module Isolation ElectronIsolation {
 #################
 
 module PdgCodeFilter MuonFilter {
-   set InputArray EFlowMerger/eflow
-  set OutputArray1 WoMuonPair
-  set OutputArray2 MuonPair
-  add EnMin   {15.0}
-  add MassRes {91.18}
-  add NP      {2}
+  set InputArray EFlowMerger/eflow
+  set OutputArray1 Muon
+  set Invert true
+  set PTMin      0.5
+#  set OutputArray2 MuonPair
+#  add EnMin   {15.0}
+#  add MassRes {91.18}
+#  add NP      {2}
 
   add PdgCode {13}
   add PdgCode {-13}
@@ -654,7 +659,7 @@ module PdgCodeFilter MuonFilter {
 #################
 
 module Efficiency MuonEfficiency {
-  set InputArray  MuonFilter/MuonPair
+  set InputArray  MuonFilter/Muon
   set OutputArray muons
 
   # set EfficiencyFormula {efficiency as a function of eta and pt}
@@ -717,9 +722,10 @@ module FastJetFinder GenJetFinder {
   set ExclusiveClustering true  
 
   set JetAlgorithm 10
-  set ParameterR   1.5
-  set ParameterP  -1.0
-  set JetPTMin     1.0
+  #set ParameterR   1.5
+  set ParameterP   1.0
+  #set JetPTMin     1.0
+  set Njets       2
 
 }
 
@@ -737,15 +743,16 @@ module Merger GenMissingET {
 ############
 
 module FastJetFinder FastJetFinder {
-  set InputArray PhotonFilter/WoPhotonpair
+  set InputArray EFlowMerger/eflow
   set OutputArray jets
   set ExclusiveClustering true
 
   # algorithm: 1 CDFJetClu, 2 MidPoint, 3 SIScone, 4 kt, 5 Cambridge/Aachen, 6 antikt
   set JetAlgorithm 10
-  set ParameterR   1.5
+  #set ParameterR   1.5
   set ParameterP   1.0
-  set JetPTMin     0.0
+  set Njets        2
+  #set JetPTMin     0.0
 }
 
 ##################
@@ -829,30 +836,30 @@ module TreeWriter TreeWriter {
     add Branch Delphes/allParticles Particle GenParticle
     add Branch TruthVertexFinder/vertices GenVertex Vertex
 
-    add Branch IdentificationMap/tracks Track Track
-    add Branch Calorimeter/towers Tower Tower
+    #add Branch IdentificationMap/tracks Track Track
+    #add Branch Calorimeter/towers Tower Tower
 
-    add Branch Calorimeter/eflowTracks EFlowTrack Track
-    add Branch Calorimeter/eflowPhotons EFlowPhoton Tower
-    add Branch TimeOfFlightNeutralHadron/eflowNeutralHadrons EFlowNeutralHadron Tower
+    #add Branch Calorimeter/eflowTracks EFlowTrack Track
+    #add Branch Calorimeter/eflowPhotons EFlowPhoton Tower
+    #add Branch TimeOfFlightNeutralHadron/eflowNeutralHadrons EFlowNeutralHadron Tower
 
     add Branch EFlowMerger/eflow ParticleFlowCandidate ParticleFlowCandidate
 
-    add Branch Calorimeter/photons CaloPhoton Photon
-    add Branch PhotonEfficiency/photons PhotonEff Photon
-    add Branch PhotonIsolation/photons PhotonIso Photon
-    add Branch PhotonFilter/Photonpair Photonpair Photon
+    #add Branch Calorimeter/photons CaloPhoton Photon
+    #add Branch PhotonEfficiency/photons PhotonEff Photon
+    #add Branch PhotonIsolation/photons PhotonIso Photon
+    #add Branch PhotonFilter/Photonpair Photonpair Photon
 
-    add Branch GenJetFinder/jets GenJet Jet
-    add Branch GenMissingET/momentum GenMissingET MissingET
+    #add Branch GenJetFinder/jets GenJet Jet
+    #add Branch GenMissingET/momentum GenMissingET MissingET
 
     add Branch JetEnergyScale/jets Jet Jet
-    add Branch ElectronIsolation/electrons Electron Electron
-    add Branch PhotonIsolation/photons Photon Photon
-    add Branch MuonEfficiency/muons Muon Muon
-    add Branch MuonFilter/WoMuonPair WoMuonPair Muon
+    #add Branch ElectronIsolation/electrons Electron Electron
+    #add Branch PhotonIsolation/photons Photon Photon
+    #add Branch MuonEfficiency/muons Muon Muon
+    #add Branch MuonFilter/WoMuonPair WoMuonPair Muon
 
-    add Branch MissingET/momentum MissingET MissingET
+    #add Branch MissingET/momentum MissingET MissingET
 
     # add Info InfoName InfoValue
     add Info Bz $B

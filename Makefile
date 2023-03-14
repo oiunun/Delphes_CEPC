@@ -835,7 +835,8 @@ tmp/modules/IdentificationMap.$(ObjSuf): \
 	classes/DelphesFormula.h \
 	external/ExRootAnalysis/ExRootClassifier.h \
 	external/ExRootAnalysis/ExRootFilter.h \
-	external/ExRootAnalysis/ExRootResult.h
+	external/ExRootAnalysis/ExRootResult.h \
+	external/TrackCovariance/TrkUtil.h
 tmp/modules/ImpactParameterSmearing.$(ObjSuf): \
 	modules/ImpactParameterSmearing.$(SrcSuf) \
 	modules/ImpactParameterSmearing.h \
@@ -941,9 +942,9 @@ tmp/modules/PdgCodeFilter.$(ObjSuf): \
 	classes/DelphesClasses.h \
 	classes/DelphesFactory.h \
 	classes/DelphesFormula.h \
-	external/ExRootAnalysis/ExRootClassifier.h \
+	external/ExRootAnalysis/ExRootResult.h \
 	external/ExRootAnalysis/ExRootFilter.h \
-	external/ExRootAnalysis/ExRootResult.h
+	external/ExRootAnalysis/ExRootClassifier.h
 tmp/modules/PhotonConversions.$(ObjSuf): \
 	modules/PhotonConversions.$(SrcSuf) \
 	modules/PhotonConversions.h \

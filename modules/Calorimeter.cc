@@ -375,6 +375,7 @@ void Calorimeter::Process()
 
       fECalTowerTrackArray->Clear();
       fHCalTowerTrackArray->Clear();
+
     }
 
     // check for track hits
@@ -459,6 +460,7 @@ void Calorimeter::Process()
 
   // finalize last tower
   FinalizeTower();
+
 }
 
 //------------------------------------------------------------------------------
@@ -589,6 +591,7 @@ void Calorimeter::FinalizeTower()
       track = static_cast<Candidate *>(track->Clone());
       track->AddCandidate(mother);
 
+
       fEFlowTrackOutputArray->Add(track);
     }
   }
@@ -611,6 +614,7 @@ void Calorimeter::FinalizeTower()
       track->AddCandidate(mother);
 
       track->Momentum *= rescaleFactor;
+
 
       fEFlowTrackOutputArray->Add(track);
     }
@@ -659,6 +663,7 @@ void Calorimeter::FinalizeTower()
       track->AddCandidate(mother);
       track->Momentum *= rescaleFactor;
       track->Momentum.SetPtEtaPhiM(track->Momentum.Pt()*rescaleFactor, track->Momentum.Eta(), track->Momentum.Phi(), track->Momentum.M());
+      
 
       fEFlowTrackOutputArray->Add(track);
     }
