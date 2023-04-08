@@ -168,17 +168,15 @@ void DualReadoutCalorimeter::Init()
   // Curved extrapolation not supported
   fElectronsFromTrack = false;
 
-  // read min E value for towers to be saved
-  fECalEnergyMin = GetDouble("ECalEnergyMin", 0.0);
-  fHCalEnergyMin = GetDouble("HCalEnergyMin", 0.0);
-  fEnergyMin = GetDouble("EnergyMin", 0.0);
-
-  fECalEnergySignificanceMin = GetDouble("ECalEnergySignificanceMin", 0.0);
-  fHCalEnergySignificanceMin = GetDouble("HCalEnergySignificanceMin", 0.0);
-  fEnergySignificanceMin = GetDouble("EnergySignificanceMin", 0.0);
+  // should be optimised depending calorimeter resolution
+  fECalMinSignificance = GetDouble("ECalMinSignificance", 0.0);
+  fHCalMinSignificance = GetDouble("HCalMinSignificance", 0.0);
 
   // switch on or off the dithering of the center of DualReadoutCalorimeter towers
   fSmearTowerCenter = GetBool("SmearTowerCenter", true);
+
+  // switch on or off the log normal smearing (gaussian if false)
+  fSmearLogNormal = GetBool("SmearLogNormal", true);
 
   // read resolution formulas
   fECalResolutionFormula->Compile(GetString("ECalResolutionFormula", "0"));
@@ -224,7 +222,7 @@ void DualReadoutCalorimeter::Process()
   Long64_t towerHit, towerEtaPhi, hitEtaPhi;
   Double_t ecalFraction, hcalFraction;
   Double_t ecalEnergy, hcalEnergy;
-  Double_t ecalSigma, hcalSigma, sigma;
+  Double_t sigma;
   Double_t energyGuess, energy;
   Int_t pdgCode;
 
@@ -424,7 +422,6 @@ void DualReadoutCalorimeter::Process()
         }
       }
 
-
       // in Dual Readout we do not care if tracks are ECAL of HCAL
       if(fECalTrackFractions[number] > 1.0E-9 || fHCalTrackFractions[number] > 1.0E-9)
       {
@@ -449,8 +446,11 @@ void DualReadoutCalorimeter::Process()
         //----------------------------------------------------------
 
         fTowerTrackArray->Add(track);
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 7b7cc48d2c23d91a4377bbe83953fb58ae7aa317
       }
       else
       {
@@ -478,13 +478,6 @@ void DualReadoutCalorimeter::Process()
     // assume combined timing measurements in ECAL/HCAL sections
     fTowerTime += (ecalEnergy + hcalEnergy) * position.T(); //sigma_t ~ 1/sqrt(E)
     fTowerTimeWeight += ecalEnergy + hcalEnergy;
-    //fTowerTime += (hcalEnergy) * position.T(); //sigma_t ~ 1/sqrt(E)
-    //fTowerTimeWeight += hcalEnergy;
-    //fTowerTime +=  position.T(); //sigma_t ~ 1/sqrt(E)
-    //fTowerTimeWeight += 1;
-
-    //cout<<" tower particle PID, pt, eta, phi, l, tof:  "<<particle->PID<<", "<<momentum.E()<<", "<<momentum.Eta()<<", "<<momentum.Phi()<<", "<<position.Vect().Mag()<<", "<<position.T()/2.99792458E2<<endl;
-    //cout<<" tower particle time, weight:  "<<fTowerTime/2.99792458E2<<", "<<fTowerTimeWeight<<endl;
 
     fTower->AddCandidate(particle);
     fTower->Position = position;
@@ -499,59 +492,83 @@ void DualReadoutCalorimeter::Process()
 void DualReadoutCalorimeter::FinalizeTower()
 {
 
-  Candidate *track, *tower, *mother;
+  Candidate *track, *tower, *mother, *candidate;
   Double_t energy, pt, eta, phi, r, time;
-  Double_t ecalEnergy, hcalEnergy;
-  Double_t ecalNeutralEnergy, hcalNeutralEnergy, neutralEnergy;
+  Double_t neutralEnergy;
 
-  Double_t ecalSigma, hcalSigma, sigma;
-  Double_t ecalNeutralSigma, hcalNeutralSigma, neutralSigma;
+  Double_t caloSigma, trackCaloSigma;
+  Double_t neutralSignificance;
+  Double_t neutralMinPFSignificance;
 
   Double_t weightTrack, weightCalo, bestEnergyEstimate, rescaleFactor;
+  Bool_t isPureEM = false;
 
   TLorentzVector momentum;
   TFractionMap::iterator itFractionMap;
 
-  Float_t weight, sumWeightedTime, sumWeight;
-
+  Bool_t debug = false;
   if(!fTower) return;
+  if (debug) cout<<"-----------------------------------------------------------------------"<<endl;
+  if (debug) cout<<"New Tower: "<<fECalTowerEnergy<<","<<fHCalTowerEnergy<<","<<fHCalTowerEnergy<<","<<fTowerEta<<endl;
 
+  if (debug) cout<<"   gen particles in tower :"<<fTower->GetCandidates()->GetEntriesFast()<<endl;
+  TIter it1(fTower->GetCandidates());
+  it1.Reset();
+  while((candidate = static_cast<Candidate *>(it1.Next())))
+  {
+     //cout<<": " << <<endl;
+     TLorentzVector mom = candidate->Momentum;
+     if (debug) cout<<"      gen particle: " << candidate->PID<<"," << mom.E()<<"," << mom.Eta()<<"," <<mom.Phi()<<endl;
+  }
 
   // if no hadronic energy, use ECAL resolution
-  if (fHCalTowerEnergy <= fHCalEnergyMin)
+  if (fHCalTowerEnergy <= 0)
   {
     energy = fECalTowerEnergy;
-    sigma  = fECalResolutionFormula->Eval(0.0, fTowerEta, 0.0, energy);
-    //cout<<"em energy"<<energy<<", sigma: "<<sigma<<endl;
+    caloSigma  = fECalResolutionFormula->Eval(0.0, fTowerEta, 0.0, energy);
+    isPureEM = true;
+    if (debug) cout<<"   using ECAL energy: "<<energy<<", "<<caloSigma<<endl;
   }
 
   // if hadronic fraction > 0, use HCAL resolution
   else
   {
     energy = fECalTowerEnergy + fHCalTowerEnergy;
-    sigma  = fHCalResolutionFormula->Eval(0.0, fTowerEta, 0.0, energy);
-    //cout<<"had energy: "<<energy<<", sigma: "<<sigma<<endl;
+    caloSigma  = fHCalResolutionFormula->Eval(0.0, fTowerEta, 0.0, energy);
+    if (debug) cout<<"   using HCAL energy: "<<energy<<", "<<caloSigma<<endl;
   }
 
-  energy = LogNormal(energy, sigma);
-  //cout<<energy<<","<<ecalEnergy<<","<<hcalEnergy<<endl;
+  if (fSmearLogNormal)
+    energy = LogNormal(energy, caloSigma);
+  else
+    //energy = TruncatedGaussian(energy, caloSigma);
+    energy = gRandom->Gaus(energy, caloSigma);
 
-  if(energy < fEnergyMin || energy < fEnergySignificanceMin*sigma) energy = 0.0;
+  if (debug) cout<<"   smeared energy: "<<energy<<endl;
 
-  // for now keep this the same
-  ecalSigma = fECalResolutionFormula->Eval(0.0, fTowerEta, 0.0, fECalTowerEnergy);
-  hcalSigma = fHCalResolutionFormula->Eval(0.0, fTowerEta, 0.0, fHCalTowerEnergy);
+  if (energy < 0.) energy = 0.;
+  // set tower energy to 0 when energy deposit is not significant
 
-  ecalEnergy = LogNormal(fECalTowerEnergy, ecalSigma);
-  hcalEnergy = LogNormal(fHCalTowerEnergy, hcalSigma);
+  if (isPureEM)
+  {
+    // estimate resolution from the measurement this time
+    caloSigma = fECalResolutionFormula->Eval(0.0, fTowerEta, 0.0, energy);
+    energy = (energy > fECalMinSignificance * caloSigma) ? energy : 0.;
+  }
+  else
+  {
+    // estimate resolution from the measurement this time
+    caloSigma = fHCalResolutionFormula->Eval(0.0, fTowerEta, 0.0, energy);
+    energy = (energy > fHCalMinSignificance * caloSigma) ? energy : 0.;
+  }
+
+  if (debug) cout<<"   smeared energy: "<<energy<<endl;
+
+  // ---------------------------------------------------------------------------
+  // compute calo tower properties
+  // ---------------------------------------------------------------------------
 
   time = (fTowerTimeWeight < 1.0E-09) ? 0.0 : fTowerTime / fTowerTimeWeight;
-
-  ecalSigma = fECalResolutionFormula->Eval(0.0, fTowerEta, 0.0, ecalEnergy);
-  hcalSigma = fHCalResolutionFormula->Eval(0.0, fTowerEta, 0.0, hcalEnergy);
-
-  if(ecalEnergy < fECalEnergyMin || ecalEnergy < fECalEnergySignificanceMin*ecalSigma) ecalEnergy = 0.0;
-  if(hcalEnergy < fHCalEnergyMin || hcalEnergy < fHCalEnergySignificanceMin*hcalSigma) hcalEnergy = 0.0;
 
   if(fSmearTowerCenter)
   {
@@ -564,28 +581,52 @@ void DualReadoutCalorimeter::FinalizeTower()
     phi = fTowerPhi;
   }
 
-  pt = energy / TMath::CosH(eta);
-
   // check whether barrel or endcap tower
-  if ((fTowerRmax - fTower->Position.Perp()) < 1.e-06 && TMath::Abs(eta) > 0.)
+
+  // endcap
+  if (TMath::Abs(fTower->Position.Pt() - fTowerRmax) > 1.e-06 && TMath::Abs(eta) > 0.){
     r = fTower->Position.Z()/TMath::SinH(eta);
-  else
+  }
+  // barrel
+  else {
     r = fTower->Position.Pt();
+  }
+
+  time = (fTowerTimeWeight < 1.0E-09) ? 0.0 : fTowerTime / fTowerTimeWeight;
+
 
   fTower->Position.SetPtEtaPhiE(r, eta, phi, time);
-
-  fTower->Momentum.SetPtEtaPhiE(pt, eta, phi, energy);
   fTower->L = fTower->Position.Vect().Mag();
-  //cout<<"   tower pt, eta, phi, l, tof:  "<<fTower->Momentum.E()<<", "<<fTower->Momentum.Eta()<<", "<<fTower->Momentum.Phi()<<", "<<fTower->L<<", "<<fTower->Position.T()/2.99792458E2<<endl;
-
-  fTower->Momentum.SetPtEtaPhiE(pt, eta, phi, energy);
-  fTower->Eem = ecalEnergy;
-  fTower->Ehad = hcalEnergy;
   fTower->Etrk = fTrackEnergy;
+
+  // these are stored for debugging purposes, should not be used since they are
+  // based on MC truth
+  fTower->Eem = fECalTowerEnergy;
+  fTower->Ehad = fHCalTowerEnergy;
+
   fTower->Edges[0] = fTowerEdges[0];
   fTower->Edges[1] = fTowerEdges[1];
   fTower->Edges[2] = fTowerEdges[2];
   fTower->Edges[3] = fTowerEdges[3];
+
+  if (isPureEM)
+  {
+    // assume massless photon hypothesis
+    fTower->PID = 22;
+    pt = energy / TMath::CosH(eta);
+    fTower->Momentum.SetPtEtaPhiE(pt, eta, phi, energy);
+  }
+  // if hadronic fraction > 0, use HCAL resolution
+  else
+  {
+
+    // assume pion hypothesis for hadronic deposit. This can be corrected later by accessing particle energy in the output
+    fTower->PID = 211;
+    Double_t mass = 0.13957;
+    Double_t p = (energy > mass) ? TMath::Sqrt(energy*energy - mass*mass) : 0.;
+    pt = p / TMath::CosH(eta);
+    fTower->Momentum.SetPtEtaPhiE(pt, eta, phi, energy);
+  }
 
   if(energy > 0.0)
   {
@@ -593,40 +634,80 @@ void DualReadoutCalorimeter::FinalizeTower()
     {
       fPhotonOutputArray->Add(fTower);
     }
+
+    if (debug) cout<<"   creating tower with energy: "<<energy<<endl;
+    if (debug) cout<<"   creating tower with PID: "<<fTower->PID<<endl;
+    if (debug) cout<<"   creating tower with track energy: "<<fTower->Etrk<<endl;
+
     fTowerOutputArray->Add(fTower);
   }
 
-  // fill energy flow candidates
+  // ---------------------------------------------------------------------------
+  // now do particle-flow
+  // ---------------------------------------------------------------------------
 
   fTrackSigma = TMath::Sqrt(fTrackSigma);
   neutralEnergy = max( (energy - fTrackEnergy) , 0.0);
-  neutralSigma = neutralEnergy / TMath::Sqrt(fTrackSigma*fTrackSigma + sigma*sigma);
 
-  if(neutralEnergy > fEnergyMin && neutralSigma > fEnergySignificanceMin)
+  if (isPureEM)
   {
-    // create new photon tower
-    tower = static_cast<Candidate*>(fTower->Clone());
-    pt = neutralEnergy / TMath::CosH(eta);
-    tower->Momentum.SetPtEtaPhiE(pt, eta, phi, neutralEnergy);
+    neutralMinPFSignificance = fECalMinSignificance;
+  }
+  else
+  {
+    neutralMinPFSignificance = fHCalMinSignificance;
+  }
 
-    // if no hadronic energy, use ECAL resolution
-    if (fHCalTowerEnergy <= fHCalEnergyMin)
+  // combined track calo resolution
+  trackCaloSigma = TMath::Sqrt(fTrackSigma*fTrackSigma + caloSigma*caloSigma);
+  neutralSignificance = (trackCaloSigma > 0) ? neutralEnergy / trackCaloSigma : 0.;
+
+  if (debug) cout<<"Doing PF here: "<<endl;
+  if (debug) cout<<"   track energy: "<<fTrackEnergy<<endl;
+  if (debug) cout<<"   calo energy: "<<energy<<endl;
+  if (debug) cout<<"   neutral energy: "<<neutralEnergy<<endl;
+  if (debug) cout<<"   track sigma: "<<fTrackSigma<<endl;
+  if (debug) cout<<"   calo sigma: "<<caloSigma<<endl;
+  if (debug) cout<<"   track calo sigma: "<<trackCaloSigma<<endl;
+  if (debug) cout<<"   neutral significance: "<<neutralSignificance<<endl;
+
+
+  // now do case where at least one track points to tower and the nuetral excess is signficant
+  // i.e pi+ and neutron or electron and photon hitting same tower
+  if ( neutralSignificance > neutralMinPFSignificance )
+  {
+
+    tower = static_cast<Candidate*>(fTower->Clone());
+    if (isPureEM)
     {
       tower->Eem = neutralEnergy;
       tower->Ehad = 0.0;
       tower->PID = 22;
+      pt = neutralEnergy / TMath::CosH(eta);
+      tower->Momentum.SetPtEtaPhiE(pt, eta, phi, neutralEnergy);
       fEFlowPhotonOutputArray->Add(tower);
     }
-    // if hadronic fraction > 0, use HCAL resolution
     else
     {
       tower->Eem = 0;
       tower->Ehad = neutralEnergy;
       tower->PID = 130;
-      fEFlowNeutralHadronOutputArray->Add(tower);
+      Double_t mass = 0.497611;
+      Double_t p = (neutralEnergy > mass) ? TMath::Sqrt(neutralEnergy*neutralEnergy - mass*mass) : 0.;
+      pt = p / TMath::CosH(eta);
+      if (p > 0)
+      {
+        tower->Momentum.SetPtEtaPhiE(pt, eta, phi, neutralEnergy);
+        fEFlowNeutralHadronOutputArray->Add(tower);
+      }
     }
 
-    //clone tracks
+    if (debug) cout<<"       creating neutral excess with energy, eta, phi: "<<neutralEnergy<<","<<eta<<","<<phi<<endl;
+    if (debug) cout<<"       creating neutral excess with PID: "<<tower->PID<<endl;
+    if (debug) cout<<"       creating neutral excess with track energy: "<<tower->Etrk<<endl;
+    if (debug) cout<<"       "<<endl;
+
+    // now clone tracks
     fItTowerTrackArray->Reset();
     while((track = static_cast<Candidate*>(fItTowerTrackArray->Next())))
     {
@@ -645,15 +726,20 @@ void DualReadoutCalorimeter::FinalizeTower()
 
       fEFlowTrackOutputArray->Add(track);
     }
+
   }
 
-
-  // if neutral excess is not significant, rescale eflow tracks, such that the total charged equals the best measurement given by the DualReadoutCalorimeter and tracking
-  else if(fTrackEnergy > 0.0)
+  // now do case where at track points to tower and the neutral excess is NOT signficant
+  // if neutral excess is not significant, rescale eflow tracks, such that the total
+  // charged equals the best measurement given by the DualReadoutCalorimeter and tracking
+  else if (fTrackEnergy > 0)
   {
-    //cout<<"no significant neutral excess found:"<<endl;
+    if (debug) cout<<"   no significant neutral excess found:"<<endl;
+    if (debug) cout<<"   neutral energy: "<<energy<<", "<<fTrackEnergy<<", "<<neutralEnergy<<endl;
+    if (debug) cout<<"       "<<endl;
+
     weightTrack = (fTrackSigma > 0.0) ? 1 / (fTrackSigma*fTrackSigma) : 0.0;
-    weightCalo  = (sigma > 0.0) ? 1 / (sigma*sigma) : 0.0;
+    weightCalo  = (caloSigma > 0.0) ? 1 / (caloSigma*caloSigma) : 0.0;
 
     bestEnergyEstimate = (weightTrack*fTrackEnergy + weightCalo*energy) / (weightTrack + weightCalo);
     rescaleFactor = bestEnergyEstimate/fTrackEnergy;
@@ -672,6 +758,7 @@ void DualReadoutCalorimeter::FinalizeTower()
       //----------------------------------------------------------
 
       track->Momentum.SetPtEtaPhiM(track->Momentum.Pt()*rescaleFactor, track->Momentum.Eta(), track->Momentum.Phi(), track->Momentum.M());
+<<<<<<< HEAD
 
 
       //add-------------------------------------------------------------
@@ -682,12 +769,15 @@ void DualReadoutCalorimeter::FinalizeTower()
       track->Eem = LogNormal(Eema, EcalSigma);
       track->Ehad = LogNormal(Ehada, HcalSigma);
       //---------------------------------------------------------------
+=======
+      if (debug) cout<<"  track Momentum: "<< track->PID<<", "<<track->Momentum.Pt()<<", "<<track->Momentum.Eta()<<", "<<track->Momentum.M()<<endl;
+>>>>>>> 7b7cc48d2c23d91a4377bbe83953fb58ae7aa317
       fEFlowTrackOutputArray->Add(track);
     }
   }
 
-
 }
+
 
 //------------------------------------------------------------------------------
 
@@ -701,6 +791,25 @@ Double_t DualReadoutCalorimeter::LogNormal(Double_t mean, Double_t sigma)
     a = TMath::Log(mean) - 0.5*b*b;
 
     return TMath::Exp(a + b*gRandom->Gaus(0.0, 1.0));
+  }
+  else
+  {
+    return 0.0;
+  }
+}
+
+//------------------------------------------------------------------------------
+
+Double_t DualReadoutCalorimeter::TruncatedGaussian(Double_t mean, Double_t sigma)
+{
+  Double_t result = -1;
+  if(mean > 0.0)
+  {
+    while (result < 0.0)
+    {
+      result = gRandom->Gaus(mean, sigma);
+    }
+    return result;
   }
   else
   {

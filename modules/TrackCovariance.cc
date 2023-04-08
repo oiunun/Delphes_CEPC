@@ -38,6 +38,7 @@
 #include "TrackCovariance/SolGeom.h"
 #include "TrackCovariance/SolGridCov.h"
 #include "TrackCovariance/ObsTrk.h"
+#include "classes/DelphesFormula.h"
 
 #include "TLorentzVector.h"
 #include "TMath.h"
@@ -51,11 +52,18 @@ using namespace std;
 //------------------------------------------------------------------------------
 
 TrackCovariance::TrackCovariance() :
-  fGeometry(0), fCovariance(0), fAcx(0), fItInputArray(0)
+  fGeometry(0), fCovariance(0), fAcx(0), fItInputArray(0),
+	fElectronScaleFactor(0), fMuonScaleFactor(0), fChargedHadronScaleFactor(0)
 {
   fGeometry = new SolGeom();
   fCovariance = new SolGridCov();
+	fElectronScaleFactor = new DelphesFormula;
+	fMuonScaleFactor = new DelphesFormula;
+	fChargedHadronScaleFactor = new DelphesFormula;
 }
+
+
+
 
 //------------------------------------------------------------------------------
 
@@ -63,6 +71,9 @@ TrackCovariance::~TrackCovariance()
 {
   if(fGeometry) delete fGeometry;
   if(fCovariance) delete fCovariance;
+  if(fElectronScaleFactor) delete fElectronScaleFactor;
+  if(fMuonScaleFactor) delete fMuonScaleFactor;
+  if(fChargedHadronScaleFactor) delete fChargedHadronScaleFactor;
 }
 
 //------------------------------------------------------------------------------
@@ -72,6 +83,11 @@ void TrackCovariance::Init()
   fBz = GetDouble("Bz", 0.0);
   fGeometry->Read(GetString("DetectorGeometry", ""));
   fNMinHits = GetInt("NMinHits", 6);
+
+  // scale factors to apply to resolutions
+  fElectronScaleFactor->Compile(GetString("ElectronScaleFactor", "1.0"));
+  fMuonScaleFactor->Compile(GetString("MuonScaleFactor", "1.0"));
+  fChargedHadronScaleFactor->Compile(GetString("ChargedHadronScaleFactor", "1.0"));
 
   // load geometry
   fCovariance->Calc(fGeometry);
@@ -102,6 +118,12 @@ void TrackCovariance::Process()
   Candidate *candidate, *mother, *particle;
   Double_t mass, p, pt, q, ct;
   Double_t dd0, ddz, dphi, dct, dp, dpt, dC;
+  //
+  // Get cylindrical box for fast track simulation
+  //
+  Double_t Rin = fGeometry->GetRmin();
+  Double_t ZinPos = fGeometry->GetZminPos();
+  Double_t ZinNeg = fGeometry->GetZminNeg();
 
   fItInputArray->Reset();
   while((candidate = static_cast<Candidate *>(fItInputArray->Next())))
@@ -114,11 +136,30 @@ void TrackCovariance::Process()
     const TLorentzVector &candidatePosition = particle->Position*1e-03;
     const TLorentzVector &candidateMomentum = particle->Momentum;
 
-    if ( !fCovariance->IsAccepted(candidateMomentum.Vect()) ) continue;
+    Bool_t inside = TrkUtil::IsInside(candidatePosition.Vect(), Rin, ZinNeg, ZinPos); // Check if in inner box
+    Bool_t Accept = kTRUE;
+    if(inside) Accept = fCovariance->IsAccepted(candidateMomentum.Vect());
+    else       Accept = fCovariance->IsAccepted(candidatePosition.Vect(),candidateMomentum.Vect(), fGeometry);
+    if(!Accept) continue;
 
     mass = candidateMomentum.M();
 
-    ObsTrk track(candidatePosition.Vect(), candidateMomentum.Vect(), candidate->Charge, fBz, fCovariance);
+    ObsTrk track(candidatePosition.Vect(), candidateMomentum.Vect(), candidate->Charge, fCovariance, fGeometry);
+
+		// apply rescaling factors to resolution
+    if (TMath::Abs(candidate->PID) == 11)
+		{
+			track.SetScale(fElectronScaleFactor->Eval(candidateMomentum.Pt(), candidateMomentum.Eta(), candidateMomentum.Phi(), candidateMomentum.E(), candidate));
+		}
+    else if (TMath::Abs(candidate->PID) == 13)
+		{
+      track.SetScale(fMuonScaleFactor->Eval(candidateMomentum.Pt(), candidateMomentum.Eta(), candidateMomentum.Phi(), candidateMomentum.E(), candidate));
+		}
+    else
+		{
+      track.SetScale(fChargedHadronScaleFactor->Eval(candidateMomentum.Pt(), candidateMomentum.Eta(), candidateMomentum.Phi(), candidateMomentum.E(), candidate));
+    }
+
 
     mother    = candidate;
     candidate = static_cast<Candidate*>(candidate->Clone());
@@ -139,6 +180,10 @@ void TrackCovariance::Process()
     candidate->Xd = track.GetObsX().X()*1e03;
     candidate->Yd = track.GetObsX().Y()*1e03;
     candidate->Zd = track.GetObsX().Z()*1e03;
+
+    candidate->XFirstHit = track.GetFirstHit().X()*1e03;
+    candidate->YFirstHit = track.GetFirstHit().Y()*1e03;
+    candidate->ZFirstHit = track.GetFirstHit().Z()*1e03;
 
     candidate->D0       = track.GetObsPar()[0]*1e03;
     candidate->Phi      = track.GetObsPar()[1];

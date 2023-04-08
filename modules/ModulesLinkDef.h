@@ -30,6 +30,7 @@
 #include "modules/AngularSmearing.h"
 #include "modules/PhotonConversions.h"
 #include "modules/ParticlePropagator.h"
+#include "modules/UnstablePropagator.h"
 #include "modules/Efficiency.h"
 #include "modules/IdentificationMap.h"
 #include "modules/EnergySmearing.h"
@@ -78,6 +79,9 @@
 #include "modules/ParticleDensity.h"
 #include "modules/TruthVertexFinder.h"
 #include "modules/ExampleModule.h"
+#include "modules/LLPFilter.h"
+#include "modules/CscClusterEfficiency.h"
+#include "modules/CscClusterId.h"
 
 #ifdef __CINT__
 
@@ -90,6 +94,7 @@
 #pragma link C++ class AngularSmearing+;
 #pragma link C++ class PhotonConversions+;
 #pragma link C++ class ParticlePropagator+;
+#pragma link C++ class UnstablePropagator+;
 #pragma link C++ class Efficiency+;
 #pragma link C++ class IdentificationMap+;
 #pragma link C++ class EnergySmearing+;
@@ -138,5 +143,8 @@
 #pragma link C++ class ParticleDensity+;
 #pragma link C++ class TruthVertexFinder+;
 #pragma link C++ class ExampleModule+;
+#pragma link C++ class LLPFilter+;
+#pragma link C++ class CscClusterEfficiency+;
+#pragma link C++ class CscClusterId+;
 
 #endif

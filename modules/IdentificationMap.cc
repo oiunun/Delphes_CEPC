@@ -210,6 +210,10 @@ void IdentificationMap::Process()
     total = 0.0;
     
     //---------------------------------Add---------------  
+//--------------------------------Save PID in Calorimeter-------------------------------
+   if(candidate->PID == 22 || candidate->PID == 130){
+     candidate->PID_meas = candidate->PID;
+   }
   //---------------Set parameters
     const Double_t c_light = 2.99792458E8;
     Double_t mass[5]={0.000511, 0.10565, 0.13957, 0.49368, 0.93827};//e u pi k p  GeV
@@ -232,18 +236,17 @@ void IdentificationMap::Process()
     Double_t L_DC = candidate->L_DC;//m
     //gas proportion 
     int Opt = 0; 
-    // if(pdgCodeIn==211||pdgCodeIn==-211||pdgCodeIn==321||pdgCodeIn==-321||pdgCodeIn==2212||pdgCodeIn==-2212){
-    if(dndx_meas!=0 && l>0 && L_DC>0/* &&  L_DC<10  && p_meas>5*/){
-
+    if(pdgCodeIn==211||pdgCodeIn==-211||pdgCodeIn==321||pdgCodeIn==-321||pdgCodeIn==2212||pdgCodeIn==-2212){
+     if(dndx_meas!=0 && l>0 && L_DC>0/* &&  L_DC<10  && p_meas>5*/){
       for(int i=2;i<5;i++){
   
-      Double_t bg = p_meas/mass[i]; //TMath::Sqrt(p_meas/TMath::Sqrt(mass[i]*mass[i]+p_meas*p_meas));
-    //-------------------Get exp
-      Double_t dndx_exp = TrkUtil::Nclusters(bg,Opt)*L_DC  * Eff(bg,CosTheta) ;
+       Double_t bg = p_meas/mass[i]; //TMath::Sqrt(p_meas/TMath::Sqrt(mass[i]*mass[i]+p_meas*p_meas));
+       //-------------------Get exp
+       Double_t dndx_exp = TrkUtil::Nclusters(bg,Opt)*L_DC  * Eff(bg,CosTheta) ;
      
       
-      Double_t tof_exp = l*TMath::Sqrt(mass[i]*mass[i]+p_meas*p_meas)/(c_light*p_meas); //s
-      if(dndx_exp<=0) break;
+       Double_t tof_exp = l*TMath::Sqrt(mass[i]*mass[i]+p_meas*p_meas)/(c_light*p_meas); //s
+       if(dndx_exp<=0) break;
     //-------------------sigma
       Double_t counting_sigma = 0.02;
       Double_t tof_sigma = 30E-12;
@@ -254,12 +257,13 @@ void IdentificationMap::Process()
       total_chi2 = chi[0]*chi[0] + chi[1]*chi[1];
       Prob[i] = TMath::Prob(total_chi2,2);   
       if(i==2){
-        candidate->Chi_pi = chi[0];
+        candidate->Chi_pi = total_chi2;
       }
       if(i==3){
-        candidate->Chi_k = chi[0];
+        candidate->Chi_k = total_chi2;
       }
     }
+    if(Prob[2] ==0 && Prob[3] == 0 && Prob[4] == 0) {candidate->PID_meas = -1; continue;}
     Double_t probability_tot =Prob[2]+Prob[3]+Prob[4];
     candidate->Prob_Pi = Prob[2]/probability_tot;
     candidate->Prob_K = Prob[3]/probability_tot;
@@ -282,9 +286,11 @@ void IdentificationMap::Process()
       if(/*Prob[4]>Prob[4]&&Prob[4]>Prob[1]&&*/ Prob[4]>Prob[2] && Prob[4]>Prob[3]  /* &&  Prob[4]>0.001 */ ){
         candidate->PID_meas = charge * PID[4]; 
       }
-	
+      }
+      else{
+       candidate->PID_meas = -1;
+      }
     }
-    // }
 
     // loop over sub-map for this PID
     for(TMisIDMap::iterator it = range.first; it != range.second; ++it)

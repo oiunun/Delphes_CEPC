@@ -35,12 +35,12 @@ set ExecutionPath {
   TimeOfFlight
 
   TrackMerger
-  IdentificationMap
   Calorimeter
 
   TimeSmearingNeutrals
   TimeOfFlightNeutralHadron
   EFlowMerger
+  IdentificationMap
   PhotonFilter
   PhotonEfficiency
   PhotonIsolation
@@ -395,7 +395,7 @@ module Merger TrackMerger {
 #############
 module DualReadoutCalorimeter Calorimeter {
   set ParticleInputArray ParticlePropagator/stableParticles
-  set TrackInputArray    IdentificationMap/tracks
+  set TrackInputArray    TrackMerger/tracks
 
   set TowerOutputArray   towers
   set PhotonOutputArray  photons
@@ -495,8 +495,8 @@ module DualReadoutCalorimeter Calorimeter {
 ####################################
 
 module IdentificationMap IdentificationMap {
-  set InputArray TrackMerger/tracks
-  set OutputArray tracks
+  set InputArray EFlowMerger/eflow
+  set OutputArray eflow
 
 }
 ########################################
@@ -843,7 +843,7 @@ module TreeWriter TreeWriter {
     #add Branch Calorimeter/eflowPhotons EFlowPhoton Tower
     #add Branch TimeOfFlightNeutralHadron/eflowNeutralHadrons EFlowNeutralHadron Tower
 
-    add Branch EFlowMerger/eflow ParticleFlowCandidate ParticleFlowCandidate
+    add Branch  IdentificationMap/eflow ParticleFlowCandidate ParticleFlowCandidate
 
     #add Branch Calorimeter/photons CaloPhoton Photon
     #add Branch PhotonEfficiency/photons PhotonEff Photon
