@@ -127,12 +127,7 @@ void FastJetFinder::Init()
   //-- Exclusive clustering for e+e- collisions --
 
   fNJets = GetInt("NJets", 2);
-<<<<<<< HEAD
   fExclusiveClustering = GetBool("ExclusiveClustering", true);
-=======
-  fExclusiveClustering = GetBool("ExclusiveClustering", false);
-  fDCut = GetDouble("DCut", 0.0);
->>>>>>> 7b7cc48d2c23d91a4377bbe83953fb58ae7aa317
 
   //-- Valencia Linear Collider algorithm
 
@@ -256,13 +251,6 @@ void FastJetFinder::Init()
     fDefinition = new JetDefinition(ee_genkt_algorithm,fParameterR,fParameterP);
     break;
 
-  // kT durham algorithm, 2 options:
-  // 1. njets mode: stop when reach predetermined n jet (optionally apply sqrt(ExclYmerge(n-1,n))*Evis) > cut offline)
-  // 2. dcut mode: stop when all dij above some threshold dcut. Is applied if fDCut > 0.
-  case 11:
-    fDefinition = new JetDefinition(ee_kt_algorithm);
-    break;
-
   }
 
   fPlugin = plugin;
@@ -342,7 +330,6 @@ void FastJetFinder::Process()
   vector<PseudoJet> inputList, outputList, subjets;
   vector<PseudoJet>::iterator itInputList, itOutputList;
   vector<TEstimatorStruct>::iterator itEstimators;
-  Double_t excl_ymerge12 = 0.0;
   Double_t excl_ymerge23 = 0.0;
   Double_t excl_ymerge34 = 0.0;
   Double_t excl_ymerge45 = 0.0;
@@ -396,23 +383,13 @@ void FastJetFinder::Process()
   {
     try
     {
-      // exclusive dcut mode
-      if (fDCut > 0.0)
-      {
-        outputList = sorted_by_pt(sequence->exclusive_jets(fDCut*fDCut));
-      }
-      else
-      {
-        // exclusive njet mode
-        outputList = sorted_by_pt(sequence->exclusive_jets(fNJets));
-      }
+      outputList = sorted_by_pt(sequence->exclusive_jets(fNJets));
     }
     catch(fastjet::Error)
     {
       outputList.clear();
     }
-    
-    excl_ymerge12 = sequence->exclusive_ymerge(1);
+
     excl_ymerge23 = sequence->exclusive_ymerge(2);
     excl_ymerge34 = sequence->exclusive_ymerge(3);
     excl_ymerge45 = sequence->exclusive_ymerge(4);
@@ -473,7 +450,7 @@ void FastJetFinder::Process()
         ncharged++;
         chargedEnergyFraction += constituent->Momentum.E();
       }
-
+      
       time += TMath::Sqrt(constituent->Momentum.E()) * (constituent->Position.T());
       timeWeight += TMath::Sqrt(constituent->Momentum.E());
 
@@ -497,7 +474,6 @@ void FastJetFinder::Process()
     candidate->ChargedEnergyFraction = (momentum.E() > 0 ) ? chargedEnergyFraction/momentum.E() : 0.0;
 
     //for exclusive clustering, access y_n,n+1 as exclusive_ymerge (fNJets);
-    candidate->ExclYmerge12 = excl_ymerge12;
     candidate->ExclYmerge23 = excl_ymerge23;
     candidate->ExclYmerge34 = excl_ymerge34;
     candidate->ExclYmerge45 = excl_ymerge45;
@@ -512,7 +488,7 @@ void FastJetFinder::Process()
 
       fastjet::Filter trimmer(fastjet::JetDefinition(fastjet::kt_algorithm, fRTrim), fastjet::SelectorPtFractionMin(fPtFracTrim));
       fastjet::PseudoJet trimmed_jet = trimmer(*itOutputList);
-
+      
       candidate->TrimmedP4[0].SetPtEtaPhiM(trimmed_jet.pt(), trimmed_jet.eta(), trimmed_jet.phi(), trimmed_jet.m());
 
       // four hardest subjets

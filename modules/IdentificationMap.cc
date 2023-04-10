@@ -210,10 +210,6 @@ void IdentificationMap::Process()
     total = 0.0;
     
     //---------------------------------Add---------------  
-//--------------------------------Save PID in Calorimeter-------------------------------
-   if(candidate->PID == 22 || candidate->PID == 130){
-     candidate->PID_meas = candidate->PID;
-   }
   //---------------Set parameters
     const Double_t c_light = 2.99792458E8;
     Double_t mass[5]={0.000511, 0.10565, 0.13957, 0.49368, 0.93827};//e u pi k p  GeV

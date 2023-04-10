@@ -59,7 +59,6 @@ private:
   void ProcessPhotons(ExRootTreeBranch *branch, TObjArray *array);
   void ProcessElectrons(ExRootTreeBranch *branch, TObjArray *array);
   void ProcessMuons(ExRootTreeBranch *branch, TObjArray *array);
-  void ProcessCscCluster(ExRootTreeBranch *branch, TObjArray *array);
   void ProcessTauJets(ExRootTreeBranch *branch, TObjArray *array);
   void ProcessJets(ExRootTreeBranch *branch, TObjArray *array);
   void ProcessMissingET(ExRootTreeBranch *branch, TObjArray *array);
@@ -67,7 +66,6 @@ private:
   void ProcessRho(ExRootTreeBranch *branch, TObjArray *array);
   void ProcessWeight(ExRootTreeBranch *branch, TObjArray *array);
   void ProcessHectorHit(ExRootTreeBranch *branch, TObjArray *array);
-
 
 #if !defined(__CINT__) && !defined(__CLING__)
   typedef void (TreeWriter::*TProcessMethod)(ExRootTreeBranch *, TObjArray *); //!

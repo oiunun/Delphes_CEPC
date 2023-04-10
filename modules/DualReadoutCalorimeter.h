@@ -70,9 +70,8 @@ private:
   Double_t fHCalEnergyMin;
   Double_t fEnergyMin;
 
-  Double_t fECalMinSignificance;
-  Double_t fHCalMinSignificance;
-
+  Double_t fECalEnergySignificanceMin;
+  Double_t fHCalEnergySignificanceMin;
   Double_t fEnergySignificanceMin;
 
   Double_t fECalTrackSigma;
@@ -83,7 +82,6 @@ private:
   Double_t fTowerTimeWeight;
 
   Bool_t fSmearTowerCenter;
-  Bool_t fSmearLogNormal;
 
   TFractionMap fFractionMap; //!
   TBinMap fBinMap; //!
@@ -126,7 +124,6 @@ private:
 
   void FinalizeTower();
   Double_t LogNormal(Double_t mean, Double_t sigma);
-  Double_t TruncatedGaussian(Double_t mean, Double_t sigma);
 
   ClassDef(DualReadoutCalorimeter, 1)
 };

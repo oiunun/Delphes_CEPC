@@ -86,7 +86,6 @@ private:
   //-- Exclusive clustering for e+e- collisions --
 
   Int_t fNJets;
-  Double_t fDCut;
   Bool_t fExclusiveClustering;
 
   //-- Valencia Linear Collider algorithm
