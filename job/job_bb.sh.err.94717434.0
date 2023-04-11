@@ -1,0 +1,480 @@
+In file included from classes/DelphesClasses.cc:29:
+./classes/DelphesClasses.h: In constructor ‘Candidate::Candidate()’:
+./classes/DelphesClasses.h:679:12: warning: ‘Candidate::Chi_pi’ will be initialized after [-Wreorder]
+  679 |   Double_t Chi_pi;
+      |            ^~~~~~
+./classes/DelphesClasses.h:678:12: warning:   ‘Double_t Candidate::Chi_k’ [-Wreorder]
+  678 |   Double_t Chi_k;
+      |            ^~~~~
+classes/DelphesClasses.cc:209:1: warning:   when initialized here [-Wreorder]
+  209 | Candidate::Candidate() :
+      | ^~~~~~~~~
+In file included from classes/DelphesClasses.cc:29:
+./classes/DelphesClasses.h:686:9: warning: ‘Candidate::PID_meas’ will be initialized after [-Wreorder]
+  686 |   Int_t PID_meas;
+      |         ^~~~~~~~
+./classes/DelphesClasses.h:683:11: warning:   ‘Float_t Candidate::Prob_K’ [-Wreorder]
+  683 |   Float_t Prob_K;
+      |           ^~~~~~
+classes/DelphesClasses.cc:209:1: warning:   when initialized here [-Wreorder]
+  209 | Candidate::Candidate() :
+      | ^~~~~~~~~
+In file included from classes/DelphesClasses.cc:29:
+./classes/DelphesClasses.h:685:11: warning: ‘Candidate::Prob_P’ will be initialized after [-Wreorder]
+  685 |   Float_t Prob_P;
+      |           ^~~~~~
+./classes/DelphesClasses.h:677:9: warning:   ‘Int_t Candidate::PID’ [-Wreorder]
+  677 |   Int_t PID;
+      |         ^~~
+classes/DelphesClasses.cc:209:1: warning:   when initialized here [-Wreorder]
+  209 | Candidate::Candidate() :
+      | ^~~~~~~~~
+In file included from classes/DelphesClasses.cc:29:
+./classes/DelphesClasses.h:780:15: warning: ‘Candidate::TrackCovariance’ will be initialized after [-Wreorder]
+  780 |   TMatrixDSym TrackCovariance;
+      |               ^~~~~~~~~~~~~~~
+./classes/DelphesClasses.h:722:11: warning:   ‘Float_t Candidate::L’ [-Wreorder]
+  722 |   Float_t L; // path length
+      |           ^
+classes/DelphesClasses.cc:209:1: warning:   when initialized here [-Wreorder]
+  209 | Candidate::Candidate() :
+      | ^~~~~~~~~
+In file included from classes/DelphesClasses.cc:29:
+./classes/DelphesClasses.h:727:11: warning: ‘Candidate::ErrorD0’ will be initialized after [-Wreorder]
+  727 |   Float_t ErrorD0;
+      |           ^~~~~~~
+./classes/DelphesClasses.h:723:11: warning:   ‘Float_t Candidate::DZ’ [-Wreorder]
+  723 |   Float_t DZ;
+      |           ^~
+classes/DelphesClasses.cc:209:1: warning:   when initialized here [-Wreorder]
+  209 | Candidate::Candidate() :
+      | ^~~~~~~~~
+In file included from classes/DelphesClasses.cc:29:
+./classes/DelphesClasses.h:731:11: warning: ‘Candidate::ErrorP’ will be initialized after [-Wreorder]
+  731 |   Float_t ErrorP;
+      |           ^~~~~~
+./classes/DelphesClasses.h:728:11: warning:   ‘Float_t Candidate::C’ [-Wreorder]
+  728 |   Float_t C;
+      |           ^
+classes/DelphesClasses.cc:209:1: warning:   when initialized here [-Wreorder]
+  209 | Candidate::Candidate() :
+      | ^~~~~~~~~
+In file included from classes/DelphesClasses.cc:29:
+./classes/DelphesClasses.h:745:11: warning: ‘Candidate::Zd’ will be initialized after [-Wreorder]
+  745 |   Float_t Zd;
+      |           ^~
+./classes/DelphesClasses.h:739:11: warning:   ‘Float_t Candidate::Nclusters’ [-Wreorder]
+  739 |   Float_t Nclusters; // Number of ionization clusters
+      |           ^~~~~~~~~
+classes/DelphesClasses.cc:209:1: warning:   when initialized here [-Wreorder]
+  209 | Candidate::Candidate() :
+      | ^~~~~~~~~
+In file included from classes/DelphesClasses.cc:29:
+./classes/DelphesClasses.h:761:11: warning: ‘Candidate::ChargedEnergyFraction’ will be initialized after [-Wreorder]
+  761 |   Float_t ChargedEnergyFraction;  // neutral energy fraction
+      |           ^~~~~~~~~~~~~~~~~~~~~
+./classes/DelphesClasses.h:755:11: warning:   ‘Float_t Candidate::Beta’ [-Wreorder]
+  755 |   Float_t Beta;
+      |           ^~~~
+classes/DelphesClasses.cc:209:1: warning:   when initialized here [-Wreorder]
+  209 | Candidate::Candidate() :
+      | ^~~~~~~~~
+classes/DelphesHepMC3Reader.cc: In member function ‘void DelphesHepMC3Reader::FinalizeParticles(TObjArray*, TObjArray*, TObjArray*)’:
+classes/DelphesHepMC3Reader.cc:468:16: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<std::pair<TLorentzVector*, TObjArray*> >::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+  468 |   for(i = 0; i < fVertices.size(); ++i)
+      |              ~~^~~~~~~~~~~~~~~~~~
+external/Hector/H_BeamParticle.cc: In member function ‘void H_BeamParticle::computePath(const H_AbstractBeamLine*, bool)’:
+external/Hector/H_BeamParticle.cc:483:25: warning: variable ‘temp_s’ set but not used [-Wunused-but-set-variable]
+  483 |  double temp_x, temp_y, temp_s, temp_tx, temp_ty;
+      |                         ^~~~~~
+external/Hector/H_BeamParticle.cc: In member function ‘void H_BeamParticle::computePath(const H_AbstractBeamLine&, bool)’:
+external/Hector/H_BeamParticle.cc:533:25: warning: variable ‘temp_s’ set but not used [-Wunused-but-set-variable]
+  533 |  double temp_x, temp_y, temp_s, temp_tx, temp_ty;
+      |                         ^~~~~~
+external/TrackCovariance/AcceptanceClx.cc: In constructor ‘AcceptanceClx::AcceptanceClx(SolGeom*)’:
+external/TrackCovariance/AcceptanceClx.cc:206:8: warning: unused variable ‘Nrows’ [-Wunused-variable]
+  206 |  Int_t Nrows = fAcc.GetNrows();
+      |        ^~~~~
+external/TrackCovariance/AcceptanceClx.cc:207:8: warning: unused variable ‘Ncols’ [-Wunused-variable]
+  207 |  Int_t Ncols = fAcc.GetNcols();
+      |        ^~~~~
+external/TrackCovariance/ObsTrk.cc: In member function ‘TVectorD ObsTrk::GenToObsPar(TVectorD, SolGridCov*)’:
+external/TrackCovariance/ObsTrk.cc:123:11: warning: unused variable ‘minPt’ [-Wunused-variable]
+  123 |  Double_t minPt = GC->GetMinPt ();
+      |           ^~~~~
+external/TrackCovariance/ObsTrk.cc:125:11: warning: unused variable ‘maxPt’ [-Wunused-variable]
+  125 |  Double_t maxPt = GC->GetMaxPt();
+      |           ^~~~~
+external/TrackCovariance/ObsTrk.cc:127:11: warning: unused variable ‘minAn’ [-Wunused-variable]
+  127 |  Double_t minAn = GC->GetMinAng();
+      |           ^~~~~
+external/TrackCovariance/ObsTrk.cc:130:11: warning: unused variable ‘maxAn’ [-Wunused-variable]
+  130 |  Double_t maxAn = GC->GetMaxAng();
+      |           ^~~~~
+external/TrackCovariance/ObsTrk.cc:150:9: warning: unused variable ‘OK’ [-Wunused-variable]
+  150 |  Bool_t OK = Chl.Decompose();  // Choleski decomposition of normalized matrix
+      |         ^~
+external/TrackCovariance/SolGridCov.cc: In member function ‘void SolGridCov::Calc(SolGeom*)’:
+external/TrackCovariance/SolGridCov.cc:49:11: warning: unused variable ‘ipt’ [-Wunused-variable]
+   49 |     Int_t ipt = TMath::Nint(10 * pta(ip));
+      |           ^~~
+external/TrackCovariance/SolTrack.cc: In member function ‘void SolTrack::CovCalc(Bool_t, Bool_t)’:
+external/TrackCovariance/SolTrack.cc:370:13: warning: unused variable ‘phi0i’ [-Wunused-variable]
+  370 |    Double_t phi0i = phi0();
+      |             ^~~~~
+external/TrackCovariance/SolTrack.cc:372:13: warning: unused variable ‘z0i’ [-Wunused-variable]
+  372 |    Double_t z0i   = z0();
+      |             ^~~
+external/TrackCovariance/SolTrack.cc:272:8: warning: variable ‘kmh’ set but not used [-Wunused-but-set-variable]
+  272 |  Int_t kmh;        // Number of measurement layers hit
+      |        ^~~
+external/TrackCovariance/TrkUtil.cc: In member function ‘Double_t TrkUtil::TrkLen(TVectorD)’:
+external/TrackCovariance/TrkUtil.cc:266:12: warning: unused variable ‘phi0’ [-Wunused-variable]
+  266 |   Double_t phi0 = Par(1);  // Transverse direction at minimum approach
+      |            ^~~~
+external/TrackCovariance/VertexFit.cc: In member function ‘TMatrixD VertexFit::Fill_A(TVectorD, Double_t)’:
+external/TrackCovariance/VertexFit.cc:340:11: warning: unused variable ‘z0’ [-Wunused-variable]
+  340 |  Double_t z0 = par(3);
+      |           ^~
+external/TrackCovariance/VertexFit.cc: In member function ‘TVectorD VertexFit::Fill_a(TVectorD, Double_t)’:
+external/TrackCovariance/VertexFit.cc:380:11: warning: unused variable ‘D’ [-Wunused-variable]
+  380 |  Double_t D = par(0);
+      |           ^
+external/TrackCovariance/VertexFit.cc:383:11: warning: unused variable ‘z0’ [-Wunused-variable]
+  383 |  Double_t z0 = par(3);
+      |           ^~
+external/TrackCovariance/VertexFit.cc: In member function ‘TVectorD VertexFit::Fill_x0(TVectorD)’:
+external/TrackCovariance/VertexFit.cc:404:11: warning: unused variable ‘C’ [-Wunused-variable]
+  404 |  Double_t C = par(2);
+      |           ^
+external/TrackCovariance/VertexFit.cc:406:11: warning: unused variable ‘ct’ [-Wunused-variable]
+  406 |  Double_t ct = par(4);
+      |           ^~
+external/TrackCovariance/VertexFit.cc: In member function ‘TVectorD VertexFit::Fill_x(TVectorD, Double_t)’:
+external/TrackCovariance/VertexFit.cc:424:11: warning: unused variable ‘D’ [-Wunused-variable]
+  424 |  Double_t D = par(0);
+      |           ^
+external/TrackCovariance/VertexFit.cc:427:11: warning: unused variable ‘z0’ [-Wunused-variable]
+  427 |  Double_t z0 = par(3);
+      |           ^~
+modules/DecayFilter.cc: In member function ‘virtual void DecayFilter::Process()’:
+modules/DecayFilter.cc:101:10: warning: unused variable ‘hasDecayed’ [-Wunused-variable]
+  101 |   Bool_t hasDecayed = kFALSE;
+      |          ^~~~~~~~~~
+modules/DualReadoutCalorimeter.cc: In member function ‘virtual void DualReadoutCalorimeter::Process()’:
+modules/DualReadoutCalorimeter.cc:227:12: warning: unused variable ‘ecalSigma’ [-Wunused-variable]
+  227 |   Double_t ecalSigma, hcalSigma, sigma;
+      |            ^~~~~~~~~
+modules/DualReadoutCalorimeter.cc:227:23: warning: unused variable ‘hcalSigma’ [-Wunused-variable]
+  227 |   Double_t ecalSigma, hcalSigma, sigma;
+      |                       ^~~~~~~~~
+modules/DualReadoutCalorimeter.cc: In member function ‘void DualReadoutCalorimeter::FinalizeTower()’:
+modules/DualReadoutCalorimeter.cc:505:12: warning: unused variable ‘ecalNeutralEnergy’ [-Wunused-variable]
+  505 |   Double_t ecalNeutralEnergy, hcalNeutralEnergy, neutralEnergy;
+      |            ^~~~~~~~~~~~~~~~~
+modules/DualReadoutCalorimeter.cc:505:31: warning: unused variable ‘hcalNeutralEnergy’ [-Wunused-variable]
+  505 |   Double_t ecalNeutralEnergy, hcalNeutralEnergy, neutralEnergy;
+      |                               ^~~~~~~~~~~~~~~~~
+modules/DualReadoutCalorimeter.cc:508:12: warning: unused variable ‘ecalNeutralSigma’ [-Wunused-variable]
+  508 |   Double_t ecalNeutralSigma, hcalNeutralSigma, neutralSigma;
+      |            ^~~~~~~~~~~~~~~~
+modules/DualReadoutCalorimeter.cc:508:30: warning: unused variable ‘hcalNeutralSigma’ [-Wunused-variable]
+  508 |   Double_t ecalNeutralSigma, hcalNeutralSigma, neutralSigma;
+      |                              ^~~~~~~~~~~~~~~~
+modules/DualReadoutCalorimeter.cc:515:11: warning: unused variable ‘weight’ [-Wunused-variable]
+  515 |   Float_t weight, sumWeightedTime, sumWeight;
+      |           ^~~~~~
+modules/DualReadoutCalorimeter.cc:515:19: warning: unused variable ‘sumWeightedTime’ [-Wunused-variable]
+  515 |   Float_t weight, sumWeightedTime, sumWeight;
+      |                   ^~~~~~~~~~~~~~~
+modules/DualReadoutCalorimeter.cc:515:36: warning: unused variable ‘sumWeight’ [-Wunused-variable]
+  515 |   Float_t weight, sumWeightedTime, sumWeight;
+      |                                    ^~~~~~~~~
+modules/IdentificationMap.cc: In member function ‘virtual void IdentificationMap::Process()’:
+modules/IdentificationMap.cc:247:16: warning: unused variable ‘counting_sigma’ [-Wunused-variable]
+  247 |       Double_t counting_sigma = 0.02;
+      |                ^~~~~~~~~~~~~~
+modules/IdentificationMap.cc:221:14: warning: unused variable ‘probability’ [-Wunused-variable]
+  221 |     Double_t probability = 0.0;
+      |              ^~~~~~~~~~~
+modules/IdentificationMap.cc:180:32: warning: variable ‘charge’ set but not used [-Wunused-but-set-variable]
+  180 |   Int_t pdgCodeIn, pdgCodeOut, charge;
+      |                                ^~~~~~
+modules/OldCalorimeter.cc: In member function ‘virtual void OldCalorimeter::Init()’:
+modules/OldCalorimeter.cc:92:51: warning: variable ‘sizeFractions’ set but not used [-Wunused-but-set-variable]
+   92 |   Long_t i, j, k, size, sizeEtaBins, sizePhiBins, sizeFractions;
+      |                                                   ^~~~~~~~~~~~~
+modules/PdgCodeFilter.cc: In member function ‘virtual void PdgCodeFilter::Process()’:
+modules/PdgCodeFilter.cc:162:29: warning: comparison of constant ‘135’ with boolean expression is always true [-Wbool-compare]
+  162 |    if(can1 && can2 && 50<dm < 135) {
+      |                       ~~~~~~^~~~~
+modules/PdgCodeFilter.cc:162:25: warning: comparisons like ‘X<=Y<=Z’ do not have their mathematical meaning [-Wparentheses]
+  162 |    if(can1 && can2 && 50<dm < 135) {
+      |                       ~~^~~
+modules/PdgCodeFilter.cc:169:10: warning: unused variable ‘number’ [-Wunused-variable]
+  169 |    Int_t number=0;
+      |          ^~~~~~
+modules/PdgCodeFilter.cc:126:16: warning: variable ‘en’ set but not used [-Wunused-but-set-variable]
+  126 |   Double_t pt, en;
+      |                ^~
+modules/PdgCodeFilter.cc:128:12: warning: unused variable ‘pt1’ [-Wunused-variable]
+  128 |   Double_t pt1, en1, pt2, en2;
+      |            ^~~
+modules/PdgCodeFilter.cc:128:22: warning: unused variable ‘pt2’ [-Wunused-variable]
+  128 |   Double_t pt1, en1, pt2, en2;
+      |                      ^~~
+modules/PileUpJetID.cc: In member function ‘virtual void PileUpJetID::Process()’:
+modules/PileUpJetID.cc:173:26: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<std::pair<float, float> >::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+  173 |         for(int i = 0; i < constituent->ECalEnergyTimePairs.size(); i++)
+      |                        ~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+modules/RecoPuFilter.cc: In member function ‘virtual void RecoPuFilter::Init()’:
+modules/RecoPuFilter.cc:72:10: warning: unused variable ‘i’ [-Wunused-variable]
+   72 |   Size_t i, size;
+      |          ^
+modules/RecoPuFilter.cc:72:13: warning: unused variable ‘size’ [-Wunused-variable]
+   72 |   Size_t i, size;
+      |             ^~~~
+modules/RecoPuFilter.cc: In member function ‘virtual void RecoPuFilter::Process()’:
+modules/RecoPuFilter.cc:94:9: warning: unused variable ‘pdgCode’ [-Wunused-variable]
+   94 |   Int_t pdgCode;
+      |         ^~~~~~~
+modules/RecoPuFilter.cc:95:10: warning: unused variable ‘pass’ [-Wunused-variable]
+   95 |   Bool_t pass;
+      |          ^~~~
+modules/RecoPuFilter.cc:96:12: warning: unused variable ‘pt’ [-Wunused-variable]
+   96 |   Double_t pt;
+      |            ^~
+modules/TimeOfFlight.cc: In member function ‘virtual void TimeOfFlight::Process()’:
+modules/TimeOfFlight.cc:98:30: warning: variable ‘mass’ set but not used [-Wunused-but-set-variable]
+   98 |   Double_t l, tof, beta, p,  mass;
+      |                              ^~~~
+In file included from modules/TimeSmearing.cc:27:
+./modules/TimeSmearing.h: In constructor ‘TimeSmearing::TimeSmearing()’:
+./modules/TimeSmearing.h:51:14: warning: ‘TimeSmearing::fItInputArray’ will be initialized after [-Wreorder]
+   51 |   TIterator *fItInputArray; //!
+      |              ^~~~~~~~~~~~~
+./modules/TimeSmearing.h:48:19: warning:   ‘DelphesFormula* TimeSmearing::fResolutionFormula’ [-Wreorder]
+   48 |   DelphesFormula *fResolutionFormula;
+      |                   ^~~~~~~~~~~~~~~~~~
+modules/TimeSmearing.cc:53:1: warning:   when initialized here [-Wreorder]
+   53 | TimeSmearing::TimeSmearing() :
+      | ^~~~~~~~~~~~
+modules/TrackCountingTauTagging.cc: In member function ‘virtual void TrackCountingTauTagging::Process()’:
+modules/TrackCountingTauTagging.cc:209:9: warning: variable ‘pdgCode’ set but not used [-Wunused-but-set-variable]
+  209 |   Int_t pdgCode, charge, i, identifier;
+      |         ^~~~~~~
+modules/TreeWriter.cc: In member function ‘void TreeWriter::ProcessTracks(ExRootTreeBranch*, TObjArray*)’:
+modules/TreeWriter.cc:325:48: warning: variable ‘rapidity’ set but not used [-Wunused-but-set-variable]
+  325 |   Double_t pt, signz, cosTheta, costheta, eta, rapidity, p, ctgTheta, phi, m;
+      |                                                ^~~~~~~~
+modules/TreeWriter.cc: In member function ‘void TreeWriter::ProcessTowers(ExRootTreeBranch*, TObjArray*)’:
+modules/TreeWriter.cc:450:39: warning: variable ‘rapidity’ set but not used [-Wunused-but-set-variable]
+  450 |   Double_t pt, signPz, cosTheta, eta, rapidity;
+      |                                       ^~~~~~~~
+modules/TreeWriter.cc: In member function ‘void TreeWriter::ProcessParticleFlowCandidates(ExRootTreeBranch*, TObjArray*)’:
+modules/TreeWriter.cc:497:14: warning: variable ‘particle’ set but not used [-Wunused-but-set-variable]
+  497 |   Candidate *particle = 0;
+      |              ^~~~~~~~
+modules/TreeWriter.cc:499:41: warning: variable ‘rapidity’ set but not used [-Wunused-but-set-variable]
+  499 |   Double_t e, pt, signz, cosTheta, eta, rapidity, p, ctgTheta, phi, m;
+      |                                         ^~~~~~~~
+modules/TreeWriter.cc: In member function ‘void TreeWriter::ProcessPhotons(ExRootTreeBranch*, TObjArray*)’:
+modules/TreeWriter.cc:626:39: warning: variable ‘rapidity’ set but not used [-Wunused-but-set-variable]
+  626 |   Double_t pt, signPz, cosTheta, eta, rapidity,CosTheta;
+      |                                       ^~~~~~~~
+modules/TreeWriter.cc: In member function ‘void TreeWriter::ProcessElectrons(ExRootTreeBranch*, TObjArray*)’:
+modules/TreeWriter.cc:683:39: warning: variable ‘rapidity’ set but not used [-Wunused-but-set-variable]
+  683 |   Double_t pt, signPz, cosTheta, eta, rapidity;
+      |                                       ^~~~~~~~
+modules/TreeWriter.cc: In member function ‘void TreeWriter::ProcessMuons(ExRootTreeBranch*, TObjArray*)’:
+modules/TreeWriter.cc:738:39: warning: variable ‘rapidity’ set but not used [-Wunused-but-set-variable]
+  738 |   Double_t pt, signPz, cosTheta, eta, rapidity;
+      |                                       ^~~~~~~~
+modules/TreeWriter.cc: In member function ‘void TreeWriter::ProcessJets(ExRootTreeBranch*, TObjArray*)’:
+modules/TreeWriter.cc:796:39: warning: variable ‘rapidity’ set but not used [-Wunused-but-set-variable]
+  796 |   Double_t pt, signPz, cosTheta, eta, rapidity;
+      |                                       ^~~~~~~~
+modules/VertexFinder.cc:85:15: warning: ‘Bool_t secondAscending(std::pair<unsigned int, double>, std::pair<unsigned int, double>)’ defined but not used [-Wunused-function]
+   85 | static Bool_t secondAscending(pair<UInt_t, Double_t> pair0, pair<UInt_t, Double_t> pair1)
+      |               ^~~~~~~~~~~~~~~
+modules/VertexFinderDA4D.cc: In member function ‘std::vector<Candidate*> VertexFinderDA4D::vertices()’:
+modules/VertexFinderDA4D.cc:359:22: warning: variable ‘l’ set but not used [-Wunused-but-set-variable]
+  359 |   Double_t z, dz, t, l, dt, d0, d0error;
+      |                      ^
+modules/VertexFinderDA4D.cc: In function ‘void dump(double, const std::vector<vertex_t>&, const std::vector<track_t>&)’:
+modules/VertexFinderDA4D.cc:699:12: warning: unused variable ‘tz’ [-Wunused-variable]
+  699 |     double tz = tks[i].z;
+      |            ^~
+modules/VertexFinderDA4D.cc:700:12: warning: unused variable ‘tt’ [-Wunused-variable]
+  700 |     double tt = tks[i].t;
+      |            ^~
+external/tcl/tclCompile.c: In function ‘TclObjIndexForString’:
+external/tcl/tclCompile.c:6513:17: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+ 6513 |      objIndex = (int) Tcl_GetHashValue(hPtr);
+      |                 ^
+In file included from external/tcl/tclInt.h:33,
+                 from external/tcl/tclCompile.c:17:
+external/tcl/tcl.h:820:55: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
+  820 | #define Tcl_SetHashValue(h, value) ((h)->clientData = (ClientData) (value))
+      |                                                       ^
+external/tcl/tclCompile.c:6554:2: note: in expansion of macro ‘Tcl_SetHashValue’
+ 6554 |  Tcl_SetHashValue(hPtr, objIndex);
+      |  ^~~~~~~~~~~~~~~~
+In file included from external/tcl/tclExecute.c:15:
+external/tcl/tclExecute.c: In function ‘TclExecuteByteCode’:
+external/tcl/tclInt.h:1752:21: warning: the address of ‘length’ will always evaluate as ‘true’ [-Waddress]
+ 1752 |         ((lengthPtr)? \
+      |                     ^
+external/tcl/tclExecute.c:565:15: note: in expansion of macro ‘TclGetStringFromObj’
+  565 |       bytes = TclGetStringFromObj(valuePtr, &length);
+      |               ^~~~~~~~~~~~~~~~~~~
+external/tcl/tclInt.h:1752:21: warning: the address of ‘length’ will always evaluate as ‘true’ [-Waddress]
+ 1752 |         ((lengthPtr)? \
+      |                     ^
+external/tcl/tclExecute.c:583:12: note: in expansion of macro ‘TclGetStringFromObj’
+  583 |    bytes = TclGetStringFromObj(valuePtr, &length);
+      |            ^~~~~~~~~~~~~~~~~~~
+external/tcl/tclInt.h:1752:21: warning: the address of ‘length’ will always evaluate as ‘true’ [-Waddress]
+ 1752 |         ((lengthPtr)? \
+      |                     ^
+external/tcl/tclExecute.c:1516:12: note: in expansion of macro ‘TclGetStringFromObj’
+ 1516 |       s1 = TclGetStringFromObj(valuePtr, &length);
+      |            ^~~~~~~~~~~~~~~~~~~
+external/tcl/tclInt.h:1752:21: warning: the address of ‘length’ will always evaluate as ‘true’ [-Waddress]
+ 1752 |         ((lengthPtr)? \
+      |                     ^
+external/tcl/tclExecute.c:1517:12: note: in expansion of macro ‘TclGetStringFromObj’
+ 1517 |       s2 = TclGetStringFromObj(value2Ptr, &length);
+      |            ^~~~~~~~~~~~~~~~~~~
+external/tcl/tclExecute.c: At top level:
+external/tcl/tclExecute.c:190:14: warning: ‘PrintByteCodeInfo’ declared ‘static’ but never defined [-Wunused-function]
+  190 | static void  PrintByteCodeInfo _ANSI_ARGS_((ByteCode *codePtr));
+      |              ^~~~~~~~~~~~~~~~~
+external/tcl/tclIndexObj.c: In function ‘Tcl_GetIndexFromObj’:
+external/tcl/tclIndexObj.c:89:14: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+   89 |  *indexPtr = (int) objPtr->internalRep.twoPtrValue.ptr2;
+      |              ^
+external/tcl/tclIndexObj.c:131:44: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
+  131 |     objPtr->internalRep.twoPtrValue.ptr2 = (VOID *) index;
+      |                                            ^
+external/tcl/tclIndexObj.c: In function ‘Tcl_WrongNumArgs’:
+external/tcl/tclIndexObj.c:293:16: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+  293 |       tablePtr[(int) objv[i]->internalRep.twoPtrValue.ptr2],
+      |                ^
+In file included from external/tcl/tclListObj.c:16:
+external/tcl/tclListObj.c: In function ‘SetListFromAny’:
+external/tcl/tclInt.h:1752:21: warning: the address of ‘length’ will always evaluate as ‘true’ [-Waddress]
+ 1752 |         ((lengthPtr)? \
+      |                     ^
+external/tcl/tclListObj.c:791:14: note: in expansion of macro ‘TclGetStringFromObj’
+  791 |     string = TclGetStringFromObj(objPtr, &length);
+      |              ^~~~~~~~~~~~~~~~~~~
+external/tcl/tclObj.c: In function ‘TclAllocateFreeObjects’:
+external/tcl/tclObj.c:461:3: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+  461 |  ((int)(&(tmp[1])) - (int)(&(tmp[0])));
+      |   ^
+external/tcl/tclObj.c:461:22: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+  461 |  ((int)(&(tmp[1])) - (int)(&(tmp[0])));
+      |                      ^
+In file included from external/tcl/tclObj.c:15:
+external/tcl/tclObj.c: In function ‘SetBooleanFromAny’:
+external/tcl/tclInt.h:1752:21: warning: the address of ‘length’ will always evaluate as ‘true’ [-Waddress]
+ 1752 |         ((lengthPtr)? \
+      |                     ^
+external/tcl/tclObj.c:828:14: note: in expansion of macro ‘TclGetStringFromObj’
+  828 |     string = TclGetStringFromObj(objPtr, &length);
+      |              ^~~~~~~~~~~~~~~~~~~
+external/tcl/tclObj.c: In function ‘SetDoubleFromAny’:
+external/tcl/tclInt.h:1752:21: warning: the address of ‘length’ will always evaluate as ‘true’ [-Waddress]
+ 1752 |         ((lengthPtr)? \
+      |                     ^
+external/tcl/tclObj.c:1129:14: note: in expansion of macro ‘TclGetStringFromObj’
+ 1129 |     string = TclGetStringFromObj(objPtr, &length);
+      |              ^~~~~~~~~~~~~~~~~~~
+external/tcl/tclObj.c: In function ‘SetIntFromAny’:
+external/tcl/tclInt.h:1752:21: warning: the address of ‘length’ will always evaluate as ‘true’ [-Waddress]
+ 1752 |         ((lengthPtr)? \
+      |                     ^
+external/tcl/tclObj.c:1419:14: note: in expansion of macro ‘TclGetStringFromObj’
+ 1419 |     string = TclGetStringFromObj(objPtr, &length);
+      |              ^~~~~~~~~~~~~~~~~~~
+external/tcl/tclProc.c: In function ‘TclObjInterpProc’:
+external/tcl/tclProc.c:833:43: warning: unused variable ‘length’ [-Wunused-variable]
+  833 |     int nameLen, localCt, numArgs, argCt, length, i, result;
+      |                                           ^~~~~~
+external/tcl/tclProc.c:832:22: warning: unused variable ‘bytes’ [-Wunused-variable]
+  832 |     char *procName, *bytes;
+      |                      ^~~~~
+external/tcl/tclProc.c: In function ‘TclCreateProc’:
+external/tcl/tclProc.c:347:40: warning: ‘localPtr’ may be used uninitialized in this function [-Wmaybe-uninitialized]
+  347 |                     || (strcmp(localPtr->name, fieldValues[0]))
+      |                                        ^~
+In file included from external/tcl/tclInt.h:33,
+                 from external/tcl/tclStringObj.c:20:
+external/tcl/tclStringObj.c: In function ‘Tcl_AppendStringsToObj’:
+external/tcl/tcl.h:156:69: warning: right-hand operand of comma expression has no effect [-Wunused-value]
+  156 | #   define TCL_VARARGS_START(type, name, list) (va_start(list, name), name)
+      |                                                ~~~~~~~~~~~~~~~~~~~~~^~~~~~~
+external/tcl/tclStringObj.c:337:5: note: in expansion of macro ‘TCL_VARARGS_START’
+  337 |     TCL_VARARGS_START(Tcl_Obj *,arg1,argList);
+      |     ^~~~~~~~~~~~~~~~~
+In file included from external/tcl/tclUtil.c:16:
+external/tcl/tclUtil.c: In function ‘Tcl_ConcatObj’:
+external/tcl/tclInt.h:1752:21: warning: the address of ‘length’ will always evaluate as ‘true’ [-Waddress]
+ 1752 |         ((lengthPtr)? \
+      |                     ^
+external/tcl/tclUtil.c:980:12: note: in expansion of macro ‘TclGetStringFromObj’
+  980 |  element = TclGetStringFromObj(objPtr, &length);
+      |            ^~~~~~~~~~~~~~~~~~~
+external/tcl/tclInt.h:1752:21: warning: the address of ‘elemLength’ will always evaluate as ‘true’ [-Waddress]
+ 1752 |         ((lengthPtr)? \
+      |                     ^
+external/tcl/tclUtil.c:1010:16: note: in expansion of macro ‘TclGetStringFromObj’
+ 1010 |      element = TclGetStringFromObj(objPtr, &elemLength);
+      |                ^~~~~~~~~~~~~~~~~~~
+In file included from external/tcl/tclInt.h:33,
+                 from external/tcl/tclUtil.c:16:
+external/tcl/tclUtil.c: In function ‘Tcl_AppendResult’:
+external/tcl/tcl.h:156:69: warning: right-hand operand of comma expression has no effect [-Wunused-value]
+  156 | #   define TCL_VARARGS_START(type, name, list) (va_start(list, name), name)
+      |                                                ~~~~~~~~~~~~~~~~~~~~~^~~~~~~
+external/tcl/tclUtil.c:1483:5: note: in expansion of macro ‘TCL_VARARGS_START’
+ 1483 |     TCL_VARARGS_START(Tcl_Interp *,arg1,argList);
+      |     ^~~~~~~~~~~~~~~~~
+In file included from external/tcl/tclUtil.c:16:
+external/tcl/tclUtil.c: In function ‘TclGetIntForIndex’:
+external/tcl/tclInt.h:1752:21: warning: the address of ‘length’ will always evaluate as ‘true’ [-Waddress]
+ 1752 |         ((lengthPtr)? \
+      |                     ^
+external/tcl/tclUtil.c:2578:13: note: in expansion of macro ‘TclGetStringFromObj’
+ 2578 |     bytes = TclGetStringFromObj(objPtr, &length);
+      |             ^~~~~~~~~~~~~~~~~~~
+In file included from external/tcl/tclVar.c:20:
+external/tcl/tclVar.c: In function ‘Tcl_LappendObjCmd’:
+external/tcl/tclInt.h:1752:21: warning: the address of ‘nameBytes’ will always evaluate as ‘true’ [-Waddress]
+ 1752 |         ((lengthPtr)? \
+      |                     ^
+external/tcl/tclVar.c:2676:13: note: in expansion of macro ‘TclGetStringFromObj’
+ 2676 |      name = TclGetStringFromObj(objv[1], &nameBytes);
+      |             ^~~~~~~~~~~~~~~~~~~
+make: Circular external/fastjet/JetDefinition.hh <- external/fastjet/ClusterSequence.hh dependency dropped.
+modules/FastJetFinder.cc: In member function ‘virtual void FastJetFinder::Process()’:
+modules/FastJetFinder.cc:388:20: warning: catching polymorphic type ‘class fastjet::Error’ by value [-Wcatch-value=]
+  388 |     catch(fastjet::Error)
+      |                    ^~~~~
+converters/root2lhco.cpp: In member function ‘void LHCOWriter::AnalyseTauJets()’:
+converters/root2lhco.cpp:342:10: warning: unused variable ‘track’ [-Wunused-variable]
+  342 |   Track *track;
+      |          ^~~~~
+In file included from examples/Example1.cpp:50:
+examples/Example1.C: In function ‘void Example1(const char*)’:
+examples/Example1.C:32:17: warning: unused variable ‘branchEvent’ [-Wunused-variable]
+   32 |   TClonesArray *branchEvent = treeReader->UseBranch("Event");
+      |                 ^~~~~~~~~~~
+validation/DelphesValidation.cpp: In function ‘void DelphesValidation(const char*, const char*, const char*, const char*, const char*, const char*, const char*, const char*, const char*, const char*, const char*)’:
+validation/DelphesValidation.cpp:1498:17: warning: unused variable ‘branchParticleBJet’ [-Wunused-variable]
+ 1498 |   TClonesArray *branchParticleBJet = treeReaderBJet->UseBranch("Particle");
+      |                 ^~~~~~~~~~~~~~~~~~
+validation/DelphesValidation.cpp:1501:17: warning: unused variable ‘branchParticleCJet’ [-Wunused-variable]
+ 1501 |   TClonesArray *branchParticleCJet = treeReaderCJet->UseBranch("Particle");
+      |                 ^~~~~~~~~~~~~~~~~~

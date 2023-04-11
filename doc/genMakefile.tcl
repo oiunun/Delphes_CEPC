@@ -37,14 +37,14 @@ proc dependencies {fileName firstLine {force 1} {command {}}} {
     foreach file $list {puts -nonewline $suffix$file}
     if {$command != {}} {
       puts {}
-      puts -nonewline $command
+      puts $command
     }
     puts {}
   } elseif {$force} {
     puts -nonewline $firstLine
     if {$command != {}} {
       puts {}
-      puts -nonewline $command
+      puts $command
     }
     puts {}
   }
@@ -72,17 +72,21 @@ proc dictDeps {dictPrefix args} {
     dependencies $fileName "$dictName$srcSuf:$suffix$fileName"
 
     puts -nonewline $dictName$pcmSuf:$suffix
-    puts $dictName$srcSuf
+    puts -nonewline $dictName$srcSuf
+    puts {}
 
     puts -nonewline [file tail $dictName$pcmSuf]:$suffix
-    puts $dictName$pcmSuf
+    puts -nonewline $dictName$pcmSuf
+    puts {}
   }
 
   puts -nonewline "${dictPrefix}_OBJ += $suffix"
   puts [join $dictObjFiles $suffix]
+  puts {}
 
   puts -nonewline "${dictPrefix}_PCM += $suffix"
   puts [join $dictPcmFiles $suffix]
+  puts {}
 }
 
 proc sourceDeps {srcPrefix args} {
@@ -112,11 +116,13 @@ proc sourceDeps {srcPrefix args} {
 
   puts -nonewline "${srcPrefix}_OBJ += $suffix"
   puts [join $srcObjFiles $suffix]
+  puts {}
 
   puts {ifeq ($(HAS_PYTHIA8),true)}
   puts -nonewline "${srcPrefix}_OBJ += $suffix"
   puts [join $srcObjFilesPythia8 $suffix]
   puts {endif}
+  puts {}
 }
 
 proc tclDeps {} {
@@ -140,6 +146,7 @@ proc tclDeps {} {
 
   puts -nonewline "TCL_OBJ += $suffix"
   puts [join $srcObjFiles $suffix]
+  puts {}
 }
 
 proc executableDeps {args} {
@@ -159,6 +166,7 @@ proc executableDeps {args} {
     lappend exeObjFiles $exeObjName$objSuf
 
     puts "$exeName$exeSuf:$suffix$exeObjName$objSuf"
+    puts {}
 
     dependencies $fileName "$exeObjName$objSuf:$suffix$fileName"
   }
@@ -166,10 +174,12 @@ proc executableDeps {args} {
   if [info exists exeFiles] {
     puts -nonewline "EXECUTABLE += $suffix"
     puts [join $exeFiles $suffix]
+    puts {}
   }
   if [info exists exeObjFiles] {
     puts -nonewline "EXECUTABLE_OBJ += $suffix"
     puts [join $exeObjFiles $suffix]
+    puts {}
   }
 }
 
@@ -198,8 +208,8 @@ SrcSuf = cc
 PcmSuf = _rdict.pcm
 
 CXXFLAGS += $(ROOTCFLAGS) -Wno-write-strings -D_FILE_OFFSET_BITS=64 -DDROP_CGAL -I. -Iexternal -Iexternal/tcl
-DELPHES_LIBS = $(shell $(RC) --libs) -lEG
-DISPLAY_LIBS = $(shell $(RC) --evelibs) -lGuiHtml
+DELPHES_LIBS = $(shell $(RC) --libs) -lEG $(SYSLIBS)
+DISPLAY_LIBS = $(shell $(RC) --evelibs) -lGuiHtml $(SYSLIBS)
 
 ifneq ($(CMSSW_FWLITE_INCLUDE_PATH),)
 HAS_CMSSW = true
@@ -276,6 +286,7 @@ DISTDIR = Delphes-$(VERSION)
 DISTTAR = $(DISTDIR).tar.gz
 
 all:
+
 }
 
 executableDeps {converters/*.cpp} {examples/*.cpp} {validation/*.cpp}
@@ -285,19 +296,23 @@ executableDeps {readers/DelphesHepMC2.cpp} {readers/DelphesHepMC3.cpp} {readers/
 puts {ifeq ($(HAS_CMSSW),true)}
 executableDeps {readers/DelphesCMSFWLite.cpp}
 puts {endif}
+puts {}
 
 puts {ifeq ($(HAS_PROMC),true)}
 executableDeps {readers/DelphesProMC.cpp}
 puts {endif}
+puts {}
 
 puts {ifeq ($(HAS_PROIO),true)}
 executableDeps {readers/DelphesProIO.cpp}
 puts {endif}
+puts {}
 
 puts {ifeq ($(HAS_PYTHIA8),true)}
 executableDeps {readers/DelphesPythia8.cpp}
 dictDeps {DELPHES_DICT} {modules/Pythia8LinkDef.h}
 puts {endif}
+puts {}
 
 dictDeps {DELPHES_DICT} {classes/ClassesLinkDef.h} {modules/ModulesLinkDef.h} {external/ExRootAnalysis/ExRootAnalysisLinkDef.h}
 
@@ -316,6 +331,7 @@ tclDeps
 headerDeps
 
 puts {
+
 ###
 
 ifeq ($(ROOT_MAJOR),6)
@@ -458,4 +474,5 @@ $(EXECUTABLE): %$(ExeSuf): $(DELPHES_DICT_OBJ) $(FASTJET_DICT_OBJ) $(DELPHES_OBJ
 	@$(LD) $(LDFLAGS) $^ $(DELPHES_LIBS) $(OutPutOpt)$@
 
 ###
+
 }

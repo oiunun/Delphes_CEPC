@@ -16,11 +16,10 @@ using namespace std;
 SolGridCov::SolGridCov()
 {
   // Define pt-polar angle grid
-  fNpt = 28;
+  fNpt = 22;
   fPta.ResizeTo(fNpt);
   Double_t p[] = { 0.1, 0.2, 0.5, 0.7, 1., 2., 3., 4., 6., 8., 10., 15.,
-                   20., 25., 30., 40., 50., 60., 80., 100., 150., 200.,
-		   500., 1000., 2000., 10000., 20000., 50000. };
+                   20., 25., 30., 40., 50., 60., 80., 100., 150., 200. };
   for (Int_t ip = 0; ip < fNpt; ip++) fPta(ip) = p[ip];
 
   fNang = 13;
@@ -103,31 +102,8 @@ Bool_t SolGridCov::IsAccepted(TVector3 p)
 	//
 	return Accept;
 }
-//
-// Detailed acceptance check
-//
-Bool_t SolGridCov::IsAccepted(TVector3 x, TVector3 p, SolGeom* G)
-{
-	Bool_t Accept = kFALSE;
-	//
-	// Check if track origin is inside beampipe and betwen the first disks
-	//
-	Double_t Rin = G->GetRmin();
-	Double_t ZinPos = G->GetZminPos();
-	Double_t ZinNeg = G->GetZminNeg();
-	Bool_t inside = TrkUtil::IsInside(x, Rin, ZinNeg, ZinPos); // Check if in inner box
-	if (inside) Accept = IsAccepted(p);
-	else
-	{
-		SolTrack* trk = new SolTrack(x, p, G);
-		if (trk->nmHit() >= fNminHits)Accept = kTRUE;
-		delete trk;
-	}
-	//
-	return Accept;
-}
 
-//
+
 // Find bin in grid
 Int_t SolGridCov::GetMinIndex(Double_t xval, Int_t N, TVectorD x)
 {
@@ -190,14 +166,8 @@ TMatrixDSym SolGridCov::GetCov(Double_t pt, Double_t ang)
   if (minPt == fNpt - 1)minPt = fNpt - 2;
   Double_t dpt = fPta(minPt + 1) - fPta(minPt);
   // Put ang in 0-90 range
-  ang = TMath::Abs(ang);	// Force positive polar angle
-  if(ang > 180.){
-	std::cout<<"SolGridCov::GetCov: illegal polar angle "<<ang<<std::endl;
-	TMatrixDSym CvZero(5); CvZero.Zero();
-	return CvZero;
-  }
-  if(ang > 90.)ang = 180.-ang;	// Assume left right symmetry
-  //
+  ang = TMath::Abs(ang);
+  while (ang > 90.)ang -= 90.;  // Needs to be fixed
   Int_t minAng = GetMinIndex(ang, fNang, fAnga);
   if (minAng == -1)minAng = 0;
   if (minAng == fNang - 1)minAng = fNang - 2;
@@ -222,7 +192,7 @@ TMatrixDSym SolGridCov::GetCov(Double_t pt, Double_t ang)
   TDecompChol Chl(CvN);
   if (!Chl.Decompose())
   {
-    std::cout << "SolGridCov::GetCov: Interpolated matrix not positive definite. Recovering ...." << std::endl;
+    cout << "SolGridCov::GetCov: Interpolated matrix not positive definite. Recovering ...." << endl;
     TMatrixDSym rCv = MakePosDef(CvN); CvN = rCv;
     TMatrixDSym DCv(5); DCv.Zero();
     for (Int_t id = 0; id < 5; id++) DCv(id, id) = TMath::Sqrt(Cv(id, id));

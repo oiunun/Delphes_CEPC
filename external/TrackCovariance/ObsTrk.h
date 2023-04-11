@@ -5,7 +5,6 @@
 #include <TVectorD.h>
 #include <TMatrixDSym.h>
 #include <TDecompChol.h>
-#include "SolGeom.h"
 #include "TrkUtil.h"
 #include "SolGridCov.h"
 //
@@ -23,8 +22,7 @@ class ObsTrk: public TrkUtil
 	//
 private:	
 	Double_t fB;					// Solenoid magnetic field
-	SolGridCov* fGC;				// Covariance matrix grid
-	SolGeom*    fG;					// Tracker geometry
+	SolGridCov *fGC;				// Covariance matrix grid
 	Double_t fGenQ;					// Generated track charge
 	Double_t fObsQ;					// Observed  track charge
 	TVector3 fGenX;					// Generated track origin (x,y,z)
@@ -45,24 +43,17 @@ private:
 									// (D, z0, phi0, theta, q/p, time)
 	TMatrixDSym fCovILC;			// Covariance of track parameters in ILC format
 									// (d0, phi0, w, z0, tan(lambda))
-	TVector3 fXfirst;			// x,y,z of first track hit
-	Bool_t fEflag;				// Electron flag
-	Double_t fEscale;			// Electron resolution degradation
-	Bool_t fObsDone;			// Flags completion of parameter generation
 	//
 	// Service routines
 	//
-	void FillGen();				// Fill generated arrays
-	void FillObs();				// Fill observed arrays
-	TVectorD GenToObsPar(TVectorD gPar);	// Extract observed parameters
-	TMatrixDSym CovCalc(TVectorD gPar);	// Calculate covariance matrix
+	TVectorD GenToObsPar(TVectorD gPar, SolGridCov* GC);
 	//
 public:
 	//
 	// Constructors
 	// x(3) track origin, p(3) track momentum at origin, Q charge, B magnetic field in Tesla
-	ObsTrk(TVector3 x, TVector3 p, Double_t Q, SolGridCov *GC, SolGeom *G);	// Initialize and generate smeared 
-	ObsTrk(Double_t *x, Double_t *p, Double_t Q, SolGridCov* GC, SolGeom *G);	// Initialize and generate smeared track
+	ObsTrk(TVector3 x, TVector3 p, Double_t Q, Double_t B, SolGridCov *GC);	// Initialize and generate smeared 
+	ObsTrk(Double_t *x, Double_t *p, Double_t Q, Double_t B, SolGridCov* GC);	// Initialize and generate smeared track
 	// Destructor
 	~ObsTrk();
 	//
@@ -80,34 +71,23 @@ public:
 	TVectorD GetGenParACTS()	{ return fGenParACTS; }
 	// d0, phi0, w, z0, tan(lambda)
 	TVectorD GetGenParILC()	{ return fGenParILC; }
-	//
 	// Observed level X, P, Q
-	Double_t GetObsQ()	{ if(!fObsDone) FillObs();
-				  return fObsQ; }
-	TVector3 GetObsX()	{ if(!fObsDone) FillObs();
-				  return fObsX; }
-	TVector3 GetObsP()	{ if(!fObsDone) FillObs();
-				  return fObsP; }
+	Double_t GetObsQ()	{ return fObsQ; }
+	TVector3 GetObsX()	{ return fObsX; }
+	TVector3 GetObsP()	{ return fObsP; }
 	// D, phi0, C, z0, cot(th)
-	TVectorD GetObsPar()	{ if(!fObsDone) FillObs();
-				  return fObsPar; }		// in meters
-	TVectorD GetObsParMm()	{ if(!fObsDone) FillObs();
-				  return fObsParMm; }		// In mm
+	TVectorD GetObsPar()	{ return fObsPar; }		// in meters
+	TVectorD GetObsParMm()	{ return fObsParMm; }	// In mm
 	// D, z0, phi0, theta, q/p, time
-	TVectorD GetObsParACTS(){ if(!fObsDone) FillObs();
-				  return fObsParACTS; }
+	TVectorD GetObsParACTS()	{ return fObsParACTS; }
 	// d0, phi0, w, z0, tan(lambda)
-	TVectorD GetObsParILC()	{ if(!fObsDone) FillObs();
-				  return fObsParILC; }
+	TVectorD GetObsParILC()	{ return fObsParILC; }
 	// Covariances
 	TMatrixDSym GetCov()	{ return fCov; }	// in meters
 	TMatrixDSym GetCovMm()	{ return fCov; }	// in mm
 	TMatrixDSym GetCovACTS(){ return fCovACTS; }
-	TMatrixDSym GetCovILC() { return fCovILC; }
-	// First hit
-	TVector3 GetFirstHit()  { return fXfirst; }
-	// Set resolution degradation scale
-	void SetScale(Double_t scale);
+	TMatrixDSym GetCovILC(){ return fCovILC; }
+	//
 };
 
 #endif

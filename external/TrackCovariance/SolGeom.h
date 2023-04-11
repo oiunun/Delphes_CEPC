@@ -5,9 +5,6 @@
 #include <TString.h>
 
 // Class to create geometry for solenoid geometry
-// Simplified implementations with cylindrical and disk layers
-//
-// Author: F. Bedeschi, INFN - Pisa
 
 class SolGeom{
   //
@@ -39,12 +36,6 @@ private:
   Double_t *fsgLayU; // Resolution Upper side (meters) - 0 = no measurement
   Double_t *fsgLayL; // Resolution Lower side (meters) - 0 = no measurement
   Bool_t   *fflLay;  // measurement flag = T, scattering only = F
-//
-//
-  Double_t fRmin;	// Radius of first barrel layer
-  Double_t fZminPos;	// Z of first disk in positive direction
-  Double_t fZminNeg;	// Z of first disk in negative direction
-  void SetMinBoundaries();	// define inner box for fast simulation
 
 public:
   SolGeom();
@@ -69,12 +60,6 @@ public:
   Double_t lSgU(Int_t nlayer)      { return fsgLayU[nlayer]; }
   Double_t lSgL(Int_t nlayer)      { return fsgLayL[nlayer]; }
   Bool_t   isMeasure(Int_t nlayer) { return fflLay[nlayer]; }
-  //
-  // Define cylindrical box to use for fast simulation
-  //
-  Double_t GetRmin() { return fRmin; }
-  Double_t GetZminPos() { return fZminPos; }
-  Double_t GetZminNeg() { return fZminNeg; }
 };
 
 #endif

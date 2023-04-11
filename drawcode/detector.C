@@ -158,4 +158,5 @@ void detector(){
 
   // g->Draw();
   c->Print("detector/detector_28.png");
+  c->Print("detector/detector.pdf");
 }

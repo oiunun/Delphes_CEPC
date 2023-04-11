@@ -1,5 +1,6 @@
 #include <TVector3.h>
 #include "AcceptanceClx.h"
+#include <iostream>
 //
 // Pt splitting routine
 //
@@ -57,14 +58,13 @@ AcceptanceClx::AcceptanceClx(SolGeom* InGeo)
 {
 	// Initializations
 	//
-	//cout << "Entered constructor of AccpeptanceClx" << endl;
+	//std::cout << "Entered constructor of AccpeptanceClx" << std::endl;
 	// Setup grid
 	// Start grid parameters
 	//
 	// Pt nodes
-	const Int_t NpPtInp = 10;
-	Float_t PtInit[NpPtInp] = { 0., 1., 10., 100., 250.,
-		 		   500., 1000., 2000., 10000, 50000. };
+	const Int_t NpPtInp = 5;
+	Float_t PtInit[NpPtInp] = { 0., 1., 10., 100., 250. };
 	TVectorF Pta(NpPtInp, PtInit);
 	Int_t NpPt = Pta.GetNrows();	// Nr. of starting pt points
 	// Theta nodes
@@ -73,7 +73,7 @@ AcceptanceClx::AcceptanceClx(SolGeom* InGeo)
 	130.,140.,150.,160.,170.,175., 180. };
 	TVectorF Tha(NpThInp, ThInit);
 	Int_t NpTh = Tha.GetNrows();	// Nr. of starting theta points
-	//cout << "AcceptanceClv:: Pta and Tha arrays defined" << endl;
+	//std::cout << "AcceptanceClv:: Pta and Tha arrays defined" << std::endl;
 	//
 	// Grid splitting parameters
 	Float_t dPtMin = 0.2;		// Grid Pt resolution (GeV)
@@ -127,9 +127,12 @@ AcceptanceClx::AcceptanceClx(SolGeom* InGeo)
 				//
 				// Pt split
 				if (dPt > dPtMin && dAp > dAmin && Nsplits < MaxSplits) {
+					//std::cout << "Pt(" << ipt << ") = " << Pta(ipt) << ", dAp = " << dAp << std::endl;
 					NsplitCnt++;	// Total splits counter
 					Nsplits++;	// Increase splits/cycle
-					NpPt++;		// Increase #pt points 
+					NpPt++;		// Increase #pt points
+					//std::cout << "New pt split: dAp = " << dAp << ", dPt = " << dPt <<
+					//	", Nsplits = " << Nsplits << ", NpPt = " << NpPt << std::endl;
 					Float_t newPt = 0.5 * (Pta(ipt + 1) + Pta(ipt));
 					VecInsert(ipt, newPt, Pta);
 					TVectorF AccPt(NpTh);
@@ -152,10 +155,12 @@ AcceptanceClx::AcceptanceClx(SolGeom* InGeo)
 				//
 				// Theta split
 				if (dTh > dThMin && dAt > dAmin && Nsplits < MaxSplits) {
-					//cout << "Th(" << ith << ") = " << Tha(ith) << ", dAt = " << dAt << endl;
+					//std::cout << "Th(" << ith << ") = " << Tha(ith) << ", dAt = " << dAt << std::endl;
 					NsplitCnt++;	// Total splits counter
 					Nsplits++;	// Increase splits
-					NpTh++;		// Increase #pt points 
+					NpTh++;		// Increase #pt points
+					//std::cout << "New th split: dAt = " << dAt << ", dTh = " << dTh <<
+					//	", Nsplits = " << Nsplits << ", NpTh = " << NpTh << std::endl;
 					Float_t newTh = 0.5 * (Tha(ith + 1) + Tha(ith));
 					VecInsert(ith, newTh, Tha);
 					TVectorF AccTh(NpPt);
@@ -196,10 +201,14 @@ AcceptanceClx::AcceptanceClx(SolGeom* InGeo)
 	fThArray.ResizeTo(NpTh);
 	fThArray = Tha;	// Array of Theta nodes
 	//
-		std::cout << "AcceptanceClx:: Acceptance encoding with " << fNPtNodes
+	std::cout << "AcceptanceClx:: Acceptance encoding with " << fNPtNodes
 		<<" pt nodes and "<< fNThNodes <<" theta nodes"<< std::endl;
 	Int_t Nrows = fAcc.GetNrows();
 	Int_t Ncols = fAcc.GetNcols();
+	//std::cout<<"AcceptanceClx:: fAcc rows: "<<Nrows<<", cols: "<<Ncols<<std::endl;
+	//std::cout<<"AcceptanceClx:: Pta size: "<<Pta.GetNrows()<<", Tha size: "<<Tha.GetNrows()<<std::endl;;
+	//std::cout<<"AcceptanceClx:: pt nodes"<<std::endl; fPtArray.Print();
+	//std::cout<<"AcceptanceClx:: th nodes"<<std::endl; fThArray.Print();
 }
 
 // Destructor
@@ -280,6 +289,10 @@ Double_t AcceptanceClx::HitNumber(Double_t pt, Double_t theta)
 {
 	//
 	// Protect against values out of range
+	//std::cout << "AcceptanceClx::HitNumber: just in pt= " << pt << ", theta = " << theta << std::endl;
+	//std::cout << "AcceptanceClx::HitNumber: ptArr(0)= " << fPtArray(0) << ", thArr(0) = " << fThArray(0) << std::endl;
+	//std::cout << "AcceptanceClx::HitNumber: ptArr(E)= " << fPtArray(fNPtNodes - 1)
+	//	<< ", thArr(E) = " << fThArray(fNThNodes - 1) << std::endl;
 	Float_t eps = 1.0e-4;
 	Float_t pt0 = (Float_t)pt;
 	if (pt0 <= fPtArray(0)) pt0 = fPtArray(0) + eps;
@@ -297,7 +310,7 @@ Double_t AcceptanceClx::HitNumber(Double_t pt, Double_t theta)
 	if (ip<0 || ip >fNPtNodes - 2)
 	{
 		std::cout << "Search error: (ip, pt) = (" << ip << ", " << pt << "), pt0 = " << pt0 << std::endl;
-		std::cout << "Search error: pt nodes = " << fNPtNodes 
+		std::cout << "Search error: pt nodes = " << fNPtNodes
 			<< " , last value = " << fPtArray(fNPtNodes - 1) << std::endl;
 	}
 	if (it<0 || ip >fNThNodes - 2)
@@ -329,4 +342,3 @@ Double_t AcceptanceClx::HitNum(Double_t *x, Double_t *p) // Theta in degrees
 	return HitNumber(pt, th);
 }
 //
-
