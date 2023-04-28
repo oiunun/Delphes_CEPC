@@ -1,0 +1,4 @@
+Error in <TGClient::TGClient>: can't open display "localhost:92.0", switching to batch mode...
+ In case you run from a remote ssh session, reconnect with ssh -Y
+Info in <TCanvas::Print>: png file fig/B_e1e1pi/hist_bg.png has been created
+Info in <TCanvas::Print>: pdf file fig/B_e1e1pi/hist_bg.pdf has been created

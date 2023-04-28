@@ -1,0 +1,267 @@
+%%
+%% cepccover.sty
+%%
+%% li.gang@mail.ihep.ac.cn
+%%
+\def\AC@PackageVersion{0.6 }
+
+\NeedsTeXFormat{LaTeX2e}[1999/12/01]
+\ProvidesPackage{cepccover}%
+[2014/03/19 v.0.0 CEPC Draft Cover Page]
+
+\typeout{********************************}
+\typeout{* CEPC Cover Page v.\AC@PackageVersion  *}
+\typeout{********************************}
+
+\let\if@AC@ClearPage\iffalse
+\DeclareOption{clearpage}{\let\if@AC@ClearPage\iftrue}
+\let\if@AC@UseFromCepcNote\iffalse
+\DeclareOption{cepcnote}{\let\if@AC@UseFromCepcNote\iftrue}
+
+\let\AC@AdvancePageTwoSided\relax
+\ProcessOptions\relax
+
+% cover page dimensions
+\newdimen\AC@CepcCoverWidth
+\newdimen\AC@CepcCoverHeight
+% these fail woth RevTeX4...
+%\AC@CepcCoverWidth=\paperwidth
+%\AC@CepcCoverHeight=\paperheight
+% .. thus I force A4 paper size
+\AC@CepcCoverWidth=21 cm
+\AC@CepcCoverHeight=29.7 cm
+%
+\advance\AC@CepcCoverWidth by -1.5in
+\advance\AC@CepcCoverHeight by -1.5in
+
+% allow for bold math font in title
+\g@addto@macro\bfseries{\boldmath}
+
+% editorial informations
+\def\AC@PaperTitle{Paper title}
+\newcommand{\CepcCoverPaperTitle}[1]{\def\AC@PaperTitle{#1}}
+
+\def\AC@PaperVersion{x.y}
+\newcommand{\CepcCoverPaperVersion}[1]{\def\AC@PaperVersion{#1}}
+
+%% single corresponding editor
+
+%\def\AC@EditorName{Corresponding editor name}
+%\def\AC@EditorEmail{corresponding.editor@email}
+%\newcommand{\CepcCoverEditor}[2]{
+%  \def\AC@EditorName{#1}
+%  \def\AC@EditorEmail{#2}
+%}
+
+%% multiple corresponding editors
+
+\def\AC@Editors{}%Corresponding editor name & corresponding.editor@email \\ }
+\newcommand{\CepcCoverEditor}[2]{%
+  \g@addto@macro\AC@Editors{%
+    #1 & ({\tt #2}) \\
+  }%
+}
+
+\def\AC@Journal{Journal name}
+\newcommand{\CepcCoverJournal}[1]{\def\AC@Journal{#1}}
+
+\def\AC@CommentsDeadline{Comments deadline}
+\newcommand{\CepcCoverCommentsDeadline}[1]{\def\AC@CommentsDeadline{#1}}
+
+\def\AC@EdBoardMembers{}
+\newcommand{\CepcCoverEdBoardMember}[2]{%
+  \g@addto@macro\AC@EdBoardMembers{%
+    #1 & ({\tt #2}) \\
+  }%
+}
+
+% PDF SETUP
+\RequirePackage[colorlinks,breaklinks,pdftitle={CEPC draft},pdfauthor={The CEPC Collaboration}]{hyperref}  
+\hypersetup{linkcolor=blue,citecolor=blue,filecolor=black,urlcolor=blue} 
+\def\AC@TwikiURL{}
+\newcommand{\CepcCoverTwikiURL}[1]{\def\AC@TwikiURL{#1}}
+
+% Supporting note list
+\def\AC@Notes{}
+\newcommand{\CepcCoverSupportingNote}[2]{%
+  \g@addto@macro\AC@Notes{%
+    #1 & \url{#2} \\
+  }%
+}
+
+\newcommand{\AC@PrintCepcCover}{
+  \bgroup\global\setbox255\vbox{%
+    \vspace*{-.25in}%
+    \noindent\hspace*{-.25in}%
+    \rlap{\begin{minipage}[t][\AC@CepcCoverHeight][c]{\AC@CepcCoverWidth}%
+        {\CepcCoverHeader}%
+        \vfill%
+        {\CepcCoverBody}%
+        \vfill%
+        {\CepcCoverFooter}%
+      \end{minipage}}%
+  }
+  \egroup\shipout\box255
+  % additional empty page
+  \if@AC@ClearPage 
+  \bgroup\global\setbox255\vbox{}
+  \egroup\shipout\box255
+  \fi
+}
+
+\newcommand{\CepcCoverHeader}{%
+  \parbox{\linewidth}{%
+    \centering%  
+    {
+      %\LARGE\sffamily\bfseries\upshape
+      \fontfamily{phv}\fontseries{b}\fontsize{14}{16}\selectfont 
+      CEPC Draft %Cover
+    }
+  }%
+}
+
+\newcommand{\CepcCoverBody}{%
+  \parbox{\linewidth}{%
+    \centering%
+    \rule{\linewidth}{1.5pt}\par
+    \vspace*{2mm}
+    {
+      %\Huge\sffamily\bfseries\upshape 
+      %\fontfamily{phv}\fontseries{b}\fontsize{20}{20}\selectfont 
+      \fontfamily{phv}\bfseries\fontsize{20}{20}\selectfont 
+      \AC@PaperTitle \par
+    }
+    \vspace{5mm}
+    {
+      %\LARGE\sffamily\bfseries\upshape 
+      \fontfamily{phv}\fontseries{b}\fontsize{14}{16}\selectfont 
+      Version:
+    }
+    {
+      %\LARGE\sffamily\mdseries\upshape 
+      \fontfamily{phv}\fontseries{m}\fontsize{14}{16}\selectfont 
+      \AC@PaperVersion\par
+    }
+    \vspace{5mm}
+    {
+      %\LARGE\sffamily\bfseries\upshape 
+      \fontfamily{phv}\fontseries{b}\fontsize{14}{16}\selectfont 
+      To be submitted to: 
+    }
+    {
+      %\LARGE\sffamily\mdseries\upshape 
+      \fontfamily{phv}\fontseries{m}\fontsize{14}{16}\selectfont 
+      \AC@Journal\par
+    }
+    \vspace{5mm}
+    {
+      %\LARGE\sffamily\bfseries\upshape 
+      \fontfamily{phv}\fontseries{b}\fontsize{14}{16}\selectfont 
+      Corresponding editor(s)\par
+    }
+    \vspace*{2mm}
+    {
+      %\LARGE\sffamily\mdseries\upshape 
+      \fontfamily{phv}\fontseries{m}\fontsize{14}{16}\selectfont 
+      %\AC@EditorName\, 
+      %({\tt \AC@EditorEmail})\par
+      \begin{tabular}{ll}
+        \AC@Editors
+      \end{tabular}\par
+    }
+    \ifx\AC@TwikiURL\@empty
+    \relax
+    \else
+    \vspace*{2mm}
+    \rule{\linewidth}{1.5pt}\par
+    {   
+      %\LARGE\sffamily\bfseries\upshape 
+      \fontfamily{phv}\fontseries{b}\fontsize{12}{14}\selectfont 
+      A list of supporting internal notes and their authors can be found at: \par
+      \fontfamily{phv}\fontseries{m}\fontsize{12}{14}\selectfont
+      \medskip
+      \href{\AC@TwikiURL}{\AC@TwikiURL}
+    }
+    \fi
+    \ifx\AC@Notes\@empty
+    \relax
+    \else
+    \vspace*{2mm}
+    \rule{\linewidth}{1.5pt}\par
+    {   
+      \fontfamily{phv}\fontseries{b}\fontsize{14}{16}\selectfont 
+      Supporting internal notes \par
+      \fontfamily{phv}\fontseries{m}\fontsize{12}{14}\selectfont
+      \medskip
+      \begin{tabular}{ll}
+        \AC@Notes
+      \end{tabular}
+    }
+    \fi
+
+    \ifx\AC@EdBoardMembers\@empty
+    \relax
+    \else
+    \rule{\linewidth}{1.5pt}\par
+    {
+      %\LARGE\sffamily\bfseries\upshape 
+      \fontfamily{phv}\fontseries{b}\fontsize{14}{16}\selectfont 
+      Editorial Board 
+      \par}
+    \vspace*{2mm}
+    {
+      %\LARGE\sffamily\mdseries\upshape%        
+      \fontfamily{phv}\fontseries{m}\fontsize{14}{16}\selectfont 
+      \begin{tabular}{ll}
+        \AC@EdBoardMembers
+      \end{tabular}
+    }
+    \fi
+
+    \rule{\linewidth}{1.5pt}\par
+    \vspace*{2mm}
+    {
+      %\LARGE\sffamily\bfseries\upshape 
+      \fontfamily{phv}\fontseries{b}\fontsize{14}{16}\selectfont 
+      Comments are due by:
+    }
+    {
+      %\LARGE\sffamily\mdseries\upshape 
+      \fontfamily{phv}\fontseries{m}\fontsize{14}{16}\selectfont 
+      \AC@CommentsDeadline\par
+    }
+    \vspace*{2mm}
+    \rule{\linewidth}{1.5pt}\par
+  }%
+}
+
+\newcommand{\CepcCoverFooter}{%
+  \RequirePackage{graphics}
+  \begin{minipage}[b]{0.7\textwidth}
+    \vfill
+    %\small
+    \fontfamily{phv}\fontseries{m}\fontsize{10}{10}\selectfont 
+    document created on \today\ from file \texttt{\jobname.tex}\\
+    cover page automatically created with \texttt{cepccover.sty}%
+  \end{minipage}%
+  \begin{minipage}[b]{0.3\textwidth}
+    \flushright
+    \IfFileExists{AC_cepclogo.pdf}{%
+      \IfFileExists{AC_cepclogo.eps}{%
+        \includegraphics{AC_cepclogo}
+      }{\mbox{}}
+    }{\mbox{}}
+  \end{minipage}
+  \vspace{10mm}
+}
+
+\AtBeginDocument{
+  \if@AC@UseFromCepcNote%
+  \relax%
+  \else%
+  \AC@PrintCepcCover%
+  \AC@AdvancePageTwoSided%
+  \fi
+}
+
+\endinput

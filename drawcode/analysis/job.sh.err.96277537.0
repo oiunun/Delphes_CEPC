@@ -1,0 +1,4 @@
+Error in <TGClient::TGClient>: can't open display "localhost:50.0", switching to batch mode...
+ In case you run from a remote ssh session, reconnect with ssh -Y
+Info in <TCanvas::Print>: png file fig/phi2K4/hist_mass.png has been created
+Info in <TCanvas::Print>: pdf file fig/phi2K4/hist_mass.pdf has been created

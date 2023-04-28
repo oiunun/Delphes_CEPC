@@ -1,0 +1,646 @@
+%
+%   cepcphysics.sty for CEPC papers
+%
+% In your own directory, you may of course change this
+% as you like. If you don't understand it or want to change 
+% or add something publicly, contact the CEPC Publications 
+% Committee.
+%
+
+% 
+%\usepackage{xspace}
+%
+\let\sst=\scriptscriptstyle % Needed for some definitions (psi and eta prime, etc.) (EE)
+\chardef\letterchar=11
+\chardef\otherchar=12
+\chardef\eolinechar=5
+%
+% +--------------------------------------------------------------------+
+% |                                                                    |
+% |  Hours:minutes macro                                               |
+% |                                                                    |
+% +--------------------------------------------------------------------+
+%
+\newcount\hrs\newcount\minu\newcount\temptime
+\def\hm{\hrs=\time \divide\hrs by 60 \minu=\time\temptime=\hrs
+\multiply\temptime by 60%
+\advance\minu by -\temptime
+\ifnum\minu<10 \let\zerofill=0\else \let\zerofill=\relax\fi
+ \the\hrs:\zerofill\the\minu}
+%
+% +--------------------------------------------------------------------+
+% |                                                                    |
+% |  Useful symbols for use in or out of math mode                     |
+% |                                                                    |
+% +--------------------------------------------------------------------+
+%
+\def\ra{\ensuremath{\rightarrow}}%  "GOES TO" arrow.
+\def\la{\ensuremath{\leftarrow}}%   "GETS" arrow.
+\let\rarrow=\ra
+\let\larrow=\la
+\def\lapprox{\ensuremath{\sim\kern-1em\raise 0.65ex\hbox{$<$}}}%  Or use \lsim
+\def\rapprox{\ensuremath{\sim\kern-1em\raise 0.65ex\hbox{$>$}}}%  and \rsim.
+\def\gam{\ensuremath{\gamma}}
+\def\rts {\ensuremath{\sqrt{s}}}
+\def\stat{\mbox{$\;$(stat.)}}
+\def\syst{\mbox{$\;$(syst.)}}
+%
+% +--------------------------------------------------------------------+
+% |                                                                    |
+% |  sin2thetaW m_W m_Z etc.                                           |
+% |                                                                    |
+% +--------------------------------------------------------------------+
+%
+\def\Mtau{\ensuremath{m_{\tau}}}
+\def\swsq{\ensuremath{\sin^2\!\theta_{W}}}
+\def\swel{\ensuremath{\sin^2\!\theta_{\mathrm{eff}}^{\mathrm{lept}}}}
+\def\swsqb{\ensuremath{\sin^2\!\overline{\theta}_{W}}}
+\def\swsqon{\ensuremath{\swsq\equiv 1-\mW^2/\mZ^2}} % Lower-case masses (EE)
+\def\gv{\ensuremath{g_{\mathrm{V}}}} % Subscripts roman not italic (EE)
+\def\ga{\ensuremath{g_{\mathrm{A}}}} % Subscripts roman not italic (EE)
+\def\gvbar{\ensuremath{\bar{g}_\mathrm{V}}} % Subscripts roman not italic (EE)
+\def\gabar{\ensuremath{\bar{g}_\mathrm{A}}} % Subscripts roman not italic (EE)
+%
+% +--------------------------------------------------------------------+
+% |                                                                    |
+% |  Particle-antiparticle pair notations                              |
+% |                                                                    |
+% +--------------------------------------------------------------------+
+%
+\def\antibar#1{\ensuremath{#1\bar{#1}}}
+\def\tbar{\ensuremath{\bar{t}}}
+\def\ttbar{\antibar{t}}
+\def\bbar{\ensuremath{\bar{b}}}
+\def\bbbar{\antibar{b}}
+\def\cbar{\ensuremath{\bar{c}}}
+\def\ccbar{\antibar{c}}
+\def\sbar{\ensuremath{\bar{s}}}
+\def\ssbar{\antibar{s}}
+\def\ubar{\ensuremath{\bar{u}}}
+\def\uubar{\antibar{u}}
+\def\dbar{\ensuremath{\bar{d}}}
+\def\ddbar{\antibar{d}}
+\def\fbar{\ensuremath{\bar{f}}}
+\def\ffbar{\antibar{f}}
+\def\qbar{\ensuremath{\bar{q}}}
+\def\qqbar{\antibar{q}}
+\def\nbar{\ensuremath{\bar{\nu}}}
+\def\nnbar{\antibar{\nu}}
+%
+% +--------------------------------------------------------------------+
+% |                                                                    |
+% |  e+e-, etc.                                                        |
+% |                                                                    |
+% +--------------------------------------------------------------------+
+%
+\def\ee{\ensuremath{e^+ e^-}}%
+\def\epm{\ensuremath{e^{\pm}}}%
+\def\epem{\ensuremath{e^+ e^-}}%
+\def\mumu{\ensuremath{\mathrm{\mu^+ \mu^-}}}%
+\def\tautau{\ensuremath{\mathrm{\tau^+ \tau^-}}}%
+\let\muchless=\ll
+\def\leplep{\ensuremath{\ell^+ \ell^-}}%
+\def\lnu{\ensuremath{\ell \nu}}%
+%
+% +--------------------------------------------------------------------+
+% |                                                                    |
+% |  Useful Z0 type stuff    Gammas, asymmetries                       |
+% |                                                                    |
+% +--------------------------------------------------------------------+
+\def\Zzero{\ensuremath{Z}}
+\def\Zboson{\ensuremath{Z}}
+\def\Wplus{\ensuremath{W^+}}
+\def\Wminus{\ensuremath{W^-}}
+\def\Wboson{\ensuremath{W}}%
+\def\Wpm{\ensuremath{W^{\pm}}}%
+\def\Wmp{\ensuremath{W^{\mp}}}%
+\def\Zzv{\ensuremath{\Zzero^{\textstyle *}}}
+\def\Abb{\ensuremath{A_{\bbbar}}}
+\def\Acc{\ensuremath{A_{\ccbar}}}
+\def\Aqq{\ensuremath{A_{\qqbar}}}
+\def\Afb{\ensuremath{A_{{fb}}}} % Subscript italic not roman (EE)
+\def\GZ{\ensuremath{\Gamma_{Z}}}
+\def\GW{\ensuremath{\Gamma_{W}}}
+\def\GH{\ensuremath{\Gamma_{H}}}
+\def\GamHad{\ensuremath{\Gamma_{\mathrm{had}}}}
+\def\Gbb{\ensuremath{\Gamma_{\bbbar}}}
+\def\Rbb{\ensuremath{R_{\bbbar}}}
+\def\Gcc{\ensuremath{\Gamma_{\ccbar}}}
+\def\Gvis{\ensuremath{\Gamma_{\mathrm{vis}}}}
+\def\Ginv{\ensuremath{\Gamma_{\mathrm{inv}}}}
+% +--------------------------------------------------------------------+
+% |                                                                    |
+% |  B-physics                                                         |
+% |                                                                    |
+% +--------------------------------------------------------------------+
+%
+\def\Bstar{\ensuremath{B^{*}}}
+\def\chic{\ensuremath{\raise.4ex\hbox{$\chi$}_{{c}}}} % Raised & tightened, as chib (EE)
+\def\BoBo{\ensuremath{B^{0}\mbox{--}\bar{B}^{0}}} % en-dash not hyphen (EE)
+\def\BodBod{\ensuremath{B^{0}_{d}\mbox{--}\bar{B}^{0}_{d}}} % en-dash not hyphen (EE)
+\def\BosBos{\ensuremath{B^{0}_{s}\mbox{--}\bar{B}^{0}_{s}}} % en-dash not hyphen (EE)
+\def\chib{\ensuremath{\raise.4ex\hbox{$\chi$}_{{b}}}} % Bit of space removed (EE)
+\def\Epsb  {\ensuremath{\epsilon_{b}}} % Subscript italic not roman (EE)
+\def\Epsc  {\ensuremath{\epsilon_{c}}} % Subscript italic not roman (EE)
+\def\Kstar    {\ensuremath{K^{*}}}
+\def\Dstar   {\ensuremath{D^{*}}} % Italic not roman (EE)
+\def\Dsstar   {\ensuremath{D^{**}}} % Italic not roman (EE)
+\def\etpt     {\ensuremath{1/p_{\mathrm{T}} - 1/E_{\mathrm{T}}}} 
+    % p not P, and subscripts roman not italic (EE)
+\def\etptsig  {\ensuremath{(1/p_{\mathrm{T}} - 1/E_{\mathrm{T}})/(\sigma(1/p_{\mathrm{T}}))}}  
+    % p not P, and subscripts roman not italic (EE)
+\newcommand{\Bd} {\ensuremath{B_d^0}}
+\newcommand{\Bs} {\ensuremath{B_s^0}}
+\newcommand{\Bu} {\ensuremath{B_u}}
+\newcommand{\Bc} {\ensuremath{B_c}}
+\newcommand{\Lb} {\ensuremath{\Lambda_b}}
+\newcommand{\btol} {\ensuremath{b \rightarrow \ell}} % Italic not roman (EE)
+\newcommand{\ctol} {\ensuremath{c \rightarrow \ell}} % Italic not roman (EE)
+\newcommand{\btoctol} {\ensuremath{b \rightarrow c \rightarrow \ell}} % Italic not roman (EE)
+%
+% +--------------------------------------------------------------------+
+% |                                                                    |
+% |  J/psi, psi prime, etc.                                            |
+% |                                                                    |
+% +--------------------------------------------------------------------+
+%
+\let\psii=\psi  %  Save normal "\psi" definition, since I redefine it.
+\def\psi{\ensuremath{\psii}}%
+\def\jpsi{\ensuremath{J/\psi}}
+\def\Jpsi{\ensuremath{J/\psi}}
+\def\Jee{\ensuremath{\Jpsi\ra\epem}}
+\def\Jmm{\ensuremath{\Jpsi\ra\mumu}}
+\def\Jmumu{\ensuremath{\Jpsi\ra\mumu}}
+\def\Brjl{\ensuremath{\mathrm{Br}(\Jpsi \ra \leplep)}} % Italic not roman (EE)
+\def\psip{\ensuremath{\psi^{\sst\prime}}}
+
+%
+% +--------------------------------------------------------------------+
+% |                                                                    |
+% |  QCD (Simplified all of these: no hbox, etc.) (EE)                 |
+% |                                                                    |
+% +--------------------------------------------------------------------+
+%
+\def\alphas{\ensuremath{\alpha_{\mathrm{S}}}} % Subscript roman not italic (EE)
+\def\NF{\ensuremath{N_{\mathrm{F}}}}
+\def\NC{\ensuremath{N_{\mathrm{C}}}}
+\def\CF{\ensuremath{C_{\mathrm{F}}}}
+\def\CA{\ensuremath{C_{\mathrm{A}}}}
+\def\TF{\ensuremath{T_{\mathrm{F}}}}
+\def\Lms{\ensuremath{\Lambda_{\overline{\mathrm{MS}}}}}
+\def\Lmsfive{\ensuremath{\Lambda^{(5)}_{\overline{\mathrm{MS}}}}}
+\def\KT{\ensuremath{k_{\perp}}}                                   
+%
+% +--------------------------------------------------------------------+
+% |                                                                    |
+% |  CKM matrix                                                        |
+% |                                                                    |
+% +--------------------------------------------------------------------+
+%
+\def\Vcb{\ensuremath{\vert V_{cb} \vert}}
+\def\Vub{\ensuremath{\vert V_{ub} \vert}}
+\def\Vtd{\ensuremath{\vert V_{td} \vert}}
+\def\Vts{\ensuremath{\vert V_{ts} \vert}}
+\def\Vtb{\ensuremath{\vert V_{tb} \vert}}
+\def\Vcs{\ensuremath{\vert V_{cs} \vert}}
+\def\Vud{\ensuremath{\vert V_{ud} \vert}}
+\def\Vus{\ensuremath{\vert V_{us} \vert}}
+\def\Vcd{\ensuremath{\vert V_{cd} \vert}}
+%
+% +--------------------------------------------------------------------+
+% |                                                                    |
+% |  New particle stuff                                                |
+% |                                                                    |
+% +--------------------------------------------------------------------+
+%
+\def\Azero{\ensuremath{A^0}}%
+\def\hzero{\ensuremath{h^0}}%
+\def\Hzero{\ensuremath{H^0}}%
+\def\Hboson{\ensuremath{H}}%
+\def\Hplus{\ensuremath{H^+}}%
+\def\Hminus{\ensuremath{H^-}}%
+\def\Hpm{\ensuremath{H^{\pm}}}%
+\def\Hmp{\ensuremath{H^{\mp}}}%
+\def\susy#1{\ensuremath{\tilde{#1}}}%
+\def\ellell{\ensuremath{\mathrm{\ell^+ \ell^-}}}%
+\def\ggino{\ensuremath{\mathchoice%
+      {\displaystyle\raise.4ex\hbox{$\displaystyle\tilde\chi$}}%
+         {\textstyle\raise.4ex\hbox{$\textstyle\tilde\chi$}}%
+       {\scriptstyle\raise.3ex\hbox{$\scriptstyle\tilde\chi$}}%
+ {\scriptscriptstyle\raise.3ex\hbox{$\scriptscriptstyle\tilde\chi$}}}}
+
+\def\chinop{\ensuremath{\mathchoice%
+      {\displaystyle\raise.4ex\hbox{$\displaystyle\tilde\chi^+$}}%
+         {\textstyle\raise.4ex\hbox{$\textstyle\tilde\chi^+$}}%
+       {\scriptstyle\raise.3ex\hbox{$\scriptstyle\tilde\chi^+$}}%
+ {\scriptscriptstyle\raise.3ex\hbox{$\scriptscriptstyle\tilde\chi^+$}}}}
+\def\chinom{\ensuremath{\mathchoice%
+      {\displaystyle\raise.4ex\hbox{$\displaystyle\tilde\chi^-$}}%
+         {\textstyle\raise.4ex\hbox{$\textstyle\tilde\chi^-$}}%
+       {\scriptstyle\raise.3ex\hbox{$\scriptstyle\tilde\chi^-$}}%
+ {\scriptscriptstyle\raise.3ex\hbox{$\scriptscriptstyle\tilde\chi^-$}}}}
+\def\chinopm{\ensuremath{\mathchoice%
+      {\displaystyle\raise.4ex\hbox{$\displaystyle\tilde\chi^\pm$}}%
+         {\textstyle\raise.4ex\hbox{$\textstyle\tilde\chi^\pm$}}%
+       {\scriptstyle\raise.3ex\hbox{$\scriptstyle\tilde\chi^\pm$}}%
+ {\scriptscriptstyle\raise.3ex\hbox{$\scriptscriptstyle\tilde\chi^\pm$}}}}
+\def\chinomp{\ensuremath{\mathchoice%
+      {\displaystyle\raise.4ex\hbox{$\displaystyle\tilde\chi^\mp$}}%
+         {\textstyle\raise.4ex\hbox{$\textstyle\tilde\chi^\mp$}}%
+       {\scriptstyle\raise.3ex\hbox{$\scriptstyle\tilde\chi^\mp$}}%
+ {\scriptscriptstyle\raise.3ex\hbox{$\scriptscriptstyle\tilde\chi^\mp$}}}}
+
+\def\chinoonep{\ensuremath{\mathchoice%
+      {\displaystyle\raise.4ex\hbox{$\displaystyle\tilde\chi^+_1$}}%
+         {\textstyle\raise.4ex\hbox{$\textstyle\tilde\chi^+_1$}}%
+       {\scriptstyle\raise.3ex\hbox{$\scriptstyle\tilde\chi^+_1$}}%
+ {\scriptscriptstyle\raise.3ex\hbox{$\scriptscriptstyle\tilde\chi^+_1$}}}}
+\def\chinoonem{\ensuremath{\mathchoice%
+      {\displaystyle\raise.4ex\hbox{$\displaystyle\tilde\chi^-_1$}}%
+         {\textstyle\raise.4ex\hbox{$\textstyle\tilde\chi^-_1$}}%
+       {\scriptstyle\raise.3ex\hbox{$\scriptstyle\tilde\chi^-_1$}}%
+ {\scriptscriptstyle\raise.3ex\hbox{$\scriptscriptstyle\tilde\chi^-_1$}}}}
+\def\chinoonepm{\ensuremath{\mathchoice%
+      {\displaystyle\raise.4ex\hbox{$\displaystyle\tilde\chi^\pm_1$}}%
+         {\textstyle\raise.4ex\hbox{$\textstyle\tilde\chi^\pm_1$}}%
+       {\scriptstyle\raise.3ex\hbox{$\scriptstyle\tilde\chi^\pm_1$}}%
+ {\scriptscriptstyle\raise.3ex\hbox{$\scriptscriptstyle\tilde\chi^\pm_1$}}}}
+
+\def\chinotwop{\ensuremath{\mathchoice%
+      {\displaystyle\raise.4ex\hbox{$\displaystyle\tilde\chi^+_2$}}%
+         {\textstyle\raise.4ex\hbox{$\textstyle\tilde\chi^+_2$}}%
+       {\scriptstyle\raise.3ex\hbox{$\scriptstyle\tilde\chi^+_2$}}%
+ {\scriptscriptstyle\raise.3ex\hbox{$\scriptscriptstyle\tilde\chi^+_2$}}}}
+\def\chinotwom{\ensuremath{\mathchoice%
+      {\displaystyle\raise.4ex\hbox{$\displaystyle\tilde\chi^-_2$}}%
+         {\textstyle\raise.4ex\hbox{$\textstyle\tilde\chi^-_2$}}%
+       {\scriptstyle\raise.3ex\hbox{$\scriptstyle\tilde\chi^-_2$}}%
+ {\scriptscriptstyle\raise.3ex\hbox{$\scriptscriptstyle\tilde\chi^-_2$}}}}
+\def\chinotwopm{\ensuremath{\mathchoice%
+      {\displaystyle\raise.4ex\hbox{$\displaystyle\tilde\chi^\pm_2$}}%
+         {\textstyle\raise.4ex\hbox{$\textstyle\tilde\chi^\pm_2$}}%
+       {\scriptstyle\raise.3ex\hbox{$\scriptstyle\tilde\chi^\pm_2$}}%
+ {\scriptscriptstyle\raise.3ex\hbox{$\scriptscriptstyle\tilde\chi^\pm_2$}}}}
+
+\def\nino{\ensuremath{\mathchoice%
+      {\displaystyle\raise.4ex\hbox{$\displaystyle\tilde\chi^0$}}%
+         {\textstyle\raise.4ex\hbox{$\textstyle\tilde\chi^0$}}%
+       {\scriptstyle\raise.3ex\hbox{$\scriptstyle\tilde\chi^0$}}%
+ {\scriptscriptstyle\raise.3ex\hbox{$\scriptscriptstyle\tilde\chi^0$}}}}
+
+\def\ninoone{\ensuremath{\mathchoice%
+      {\displaystyle\raise.4ex\hbox{$\displaystyle\tilde\chi^0_1$}}%
+         {\textstyle\raise.4ex\hbox{$\textstyle\tilde\chi^0_1$}}%
+       {\scriptstyle\raise.3ex\hbox{$\scriptstyle\tilde\chi^0_1$}}%
+ {\scriptscriptstyle\raise.3ex\hbox{$\scriptscriptstyle\tilde\chi^0_1$}}}}
+\def\ninotwo{\ensuremath{\mathchoice%
+      {\displaystyle\raise.4ex\hbox{$\displaystyle\tilde\chi^0_2$}}%
+         {\textstyle\raise.4ex\hbox{$\textstyle\tilde\chi^0_2$}}%
+       {\scriptstyle\raise.3ex\hbox{$\scriptstyle\tilde\chi^0_2$}}%
+ {\scriptscriptstyle\raise.3ex\hbox{$\scriptscriptstyle\tilde\chi^0_2$}}}}
+\def\ninothree{\ensuremath{\mathchoice%
+      {\displaystyle\raise.4ex\hbox{$\displaystyle\tilde\chi^0_3$}}%
+         {\textstyle\raise.4ex\hbox{$\textstyle\tilde\chi^0_3$}}%
+       {\scriptstyle\raise.3ex\hbox{$\scriptstyle\tilde\chi^0_3$}}%
+ {\scriptscriptstyle\raise.3ex\hbox{$\scriptscriptstyle\tilde\chi^0_3$}}}}
+\def\ninofour{\ensuremath{\mathchoice%
+      {\displaystyle\raise.4ex\hbox{$\displaystyle\tilde\chi^0_4$}}%
+         {\textstyle\raise.4ex\hbox{$\textstyle\tilde\chi^0_4$}}%
+       {\scriptstyle\raise.3ex\hbox{$\scriptstyle\tilde\chi^0_4$}}%
+ {\scriptscriptstyle\raise.3ex\hbox{$\scriptscriptstyle\tilde\chi^0_4$}}}}
+
+\def\gravino{\ensuremath{\tilde{G}}}%
+\def\Zprime{\ensuremath{Z^\prime}}
+\def\Zstar{\ensuremath{Z^{*}}}
+\def\squark{\ensuremath{\tilde{q}}}
+\def\squarkL{\ensuremath{\tilde{q}_{\mathrm{L}}}} % Subscript roman not italic (EE)
+\def\squarkR{\ensuremath{\tilde{q}_{\mathrm{R}}}} % Subscript roman not italic (EE)
+\def\gluino{\ensuremath{\tilde{g}}}
+\def\stop{\ensuremath{\tilde{t}}}
+\def\stopone{\ensuremath{\tilde{t}_1}}
+\def\stoptwo{\ensuremath{\tilde{t}_2}}
+\def\stopL{\ensuremath{\tilde{t}_{\mathrm{L}}}} % Subscript roman not italic (EE)
+\def\stopR{\ensuremath{\tilde{t}_{\mathrm{R}}}} % Subscript roman not italic (EE)
+\def\sbottom{\ensuremath{\tilde{b}}}
+\def\sbottomone{\ensuremath{\tilde{b}_1}}
+\def\sbottomtwo{\ensuremath{\tilde{b}_2}}
+\def\sbottomL{\ensuremath{\tilde{b}_{\mathrm{L}}}} % Subscript roman not italic (EE)
+\def\sbottomR{\ensuremath{\tilde{b}_{\mathrm{R}}}} % Subscript roman not italic (EE)
+\def\slepton{\ensuremath{\tilde{\ell}}}
+\def\sleptonL{\ensuremath{\tilde{\ell}_{\mathrm{L}}}} % Subscript roman not italic (EE)
+\def\sleptonR{\ensuremath{\tilde{\ell}_{\mathrm{R}}}} % Subscript roman not italic (EE)
+\def\sel{\ensuremath{\tilde{e}}}
+\def\selL{\ensuremath{\tilde{e}_{\mathrm{L}}}} % Subscript roman not italic (EE)
+\def\selR{\ensuremath{\tilde{e}_{\mathrm{R}}}} % Subscript roman not italic (EE)
+\def\smu{\ensuremath{\tilde{\mu}}}
+\def\smuL{\ensuremath{\tilde{\mu}_{\mathrm{L}}}} % Subscript roman not italic (EE)
+\def\smuR{\ensuremath{\tilde{\mu}_{\mathrm{R}}}} % Subscript roman not italic (EE)
+\def\stau{\ensuremath{\tilde{\tau}}}
+\def\stauL{\ensuremath{\tilde{\tau}_{\mathrm{L}}}} % Subscript roman not italic (EE)
+\def\stauR{\ensuremath{\tilde{\tau}_{\mathrm{R}}}} % Subscript roman not italic (EE)
+\def\stauone{\ensuremath{\tilde{\tau}_1}}
+\def\stautwo{\ensuremath{\tilde{\tau}_2}}
+\def\snu{\ensuremath{\tilde{\nu}}}
+%
+% +--------------------------------------------------------------------+
+% |                                                                    |
+% |  pi, pi0, pi+, pi-, pi+-, eta, eta1, etc.                          |
+% |                                                                    |
+% +--------------------------------------------------------------------+
+%
+\let\pii=\pi
+\def\pi{\ensuremath{\pii}}%
+\def\pizero{\ensuremath{\pii^0}}%
+\def\piplus{\ensuremath{\pii^+}}%
+\def\piminus{\ensuremath{\pii^-}}%
+\def\pipm{\ensuremath{\pii^{\pm}}}%
+\def\pimp{\ensuremath{\pii^{\mp}}}%
+\let\etaa=\eta
+\def\eta{\ensuremath{\etaa}}%
+\def\etaprime{\ensuremath{\eta^{\sst\prime}}}%
+%
+% +--------------------------------------------------------------------+
+% |                                                                    |
+% |  K0, K+, K-, K0L, K0S                                              |
+% |                                                                    |
+% +--------------------------------------------------------------------+
+%
+\def\kzero{\ensuremath{K^0}}%
+\def\kzerobar{\ensuremath{\overline{K}\vphantom{K}^0}}%
+%
+\def\kaon{\ensuremath{K}}%
+\def\kplus{\ensuremath{K^+}}%
+\def\kminus{\ensuremath{K^-}}%
+\def\kzeroL{\ensuremath{K^0_{\mathrm{L}}}} % Subscript roman not italic (EE)
+\def\kzerol{\ensuremath{K^0_{\mathrm{L}}}} % Subscript roman not italic (EE)
+\def\klong{\ensuremath{K^0_{\mathrm{L}}}} % Subscript roman not italic (EE)
+\def\kzeroS{\ensuremath{K^0_{\mathrm{S}}}} % Subscript roman not italic (EE)
+\def\kzeros{\ensuremath{K^0_{\mathrm{S}}}} % Subscript roman not italic (EE)
+\def\kshort{\ensuremath{K^0_{\mathrm{S}}}} % Subscript roman not italic (EE)
+%
+% +--------------------------------------------------------------------+
+% |                                                                    |
+% |  Upsilons of various sorts                                         |
+% |                                                                    |
+% +--------------------------------------------------------------------+
+%
+\def\Ups{\ensuremath{\mit\Upsilon}} % Should be italic (EE)
+\def\Upsp{\ensuremath{\mit\Upsilon^{\sst\prime}}} % Should be italic (EE)
+\def\Upspp{\ensuremath{\mit\Upsilon^{\sst\prime\prime}}} % Should be italic (EE)
+\def\Upsppp{\ensuremath{\mit\Upsilon^{\sst\prime\prime\prime}}} % Should be italic (EE)
+\def\Upspppp{\ensuremath{\mit\Upsilon^{\sst\prime\prime\prime\prime}}} % Should be italic (EE)
+\def\itUpsp{\ensuremath{\mit\Upsilon^{\sst\prime}}}%
+\def\UoneS{\ensuremath{\Upsilon(\mathrm{1S})}}%
+
+%
+% +--------------------------------------------------------------------+
+% |                                                                    |
+% |  Things like \ups4 --> Y(4S)                                       |
+% |                                                                    |
+% +--------------------------------------------------------------------+
+%
+\def\ups#1{\ensuremath{\mit{\Upsilon}(\mathrm{#1S})}} % Italic, fixed and simplified (EE)
+%
+% +--------------------------------------------------------------------+
+% |                                                                    |
+% |  Notation for the P-lines: \nspj211 -->  2 1P1, etc.               |
+% |                                                                    |
+% +--------------------------------------------------------------------+
+%
+\def\nsPj#1#2#3{\ensuremath{#1\,^{#2}\!P_{#3}}}%
+\let\nspj=\nsPj
+\def\nsSj#1#2#3{\ensuremath{#1\,^{#2}\!S_{#3}}}%
+\let\nssj=\nsSj
+%
+% +--------------------------------------------------------------------+
+% |                                                                    |
+% |  Useful things for proton-proton physics                           |
+% |                                                                    |
+% +--------------------------------------------------------------------+
+%
+\def\pt{\ensuremath{p_{\mathrm{T}}}} % Subscript roman not italic (EE)
+\def\pT{\ensuremath{p_{\mathrm{T}}}} % Subscript roman not italic (EE)
+\def\et{\ensuremath{E_{\mathrm{T}}}} % Subscript roman not italic (EE)
+\def\eT{\ensuremath{E_{\mathrm{T}}}} % Subscript roman not italic (EE)
+\def\ET{\ensuremath{E_{\mathrm{T}}}} % Subscript roman not italic (EE)
+\def\HT{\ensuremath{H_{\mathrm{T}}}} % Subscript roman not italic (EE)
+\def\ptsq{\ensuremath{p^2_{\mathrm{T}}}} % Fixed so it works correctly (EE)
+
+\def\degr{\ensuremath{^\circ}} % Removed mbox - caused problems and not needed (EE)
+\def\abseta{\ensuremath{|\eta|}}
+\def\Hgg{\ensuremath{H\to\gamma\gamma}}
+\def\mh{\ensuremath{m_h}}
+\def\mW{\ensuremath{m_W}}
+\def\mZ{\ensuremath{m_Z}}
+\def\mH{\ensuremath{m_H}}
+\def\mA{\ensuremath{m_A}}
+\def\MET{\ensuremath{E_{\mathrm{T}}^{\mathrm{miss}}}} % Sub/superscript roman not italic (EE)
+\def\met{\ensuremath{E_{\mathrm{T}}^{\mathrm{miss}}}} % Sub/superscript roman not italic (EE)
+\def\Wjj{\ensuremath{W \rightarrow jj}}
+\def\tjjb{\ensuremath{t \rightarrow jjb}}
+\def\Hbb{\ensuremath{H \rightarrow b\bar b}}
+\def\Zmm{\ensuremath{Z \rightarrow \mu\mu}}
+\def\Zee{\ensuremath{Z \rightarrow ee}}
+\def\Zll{\ensuremath{Z \rightarrow \ell\ell}}
+\def\Wln{\ensuremath{W \rightarrow \ell\nu}}
+\def\Wen{\ensuremath{W \rightarrow e\nu}}
+\def\Wmn{\ensuremath{W \rightarrow \mu\nu}}
+\def\Hllll{\ensuremath{H \rightarrow ZZ^{(*)} \rightarrow \mu\mu\mu\mu}}
+\def\Hmmmm{\ensuremath{H \rightarrow \mu\mu\mu\mu}}
+\def\Heeee{\ensuremath{H \rightarrow eeee}}
+\def\Amm{\ensuremath{A \rightarrow \mu\mu}}
+\def\Ztau{\ensuremath{Z \rightarrow \tau\tau}}
+\def\Wtau{\ensuremath{W \rightarrow \tau\nu}}
+\def\Atau{\ensuremath{A \rightarrow \tau\tau}}
+\def\Htau{\ensuremath{H \rightarrow \tau\tau}}
+\def\begL{10$^{31}$~cm$^{-2}$~s$^{-1}$}
+\def\lowL{10$^{33}$~cm$^{-2}$~s$^{-1}$}
+\def\highL{10$^{34}$~cm$^{-2}$~s$^{-1}$}
+\newcommand{\EjetRec}{\ensuremath{E_{\mathrm{rec}}}} % Subscript roman not italic (EE)
+\newcommand{\PjetRec}{\ensuremath{p_{\mathrm{rec}}}} % Subscript roman not italic (EE)
+\newcommand{\EjetTru}{\ensuremath{E_{\mathrm{truth}}}} % Subscript roman not italic (EE)
+\newcommand{\PjetTru}{\ensuremath{p_{\mathrm{truth}}}} % Subscript roman not italic (EE)
+\newcommand{\EjetDM}{\ensuremath{E_{\mathrm{DM}}}} % Subscript roman not italic (EE)
+\newcommand{\Rcone}{\ensuremath{R_{\mathrm{cone}}}} % Subscript roman not italic (EE)
+%
+% +--------------------------------------------------------------------+
+% |                                                                    |
+% |  Some useful units                                                 |
+% |                                                                    |
+% +--------------------------------------------------------------------+
+%
+\def\TeV{\ifmmode {\mathrm{\ Te\kern -0.1em V}}\else
+                   \textrm{Te\kern -0.1em V}\fi}%
+\def\GeV{\ifmmode {\mathrm{\ Ge\kern -0.1em V}}\else
+                   \textrm{Ge\kern -0.1em V}\fi}%
+\def\MeV{\ifmmode {\mathrm{\ Me\kern -0.1em V}}\else
+                   \textrm{Me\kern -0.1em V}\fi}%
+\def\keV{\ifmmode {\mathrm{\ ke\kern -0.1em V}}\else
+                   \textrm{ke\kern -0.1em V}\fi}%
+\def\eV{\ifmmode  {\mathrm{\ e\kern -0.1em V}}\else
+                   \textrm{e\kern -0.1em V}\fi}%
+\let\tev=\TeV
+\let\gev=\GeV
+\let\mev=\MeV
+\let\kev=\keV
+\let\ev=\eV
+
+\def\TeVc{\ifmmode {\mathrm{\ Te\kern -0.1em V}/c}\else
+                   {\textrm{Te\kern -0.1em V}/$c$}\fi}%
+\def\GeVc{\ifmmode {\mathrm{\ Ge\kern -0.1em V}/c}\else
+                   {\textrm{Ge\kern -0.1em V}/$c$}\fi}%
+\def\MeVc{\ifmmode {\mathrm{\ Me\kern -0.1em V}/c}\else
+                   {\textrm{Me\kern -0.1em V}/$c$}\fi}%
+\def\keVc{\ifmmode {\mathrm{\ ke\kern -0.1em V}/c}\else
+                   {\textrm{ke\kern -0.1em V}/$c$}\fi}%
+\def\eVc{\ifmmode  {\mathrm{\ e\kern -0.1em V}/c}\else
+                   {\textrm{e\kern -0.1em V}/$c$}\fi}%
+\let\tevc=\TeVc
+\let\gevc=\GeVc
+\let\mevc=\MeVc
+\let\kevc=\keVc
+\let\evc=\eVc
+
+\def\TeVcc{\ifmmode {\mathrm{\ Te\kern -0.1em V}/c^2}\else
+                   {\textrm{Te\kern -0.1em V}/$c^2$}\fi}%
+\def\GeVcc{\ifmmode {\mathrm{\ Ge\kern -0.1em V}/c^2}\else
+                   {\textrm{Ge\kern -0.1em V}/$c^2$}\fi}%
+\def\MeVcc{\ifmmode {\mathrm{\ Me\kern -0.1em V}/c^2}\else
+                   {\textrm{Me\kern -0.1em V}/$c^2$}\fi}%
+\def\keVcc{\ifmmode {\mathrm{\ ke\kern -0.1em V}/c^2}\else
+                   {\textrm{ke\kern -0.1em V}/$c^2$}\fi}%
+\def\eVcc{\ifmmode  {\mathrm{\ e\kern -0.1em V}/c^2}\else
+                   {\textrm{e\kern -0.1em V}/$c^2$}\fi}%
+\let\tevcc=\TeVcc
+\let\gevcc=\GeVcc
+\let\mevcc=\MeVcc
+\let\kevcc=\keVcc
+\let\evcc=\eVcc
+
+\def\cm{\ifmmode  {\mathrm{\ cm}}\else
+                   \textrm{~cm}\fi}%
+%
+\def\ifb{\mbox{fb$^{-1}$}}%  Inverse femtobarns.
+\def\ipb{\mbox{pb$^{-1}$}}%  Inverse picobarns.
+\def\inb{\mbox{nb$^{-1}$}}%  Inverse nanobarns.
+%
+\def\mass#1{\ensuremath{m_{#1#1}}}%  "\mass{\mu}" produces "msub{mumu}".
+\def\twomass#1#2{\ensuremath{m_{#1#2}}}% 
+%
+\def\Ecm{\ensuremath{E_{\mathrm{cm}}}} % Subscript roman not italic (EE)
+%
+% +--------------------------------------------------------------------+
+% |                                                                    |
+% |  "Box-squared" operator, as in Klein-Gordon. Command is "\boxsq".  |
+% |                                                                    |
+% +--------------------------------------------------------------------+
+%
+\newbox\boxsqbox
+\newdimen\boxsize\boxsize=1.2ex%
+\def\boxop{%
+\setbox\boxsqbox=\vbox{\hrule depth0.8pt width0.8\boxsize height0pt%
+                       \kern0.8\boxsize
+                       \hrule height0.8pt width0.8\boxsize depth0pt}%
+           \hbox{%
+           \vrule height1.0\boxsize width0.8pt depth0pt%
+           \copy\boxsqbox
+           \vrule height1.0\boxsize width0.8pt depth0pt\kern1.5pt}}%
+\def\boxsq{\ensuremath{\boxop^2}}%
+% +--------------------------------------------------------------------+
+% |                                                                    |
+% |  Theoretical notations                                             |
+% |                                                                    |
+% +--------------------------------------------------------------------+
+%
+\def\spinor#1{\ensuremath{\left(\matrix{#1_1\cr#1_2\cr#1_3\cr#1_4\cr}\right)}} % Math mode (EE)
+\def\pmb#1{\setbox0=\hbox{$#1$}%  This is "poor man's boldface".
+  \kern-.025em\copy0\kern-1.0\wd0%
+  \kern.05em\copy0\kern-1.0\wd0%
+  \kern-.025em\raise.0433em\box0}%
+\def\grad{\pmb{\nabla}}%
+%
+% +--------------------------------------------------------------------+
+% |                                                                    |
+% |  The decay symbol, to be used in \eqalign.                         |
+% |  It works like: \[\eqalign{a\ra &b+c\cr &\dk &e+f\cr &&\dk g+h}\]  |
+% |                                                                    |
+% |                  a  -->  b + c                                     |
+% |                          |                                         |
+% |                          |                                         |
+% |                          +----> e + f                              |
+% |                                 |                                  |
+% |                                 |                                  |
+% |                                 +----> g + h                       |
+% |                                                                    |
+% +--------------------------------------------------------------------+
+%
+\newdimen\dkwidth
+\def\dk{%
+   \dkwidth=\baselineskip
+   {\def\to{\rightarrow}%  allows "\rightarrowfill" to work.
+   \kern 3pt%
+   \hbox{%
+      \raise 3pt%
+      \hbox{%
+         \vrule height 0.8\dkwidth width 0.7pt depth0pt%
+      }%
+      \kern-0.4pt%
+      \hbox to 1.5\dkwidth{%
+         \rightarrowfill
+      }%
+   \kern0.6em%
+   }}%
+}%
+%
+% +--------------------------------------------------------------------+
+% |                                                                    |
+% |  Redefine \eqalign to allow more than one column; very             |
+% |  useful for multiple decays as defined above.                      |
+% |                                                                    |
+% +--------------------------------------------------------------------+
+%
+%\unlock
+\def\eqalign#1{%
+   \,
+   \vcenter{%
+      \openup\jot\m@th
+      \ialign{%
+         \strut\hfil$\displaystyle{##}$&&$%
+         \displaystyle{{}##}$\hfil\crcr#1\crcr%
+      }%
+   }%
+   \,
+}%
+%\lock
+%
+% +--------------------------------------------------------------------+
+% |                                                                    |
+% |  JOURNALS (for MISC definitions, see also ../biblio/CEPCstyle.bst)|
+% |                                                                    |
+% +--------------------------------------------------------------------+
+%
+\newcommand {\AcPA}   {Acta Phys. Austriaca{} }
+\newcommand {\ARevNS} {Ann.{} Rev.{} Nucl.{} Sci.{} }
+\newcommand {\CPC}    {Comp.{} Phys.{} Comm.{} }
+\newcommand {\FortP}  {Fortschr.{} Phys.{} }
+\newcommand {\IJMP}   {Int.{} J.{} Mod.{} Phys.{} }
+\newcommand {\JETP}   {Sov.{} Phys.{} JETP{} }
+\newcommand {\JETPL}  {JETP Lett.{} }
+\newcommand {\JaFi}   {Jad.{} Fiz.{} }
+\newcommand {\JMP}    {J.{} Math.{} Phys.{} }
+\newcommand {\MPL}    {Mod.{} Phys.{} Lett.{} }
+\newcommand {\NCim}   {Nuovo Cimento{} }
+\newcommand {\NIM}    {Nucl.{} Instrum.{} Meth.{} }
+\newcommand {\NP}     {Nucl.{} Phys.{} }
+\newcommand {\PL}     {Phys.{} Lett.{} }
+\newcommand {\PR}     {Phys.{} Rev.{} }
+\newcommand {\PRL}    {Phys.{} Rev.{} Lett.{} }
+\newcommand {\PRep}   {Phys.{} Rep.{} }   
+\newcommand {\RMP}    {Rev.{} Mod.{} Phys.{} }
+\newcommand {\ZfP}    {Z.{} Phys.{} }
+\newcommand {\EPJ}    {Eur.{} Phys.{} J.{} }
+        
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%     
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%     
+ 

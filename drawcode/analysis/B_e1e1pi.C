@@ -3,21 +3,32 @@ root -l examples/draw_invar_mass.C'("delphes_output.root")'
 */
 #ifdef __CLING__
 R__LOAD_LIBRARY(../../libDelphes.so)
+#endif
 #include "../../classes/DelphesClasses.h"
 #include "../../external/ExRootAnalysis/ExRootTreeReader.h"
 #include <iostream>
 #include "TMath.h"
-#endif
+#include <string>
+#include "TFile.h"
+#include "TF2.h"
+#include "TH1F.h"
+#include "TH2F.h"
+#include "THStack.h"
+#include "TTree.h"
+#include "TBranch.h"
+#include "TCanvas.h"
+#include "TClonesArray.h"
 
 //------------------------------------------------------------------------------
 void Eem_Ehad(ExRootTreeReader *treeReader);
 void Signal_Mass(ExRootTreeReader *treeReader);
-void Sig_Bg_Mass(ExRootTreeReader *treeReader,ExRootTreeReader *treeReaderbg);
-void Inv_Mass(ExRootTreeReader *treeReader,TH1F *hmass);
+void Bg_ana(ExRootTreeReader *treeReadersig,ExRootTreeReader *treeReaderbg);
 void Truth_Mass(ExRootTreeReader *treeReader);
 void TrackEfficiency(ExRootTreeReader *treeReader);
 void Performance_PID(ExRootTreeReader *treeReader);
-void Momentum(ExRootTreeReader *treeReader);
+void testcos(ExRootTreeReader *treeReader);
+void Momentum(ExRootTreeReader *treeReader,ExRootTreeReader *treeReaderbg);
+double Inv_Mass(Jet *jet,TLorentzVector &P_pi,TLorentzVector &P_em,TLorentzVector &P_ep,Double_t &l);
 
 void B_e1e1pi()
 {
@@ -26,8 +37,8 @@ void B_e1e1pi()
   // Create chain of root trees
   TChain chain("Delphes");
   TChain chainbg("Delphes");
-  chain.Add("../../../rootfile/mal/output_pythia6_PID/bb_0001.root");
-  chainbg.Add("../../rootfile/mal/output_pythia6/bb_0001.root");
+  chain.Add("../../../rootfile/signal.root");
+  chainbg.Add("../../../rootfile/mal/output_pythia6_PID/bb_0001.root");
   // chain.Add("../../rootfile/test_bb.root");
   // chain.Add("../../rootfile/qqh_X_1_9.root");
 
@@ -35,15 +46,15 @@ void B_e1e1pi()
   ExRootTreeReader *treeReader = new ExRootTreeReader(&chain);
   ExRootTreeReader *treeReaderbg = new ExRootTreeReader(&chainbg);
 
-  // Book histograms
 
   // Eem_Ehad(treeReader);
-  Signal_Mass(treeReader);
-  // Sig_Bg_Mass(treeReader,treeReaderbg);
+ // Signal_Mass(treeReaderbg);
   // Truth_Mass(treeReader);
+   testcos(treeReader);
   // TrackEfficiency(treeReaderbg);
   // Performance_PID(treeReader);
-  // Momentum(treeReader);
+ //  Momentum(treeReader,treeReaderbg);
+ //  Bg_ana(treeReader,treeReaderbg);
 
   delete treeReader;
   delete treeReaderbg;
@@ -356,8 +367,31 @@ void Eem_Ehad(ExRootTreeReader *treeReader){
 
 void Signal_Mass(ExRootTreeReader *treeReader){
   
+    TClonesArray *branchJet = treeReader->UseBranch("Jet");
+    TClonesArray *branchPFC = treeReader->UseBranch("ParticleFlowCandidate");
     TH1F *hist_sig_mass = new TH1F("sig inv_mass", "sig inv_mass", 100,5,5.6);
-    Inv_Mass(treeReader,hist_sig_mass);
+
+    
+    Long64_t numberOfEntries = treeReader->GetEntries();
+    for(Long64_t entry = 0; entry <numberOfEntries ; ++entry)
+    {
+      // Load selected branches with data from specified event
+      treeReader->ReadEntry(entry);
+      if(branchJet->GetEntriesFast()!= 2) continue;
+      Double_t Mass[2]={0.0,0.0};
+      for(Int_t i=0;i<2;i++){
+        Jet* jet=(Jet*) branchJet->At(i);
+        cout<<"  n = "<<jet->Constituents.GetEntriesFast()<<endl;
+      //  Mass[i]=Inv_Mass(jet);
+      }
+      if(Mass[0]>Mass[1]){
+        hist_sig_mass->Fill(Mass[0]);
+      }
+      else{
+        hist_sig_mass->Fill(Mass[1]);
+      }
+     
+    }  
     TCanvas *c1=new TCanvas("c1","c1",700,700);
     hist_sig_mass->Draw();
     c1->Print("fig/B_e1e1pi/hist_mass.png"); 
@@ -366,139 +400,168 @@ void Signal_Mass(ExRootTreeReader *treeReader){
     delete c1;
 }
 
-
-void Sig_Bg_Mass(ExRootTreeReader *treeReader,ExRootTreeReader *treeReaderbg){
+void Bg_ana(ExRootTreeReader *treeReadersig,ExRootTreeReader *treeReaderbg){
   
-    TH1F *hist_sig_mass = new TH1F("sig inv_mass", "sig ", 100,5,5.6);
-    TH1F *hist_bg_mass = new TH1F("bg inv_mass", "bg ", 100,5,5.6);
-    Inv_Mass(treeReader,hist_sig_mass);
-    Inv_Mass(treeReaderbg,hist_bg_mass);
-    hist_sig_mass->SetFillColor(kRed);
-    hist_sig_mass->SetLineColor(kRed);
-    hist_bg_mass->SetFillColor(kBlue);
-    THStack *hs = new THStack("hs","Sig+Bg inv_mass");
-    hs->Add(hist_bg_mass);
-    hs->Add(hist_sig_mass);
+    TClonesArray *branchJet_bg  = treeReaderbg ->UseBranch("Jet");
+    TClonesArray *branchJet_sig = treeReadersig->UseBranch("Jet");
+    TClonesArray *branchPFC_bg  = treeReaderbg ->UseBranch("ParticleFlowCandidate");
+    TClonesArray *branchPFC_sig = treeReadersig->UseBranch("ParticleFlowCandidate");
+    TH1F *hist_bg    = new TH1F("bg"   , "bg"   , 100,5,5.6);
+    TH1F *hist_l_bg  = new TH1F("l_bg" , "l_bg" , 100,0,20 );
+    TH1F *hist_sig   = new TH1F("sig"  , "sig"  , 100,5,5.6);
+    TH1F *hist_l_sig = new TH1F("l_sig", "l_sig", 100,0,20 );
+
+    double mass_b=5.27934;
+    Long64_t numberOfEntries = treeReadersig->GetEntries();
+    for(Long64_t entry = 0; entry <numberOfEntries ; ++entry)
+    {
+      // Load selected branches with data from specified event
+      treeReadersig->ReadEntry(entry);
+      if(branchJet_sig->GetEntriesFast()!= 2) continue;
+      Double_t Mass[2]={0.0,0.0};
+      Double_t mass=0.0;
+      Double_t l_1=0.0,l_2=0.0,l=0.0;
+      TLorentzVector P_pi,P_em,P_ep;
+      TLorentzVector P_pi_1,P_em_1,P_ep_1;
+      TLorentzVector P_pi_2,P_em_2,P_ep_2;
+      for(Int_t i=0;i<2;i++){
+        Jet* jet=(Jet*) branchJet_sig->At(i);
+        if(i==0)  Mass[i]=Inv_Mass(jet,P_pi_1,P_em_1,P_ep_1,l_1);
+        else      Mass[i]=Inv_Mass(jet,P_pi_2,P_em_2,P_ep_2,l_2);
+      }
+      if(abs(Mass[0]-mass_b)<abs(Mass[1]-mass_b)){
+	mass=Mass[0];
+        P_pi=P_pi_1;
+        P_em=P_em_1;
+        P_ep=P_ep_1;
+        l=l_1;
+      }
+      else{
+	mass=Mass[1];
+        P_pi=P_pi_2;
+        P_em=P_em_2;
+        P_ep=P_ep_2;
+        l=l_2;
+      }
+     if(l!=0) hist_l_sig->Fill(l);
+     if(P_pi.Pt()<3 || P_em.Pt()<3 || P_ep.Pt()<3) continue;
+     if(mass<5 || mass>5.6) continue;
+     hist_sig->Fill(mass);
+     
+    }  
+
+    for(Long64_t entry = 0; entry <treeReaderbg->GetEntries(); ++entry)
+    {
+      // Load selected branches with data from specified event
+      treeReaderbg->ReadEntry(entry);
+      if(branchJet_bg->GetEntriesFast()!= 2) continue;
+      Double_t Mass[2]={0.0,0.0};
+      Double_t mass=0.0;
+      Double_t l_1=0.0,l_2=0.0,l=0.0;
+      TLorentzVector P_pi,P_em,P_ep;
+      TLorentzVector P_pi_1,P_em_1,P_ep_1;
+      TLorentzVector P_pi_2,P_em_2,P_ep_2;
+      for(Int_t i=0;i<2;i++){
+        Jet* jet=(Jet*) branchJet_bg->At(i);
+        if(i==0)  Mass[i]=Inv_Mass(jet,P_pi_1,P_em_1,P_ep_1,l_1);
+        else      Mass[i]=Inv_Mass(jet,P_pi_2,P_em_2,P_ep_2,l_2);
+      }
+      if(abs(Mass[0]-mass_b)<abs(Mass[1]-mass_b)){
+	mass=Mass[0];
+        P_pi=P_pi_1;
+        P_em=P_em_1;
+        P_ep=P_ep_1;
+        l=l_1;
+      }
+      else{
+	mass=Mass[1];
+        P_pi=P_pi_2;
+        P_em=P_em_2;
+        P_ep=P_ep_2;
+        l=l_2;
+      }
+     if(l!=0) hist_l_bg->Fill(l);
+     if(P_pi.Pt()<3 || P_em.Pt()<3 || P_ep.Pt()<3) continue;
+     if(mass<5 || mass>5.6) continue;
+     hist_bg->Fill(mass);
+
+    }  
     TCanvas *c1=new TCanvas("c1","c1",700,700);
-    hs->Draw();
-    gPad->BuildLegend(0.7,0.75,0.95,0.9);
-    c1->Print("fig/B_e1e1pi/hmass_sig_bg.png"); 
-    c1->Print("fig/B_e1e1pi/hmass_sig_bg.pdf"); 
+    gStyle->SetOptStat("im");
+    hist_bg->Draw();
+    c1->Print("fig/B_e1e1pi/hist_bg.png"); 
+    c1->Print("fig/B_e1e1pi/hist_bg.pdf"); 
+    hist_l_bg ->Draw();
+    hist_l_sig->SetLineColor(kRed);
+    hist_l_sig->DrawNormalized("same",hist_l_bg->Integral());
+    gPad->BuildLegend(0.65,0.75,0.95,0.95);
+    c1->Print("fig/B_e1e1pi/hist_l.png"); 
+    c1->Print("fig/B_e1e1pi/hist_l.pdf"); 
     c1->Clear();
     delete c1;
 }
 
 
-void Inv_Mass(ExRootTreeReader *treeReader,TH1F *hmass){
-  
-  TClonesArray *branchParticle = treeReader->UseBranch("Particle");
-  TClonesArray *branchParticleFlowCandidate = treeReader->UseBranch("ParticleFlowCandidate");
-
-  GenParticle *particle;
-  GenParticle *par;
-  Track *track;
-  ParticleFlowCandidate *particleflowcandidate;
-  ParticleFlowCandidate *canpi;
-  ParticleFlowCandidate *canep;
-  ParticleFlowCandidate *canem;
-  Long64_t numberOfEntries = treeReader->GetEntries();
-
-
-  for(Int_t entry = 0; entry < numberOfEntries; ++entry)
-  {
-    // Load selected branches with data from specified event
-    treeReader->ReadEntry(entry);
-
+double Inv_Mass(Jet *jet,TLorentzVector &P_pi,TLorentzVector &P_em,TLorentzVector &P_ep,double &l){
+    int n_Jetp = jet->Constituents.GetEntriesFast();
+    if(n_Jetp==0) return 0;
     std::vector < Int_t > id_pi;
     std::vector < Int_t > id_ep;
     std::vector < Int_t > id_em;
-    TLorentzVector tru_P_pi(0,0,0,0); 
-    TLorentzVector tru_P_e1(0,0,0,0);
-    TLorentzVector tru_P_e2(0,0,0,0);
-
-    for(Long64_t i=0;i<branchParticleFlowCandidate->GetEntriesFast();i++){
-
-      particleflowcandidate= (ParticleFlowCandidate*) branchParticleFlowCandidate->At(i);
-
-      if((particleflowcandidate->Eem+particleflowcandidate->Ehad)/particleflowcandidate->P>0.4 && (particleflowcandidate->Eem/particleflowcandidate->P)<0.8  && particleflowcandidate->Prob_Pi>0.99 /* && particleflowcandidate->P>3 */){
+    ParticleFlowCandidate *particleflowcandidate=NULL;
+    for(int i=0;i<n_Jetp;i++){
+       particleflowcandidate = (ParticleFlowCandidate*) jet->Constituents.At(i);
+      if((particleflowcandidate->Eem+particleflowcandidate->Ehad)/particleflowcandidate->P>0.4 && (particleflowcandidate->Eem/particleflowcandidate->P)<0.8   && abs(particleflowcandidate->PID)==211 /* &&  particleflowcandidate->P>3 */){
         id_pi.push_back(i);
       }
-      if(particleflowcandidate->Eem/particleflowcandidate->P>0.8 /* && particleflowcandidate->P>3 */ && particleflowcandidate->Charge == 1){
+      if(particleflowcandidate->Eem/particleflowcandidate->P>0.8  /* &&  particleflowcandidate->P>3 */  && particleflowcandidate->Charge == 1 ){
         id_ep.push_back(i);
       }
-      if(particleflowcandidate->Eem/particleflowcandidate->P>0.8/*  && particleflowcandidate->P>3 */ && particleflowcandidate->Charge == -1){
+      if(particleflowcandidate->Eem/particleflowcandidate->P>0.8 /* && particleflowcandidate->P>3 */ && particleflowcandidate->Charge == -1){
         id_em.push_back(i);
       }
+      
     }
 
-    Double_t inv_mass = 0;
+    float inv_mass = 0;
     if(!id_em.empty() && !id_ep.empty() && !id_pi.empty()) {       
       vector<int>::iterator it_pi;
       vector<int>::iterator it_ep;
       vector<int>::iterator it_em;
-      TLorentzVector P_pi; 
-      TLorentzVector P_ep;
-      TLorentzVector P_em;
-      vector<int>::iterator f_pi;
-      vector<int>::iterator f_ep;
-      vector<int>::iterator f_em;
+      TLorentzVector P_pi_i; 
+      TLorentzVector P_ep_i;
+      TLorentzVector P_em_i;
       for(it_pi=id_pi.begin();it_pi!=id_pi.end();it_pi++){
-        canpi = (ParticleFlowCandidate*) branchParticleFlowCandidate->At(*it_pi);
-        P_pi=canpi->P4();
+        ParticleFlowCandidate* canpi = (ParticleFlowCandidate*) jet->Constituents.At(*it_pi);
+        P_pi_i=canpi->P4();
         for(it_ep=id_ep.begin();it_ep!=id_ep.end();it_ep++){
-          canep = (ParticleFlowCandidate*) branchParticleFlowCandidate->At(*it_ep);
-          P_ep = canep->P4();
+         ParticleFlowCandidate* canep = (ParticleFlowCandidate*) jet->Constituents.At(*it_ep);
+          P_ep_i = canep->P4();
           for(it_em=id_em.begin();it_em!=id_em.end();it_em++){
-            canem = (ParticleFlowCandidate*) branchParticleFlowCandidate->At(*it_em);
-            P_em = canem->P4();
-            Double_t mass = (P_pi+P_ep+P_em).M();
+           ParticleFlowCandidate* canem = (ParticleFlowCandidate*) jet->Constituents.At(*it_em);
+            P_em_i = canem->P4();
+            Double_t mass = (P_pi_i+P_ep_i+P_em_i).M();
             if(abs(mass-5.27934)<abs(inv_mass-5.27934)) {
               inv_mass = mass;
-              f_pi = it_pi;
-              f_ep = it_ep;
-              f_em = it_em;
+	      P_pi=P_pi_i;
+	      P_em=P_em_i;
+	      P_ep=P_ep_i;
+              if((canpi->X+canem->X)==0 || (canpi->Y+canem->Y)==0 || (canpi->Z+canem->Z)==0 || (canpi->T+canem->T)==0) continue;
+              if((canep->X+canem->X)==0 || (canep->Y+canem->Y)==0 || (canep->Z+canem->Z)==0 || (canep->T+canem->T)==0) continue;
+              if((canpi->X+canep->X)==0 || (canpi->Y+canep->Y)==0 || (canpi->Z+canep->Z)==0 || (canpi->T+canep->T)==0) continue;
+              double l_pi_em = sqrt(pow((canpi->X-canem->X)/(canpi->X+canem->X),2)+pow((canpi->Y-canem->Y)/(canpi->Y+canem->Y),2)+pow((canpi->Z-canem->Z)/(canpi->Z+canem->Z),2)+pow((canpi->T-canem->T)/(canpi->T+canem->T),2));
+              double l_ep_em = sqrt(pow((canep->X-canem->X)/(canep->X+canem->X),2)+pow((canep->Y-canem->Y)/(canep->Y+canem->Y),2)+pow((canep->Z-canem->Z)/(canep->Z+canem->Z),2)+pow((canep->T-canem->T)/(canep->T+canem->T),2));
+              double l_pi_ep = sqrt(pow((canpi->X-canep->X)/(canpi->X+canep->X),2)+pow((canpi->Y-canep->Y)/(canpi->Y+canep->Y),2)+pow((canpi->Z-canep->Z)/(canpi->Z+canep->Z),2)+pow((canpi->T-canep->T)/(canpi->T+canep->T),2));
+             l=sqrt(pow(l_pi_em,2)+pow(l_ep_em,2)+pow(l_pi_ep,2));
             }
           }
         }
       }
-      if(inv_mass>5 && inv_mass<5.6){
-        hmass->Fill(inv_mass);
-        inv_mass = 0;
-        id_pi.erase(f_pi);
-        id_ep.erase(f_ep);
-        id_em.erase(f_em);
-      }
     }
-    // if(!id_em.empty() && !id_ep.empty() && !id_pi.empty()) {
-    //   vector<int>::iterator it_pi;
-    //   vector<int>::iterator it_ep;
-    //   vector<int>::iterator it_em;
-    //   TLorentzVector P_pi; 
-    //   TLorentzVector P_ep;
-    //   TLorentzVector P_em;
-    //   for(it_pi=id_pi.begin();it_pi!=id_pi.end();it_pi++){
-    //     canpi = (ParticleFlowCandidate*) branchParticleFlowCandidate->At(*it_pi);
-    //     P_pi=canpi->P4();
-    //     for(it_ep=id_ep.begin();it_ep!=id_ep.end();it_ep++){
-    //       canep = (ParticleFlowCandidate*) branchParticleFlowCandidate->At(*it_ep);
-    //       P_ep = canep->P4();
-    //       for(it_em=id_em.begin();it_em!=id_em.end();it_em++){
-    //         canem = (ParticleFlowCandidate*) branchParticleFlowCandidate->At(*it_em);
-    //         P_em = canem->P4();
-    //         Double_t mass = (P_pi+P_ep+P_em).M();
-    //         if(abs(mass-5.27934)<abs(inv_mass-5.27934)) inv_mass = mass;
-    //       }
-    //     }
-    //   }
-    //   if(inv_mass>5 && inv_mass<5.6){
-    //     hmass->Fill(inv_mass);
-    //   }
-    // }
     id_em.clear();
     id_ep.clear();
     id_pi.clear();
-
-  } 
+    return inv_mass;
 }
 
 
@@ -508,6 +571,8 @@ void Truth_Mass(ExRootTreeReader *treeReader){
   TClonesArray *branchParticleFlowCandidate = treeReader->UseBranch("ParticleFlowCandidate");
 
   TH1F *hist_truth_mass = new TH1F("B_truth_mass", "B_truth_mass", 100,5,5.6);
+
+  TH1F *hist_l_sig = new TH1F("l_sig", "l_sig", 100,0,20 );
 
   GenParticle *particle;
   GenParticle *par;
@@ -575,6 +640,7 @@ void Truth_Mass(ExRootTreeReader *treeReader){
     //     if(it_pi->first ==distance(id_B.begin(),it_B)){}
     //   }
     // }
+    double l=0.0;
     if(id_pi.empty() || id_ep.empty() || id_em.empty()) continue;
     for(it_pi=id_pi.begin();it_pi!=id_pi.end();it_pi++){
       canpi=(ParticleFlowCandidate*) branchParticleFlowCandidate->At(it_pi->second);
@@ -593,12 +659,18 @@ void Truth_Mass(ExRootTreeReader *treeReader){
             // cout<<"mass  ="<<mass<<endl;
             if(mass>5 && mass<5.6){
               hist_truth_mass->Fill(mass);
+              double l_pi_em = sqrt(pow((parpi->X-parem->X)/(parpi->X+parem->X),2)+pow((parpi->Y-parem->Y)/(parpi->Y+parem->Y),2)+pow((parpi->Z-parem->Z)/(parpi->Z+parem->Z),2)+pow((parpi->T-parem->T)/(parpi->T+parem->T),2));
+              double l_ep_em = sqrt(pow((parep->X-parem->X)/(parep->X+parem->X),2)+pow((parep->Y-parem->Y)/(parep->Y+parem->Y),2)+pow((parep->Z-parem->Z)/(parep->Z+parem->Z),2)+pow((parep->T-parem->T)/(parep->T+parem->T),2));
+              double l_pi_ep = sqrt(pow((parpi->X-parep->X)/(parpi->X+parep->X),2)+pow((parpi->Y-parep->Y)/(parpi->Y+parep->Y),2)+pow((parpi->Z-parep->Z)/(parpi->Z+parep->Z),2)+pow((parpi->T-parep->T)/(parpi->T+parep->T),2));
+             l=sqrt(pow(l_pi_em,2)+pow(l_ep_em,2)+pow(l_pi_ep,2));
+             cout<<parpi->X<<endl;
+             hist_l_sig->Fill(l);
             }
           }
-        }
+        }   
       }
     }
-
+    
     id_B.clear();
     id_pi.clear();
     id_ep.clear();
@@ -613,6 +685,8 @@ void Truth_Mass(ExRootTreeReader *treeReader){
   cout<<"integral = "<<hist_truth_mass->Integral()<<endl;
   c1->Print("fig/B_e1e1pi/hist_truth_mass.png"); 
   c1->Print("fig/B_e1e1pi/hist_truth_mass.pdf"); 
+  hist_l_sig->Draw();
+  c1->Print("fig/B_e1e1pi/hist_truth_l.png"); 
   c1->Clear();
   delete c1;
 }
@@ -744,22 +818,19 @@ void Performance_PID(ExRootTreeReader *treeReader){
   cout<<"Prob_k for pi = "<<hProb_K_pi->GetEntries()<<endl;
 }
 
-void Momentum(ExRootTreeReader *treeReader){
+void Momentum(ExRootTreeReader *treeReader, ExRootTreeReader *treeReaderbg ){
   TClonesArray *branchParticle = treeReader->UseBranch("Particle");
   TClonesArray *branchParticleFlowCandidate = treeReader->UseBranch("ParticleFlowCandidate");
+  TClonesArray *branchParticleFlowCandidate_bg = treeReaderbg->UseBranch("ParticleFlowCandidate");
 
   Long64_t numberOfEntries = treeReader->GetEntries();
 
-  ParticleFlowCandidate *particleflowcandidate;
+  
   GenParticle *particle;
-  TH1F *hmom_fBpi = new TH1F("P of pi/e from B", "P of pi/e from B", 100,0,10);
-  TH1F *hmom_e = new TH1F("P of pi", "P of pi", 100,-1,1);
-  TH1F *hmom_pi = new TH1F("P of pi/e", "P of pi/e", 100,0,10);
+  TH1F *hmom_fB = new TH1F("sig", "sig", 100,0,10);
+  TH1F *hmom_nfB = new TH1F("bg", "bg", 100,0,10);
 
-  int num_tru = 0;
-  int num_tra = 0;
-  float enfficiency = 0;
-  for(Int_t entry = 0; entry < numberOfEntries; ++entry)
+  for(Long64_t entry = 0; entry < numberOfEntries; ++entry)
   {
     // Load selected branches with data from specified event
     treeReader->ReadEntry(entry);
@@ -771,53 +842,62 @@ void Momentum(ExRootTreeReader *treeReader){
         id_B.push_back(i);
       }
     }
-    for(it_B = id_B.begin();it_B!=id_B.end();it_B++){
-      for(Long64_t i=0;i<branchParticle->GetEntriesFast();i++){
-        particle=(GenParticle* )branchParticle->At(i);
-        if(particle->M1==*it_B){
-          num_tru++;
-        }
-      }
-    }
-    for(it_B = id_B.begin();it_B!=id_B.end();it_B++){
-      for(Long64_t i=0;i<branchParticleFlowCandidate->GetEntriesFast();i++){
-        particleflowcandidate =(ParticleFlowCandidate*)branchParticleFlowCandidate->At(i);
-        particle= (GenParticle*) particleflowcandidate->Particles.At(0);
-        if(particleflowcandidate->truth_PID == 130) continue;
-        if(particle->M1 == *it_B){
-          num_tra++;
-        }
-      }
-    }
-    for(Long64_t i=0;i<branchParticle->GetEntriesFast();i++){
-      particle= (GenParticle*) branchParticle->At(i);
+    for(Long64_t i=0;i<branchParticleFlowCandidate->GetEntriesFast();i++){
+      ParticleFlowCandidate *particleflowcandidate =(ParticleFlowCandidate*)branchParticleFlowCandidate->At(i);
+      particle= (GenParticle*) particleflowcandidate->Particles.At(0);
       for(it_B = id_B.begin();it_B!=id_B.end();it_B++){
         if(particle->M1 == *it_B){
-          hmom_fBpi->Fill(particle->P);
-        }
-        if(/* abs(particle->PID)==11 &&  */particle->Status == 1){
-          hmom_e->Fill(particle->P4().CosTheta());
-        }
-        if(abs(particle->Status) == 1 && particle->M1 != *it_B){
-          hmom_pi->Fill(particle->P);
+          hmom_fB->Fill(particleflowcandidate->P4().Pt());
         }
       }
     }
-    
   }
-  enfficiency = ((float)num_tra)/((float)num_tru);
-  cout<<num_tra<<endl;
-  cout<<num_tru<<endl;
-  cout<<"enfficiency = "<<enfficiency<<endl;
+  for(Long64_t entry = 0; entry < treeReaderbg->GetEntries(); ++entry)
+  {
+    // Load selected branches with data from specified event
+    treeReaderbg->ReadEntry(entry);
+    for(Long64_t i=0;i<branchParticleFlowCandidate_bg->GetEntriesFast();i++){
+      ParticleFlowCandidate *particleflowcandidate =(ParticleFlowCandidate*)branchParticleFlowCandidate_bg->At(i);
+        if(abs(particle->PID) == 11 || abs(particle->PID) == 211 ){
+          hmom_nfB->Fill(particleflowcandidate->P4().Pt());
+        }
+      }
+    }
+
   TCanvas *c1=new TCanvas("c1","c1",600,600);
-  gStyle->SetOptTitle(kFALSE);
-  hmom_fBpi->SetLineColor(kRed);
-  hmom_pi->Draw();
-  hmom_fBpi->DrawNormalized("same",hmom_pi->Integral());
+  hmom_fB->SetLineColor(kRed);
+  hmom_nfB->Draw();
+  hmom_fB->DrawNormalized("same",hmom_nfB->Integral());
   gPad->BuildLegend(0.65,0.75,0.98,0.95);
   c1->Print("fig/B_e1e1pi/hmom.png"); 
   c1->Print("fig/B_e1e1pi/hmom.pdf"); 
 
 
   delete c1;
+}
+void testcos(ExRootTreeReader *treeReader){
+ TClonesArray *branchParticleFlowCandidate = treeReader->UseBranch("ParticleFlowCandidate");
+  Long64_t numberOfEntries = treeReader->GetEntries();
+
+  GenParticle *particle;
+  ParticleFlowCandidate *pfc;
+  for(Int_t entry = 0; entry < numberOfEntries; ++entry)
+  {
+
+    treeReader->ReadEntry(entry);
+    for(Long64_t i=0;i<branchParticleFlowCandidate->GetEntriesFast();i++){
+      ParticleFlowCandidate *pfc =(ParticleFlowCandidate*)branchParticleFlowCandidate->At(i);
+      TLorentzVector P4;
+      P4.SetPtEtaPhiM(pfc->PT,pfc->Eta,pfc->Phi,pfc->Mass);
+      cout<<P4.CosTheta()-pfc->CosTheta<<endl;
+
+    }
+
+
+  }  
+
+
+
+
+
 }

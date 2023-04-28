@@ -484,6 +484,7 @@ void DualReadoutCalorimeter::Process()
     //fTowerTimeWeight += 1;
 
     //cout<<" tower particle PID, pt, eta, phi, l, tof:  "<<particle->PID<<", "<<momentum.E()<<", "<<momentum.Eta()<<", "<<momentum.Phi()<<", "<<position.Vect().Mag()<<", "<<position.T()/2.99792458E2<<endl;
+    //cout<<"position eta "<<position.Eta()<<endl;
     //cout<<" tower particle time, weight:  "<<fTowerTime/2.99792458E2<<", "<<fTowerTimeWeight<<endl;
 
     fTower->AddCandidate(particle);

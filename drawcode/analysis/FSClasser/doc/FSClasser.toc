@@ -1,0 +1,48 @@
+\contentsline {section}{\numberline {1}Purpose}{3}
+\contentsline {section}{\numberline {2}Overview}{3}
+\contentsline {section}{\numberline {3}Particle Selection}{3}
+\contentsline {subsection}{\numberline {3.1}Isolated lepton ($e^{\pm } and \mu ^{\pm }$)}{3}
+\contentsline {subsection}{\numberline {3.2}Showers ($\gamma $)}{4}
+\contentsline {subsection}{\numberline {3.3}$\ensuremath {\pii }^0\to \gamma \gamma $ and $\ensuremath {\etaa }\to \gamma \gamma $}{4}
+\contentsline {subsection}{\numberline {3.4}$K^0_S \to \ensuremath {\pii }^+\ensuremath {\pii }^-$, $\Lambda \to p\ensuremath {\pii }^-$ and $\overline {\Lambda }\to \overline {p}\ensuremath {\pii }^+$}{4}
+\contentsline {section}{\numberline {4}Event Selection}{4}
+\contentsline {section}{\numberline {5}Final State Numbering}{5}
+\contentsline {section}{\numberline {6}Job Options Parameters}{6}
+\contentsline {subsection}{\numberline {6.1}\tt FSClasser.FS(N) = "(EXC/INC)(tag)(code2)\_(code1)";}{6}
+\contentsline {subsection}{\numberline {6.2}\tt FSClasser.FSCut(N) = "(FS) (submode) (type) (x1) (x2)";}{6}
+\contentsline {subsection}{\numberline {6.3}\tt FSClasser.FSMMFit(N) = "(FS) (mass)";}{7}
+\contentsline {subsection}{\numberline {6.4}\tt FSClasser.maxShowers = (n);}{8}
+\contentsline {subsection}{\numberline {6.5}\tt FSClasser.maxExtraTracks = (n);}{8}
+\contentsline {subsection}{\numberline {6.6}\tt FSClasser.cmEnergy = (E);}{8}
+\contentsline {subsection}{\numberline {6.7}\tt FSClasser.crossingAngle = (theta);}{8}
+\contentsline {subsection}{\numberline {6.8}\tt FSClasser.energyTolerance = (deltaE);}{9}
+\contentsline {subsection}{\numberline {6.9}\tt FSClasser.momentumTolerance = (deltaP);}{9}
+\contentsline {subsection}{\numberline {6.10}\tt FSClasser.maxKinematicFitChi2DOF = (chi2DOF);}{9}
+\contentsline {subsection}{\numberline {6.11}\tt FSClasser.trackStudies = (true/false);}{9}
+\contentsline {subsection}{\numberline {6.12}\tt FSClasser.pidStudies = (true/false);}{9}
+\contentsline {subsection}{\numberline {6.13}\tt FSClasser.neutralStudies = (true/false);}{9}
+\contentsline {subsection}{\numberline {6.14}\tt FSClasser.pi0Studies = (true/false);}{9}
+\contentsline {subsection}{\numberline {6.15}\tt FSClasser.etaStudies = (true/false);}{9}
+\contentsline {subsection}{\numberline {6.16}\tt FSClasser.veeStudies = (true/false);}{10}
+\contentsline {subsection}{\numberline {6.17}\tt FSClasser.bypassVertexDB = (true/false);}{10}
+\contentsline {subsection}{\numberline {6.18}\tt FSClasser.YUPING = (true/false);}{10}
+\contentsline {subsection}{\numberline {6.19}\tt FSClasser.writeNTGen = (true/false);}{10}
+\contentsline {subsection}{\numberline {6.20}\tt FSClasser.writeNTGenCode = (true/false);}{10}
+\contentsline {subsection}{\numberline {6.21}Parameters for Debugging}{10}
+\contentsline {subsubsection}{\numberline {6.21.1}\tt FSClasser.printTruthInformation = (true/false);}{10}
+\contentsline {subsubsection}{\numberline {6.21.2}\tt FSClasser.isolateRunLow = (run);}{10}
+\contentsline {subsubsection}{\numberline {6.21.3}\tt FSClasser.isolateRunHigh = (run);}{10}
+\contentsline {subsubsection}{\numberline {6.21.4}\tt FSClasser.isolateEventLow = (event);}{11}
+\contentsline {subsubsection}{\numberline {6.21.5}\tt FSClasser.isolateEventHigh = (event);}{11}
+\contentsline {section}{\numberline {7}Example Job Options File}{11}
+\contentsline {section}{\numberline {8}Output Root Trees}{12}
+\contentsline {subsection}{\numberline {8.1}Event Information}{13}
+\contentsline {subsection}{\numberline {8.2}Vertex Information}{14}
+\contentsline {subsection}{\numberline {8.3}Particle Four-Momenta}{14}
+\contentsline {subsection}{\numberline {8.4}Shower Information}{15}
+\contentsline {subsection}{\numberline {8.5}Track Information}{15}
+\contentsline {subsection}{\numberline {8.6}$\ensuremath {\pii }^0\to \gamma \gamma $ Information}{16}
+\contentsline {subsection}{\numberline {8.7}$\ensuremath {\etaa }\to \gamma \gamma $ Information}{16}
+\contentsline {subsection}{\numberline {8.8}$K^0_S\to \ensuremath {\pii }^+\ensuremath {\pii }^-$, $\Lambda \to p\ensuremath {\pii }^-$ and $\overline {\Lambda }\to \overline {p}\ensuremath {\pii }^+$ Information}{16}
+\contentsline {subsection}{\numberline {8.9}Information to Tag $\ensuremath {\psii }(2S)\to XJ/\ensuremath {\psii }$}{17}
+\contentsline {subsection}{\numberline {8.10}Truth Information}{17}

@@ -1,0 +1,3 @@
+/workfs2/bes/lig/higgs/FSClasser/lib/libFSClasser.so.0.1.0
+/workfs2/bes/lig/higgs/FSClasser/lib/libFSClasser.so.0.1
+/workfs2/bes/lig/higgs/FSClasser/lib/libFSClasser.so

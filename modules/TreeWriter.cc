@@ -575,7 +575,7 @@ void TreeWriter::ProcessParticleFlowCandidates(ExRootTreeBranch *branch, TObjArr
     entry->E = e;
     entry->P = p;
     entry->PT = pt;
-    entry->Eta = eta;
+    entry->Eta = momentum.Eta();
     entry->Phi = phi;
     entry->CtgTheta = ctgTheta;
     entry->C = candidate->C;
