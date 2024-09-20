@@ -208,7 +208,7 @@ TMatrixDSym ParticleFlowCandidate::CovarianceMatrix() const
 
 Candidate::Candidate() :
 //add------------------------------------------------------------------------------
-  Chi_pi(0.), Chi_k(0.), Counting_eff(0.), L_DC(-1.), TOF(-1.), PID_meas(0.), Prob_K(0.), Prob_Pi(0.), Prob_P(0.),
+  Chi_pi(0.), Chi_k(0.), Counting_eff(0.), L_DC(-1.), TOF(-1.), PID_meas(0.), Prob_K(0.), Prob_Pi(0.), Prob_P(0.), 
 //------------------------------------------------------------------------------
   PID(0), Status(0), M1(-1), M2(-1), D1(-1), D2(-1),
   Charge(0), Mass(0.0),

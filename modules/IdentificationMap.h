@@ -41,6 +41,8 @@ public:
   ~IdentificationMap();
   Double_t Eff(Double_t ,Double_t );
   Double_t dNdxSigma(Double_t, Double_t, Double_t, Double_t, Double_t);
+  Double_t fRmax;
+  Double_t fRmin;
   void Init();
   void Process();
   void Finish();

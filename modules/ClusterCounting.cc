@@ -101,42 +101,42 @@ void ClusterCounting::Finish()
 
 void ClusterCounting::Process()
 {
-  Candidate *candidate, *mother, *particle;
-  Double_t mass, trackLength, Ncl, eff;
+    Candidate *candidate, *mother, *particle;
+    Double_t mass, trackLength, Ncl,Nclerr,tRout_DC ;
 
-  fItInputArray->Reset();
-  while((candidate = static_cast<Candidate *>(fItInputArray->Next())))
-  {
-
-    // converting to meters
-    particle = static_cast<Candidate *>(candidate->GetCandidates()->At(0));
-
-    // converting to meters
-    const TLorentzVector &candidatePosition = particle->Position*1e-03;
-    const TLorentzVector &candidateMomentum = particle->Momentum;
-
-		TVectorD Par = TrkUtil::XPtoPar(candidatePosition.Vect(), candidateMomentum.Vect(), candidate->Charge, fBz);
-    mass = candidateMomentum.M();
-
-    trackLength = fTrackUtil->TrkLen(Par);
-
-    mother    = candidate;
-    candidate = static_cast<Candidate*>(candidate->Clone());
-
-    Ncl = 0.;
-    if (fTrackUtil->IonClusters(Ncl, mass, Par, eff))
+    fItInputArray->Reset();
+    while((candidate = static_cast<Candidate *>(fItInputArray->Next())))
     {
-      candidate->L_DC = trackLength;
-      candidate->Nclusters = Ncl;
-      candidate->dNdx = (trackLength > 0.) ? Ncl/trackLength : -1;
-      candidate->Counting_eff = eff;
-      candidate->Nclusters_err = TMath::Sqrt(Ncl*eff);
+
+        // converting to meters
+        particle = static_cast<Candidate *>(candidate->GetCandidates()->At(0));
+
+        // converting to meters
+        const TLorentzVector &candidatePosition = particle->Position*1e-03;
+        const TLorentzVector &candidateMomentum = particle->Momentum;
+
+        TVectorD Par = TrkUtil::XPtoPar(candidatePosition.Vect(), candidateMomentum.Vect(), candidate->Charge, fBz);
+        mass = candidateMomentum.M();
+
+        trackLength = fTrackUtil->TrkLen(Par);
+
+        mother    = candidate;
+        candidate = static_cast<Candidate*>(candidate->Clone());
+
+        Ncl = 0.;
+        Nclerr = 0.;
+        if (fTrackUtil->IonClusters(Ncl, Nclerr,mass, Par))
+        {
+            candidate->L_DC = trackLength;
+            candidate->Nclusters = Ncl;
+            candidate->dNdx = (trackLength > 0.) ? Ncl/trackLength : -1;
+            candidate->Nclusters_err = Nclerr;
+        }
+
+        candidate->AddCandidate(mother);
+        fOutputArray->Add(candidate);
+
     }
-
-    candidate->AddCandidate(mother);
-
-    fOutputArray->Add(candidate);
-  }
 }
 
 //------------------------------------------------------------------------------

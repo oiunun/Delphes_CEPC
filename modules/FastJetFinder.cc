@@ -251,6 +251,12 @@ void FastJetFinder::Init()
     fDefinition = new JetDefinition(ee_genkt_algorithm,fParameterR,fParameterP);
     break;
 
+  // kT durham algorithm, 2 options:
+  // 1. njets mode: stop when reach predetermined n jet (optionally apply sqrt(ExclYmerge(n-1,n))*Evis) > cut offline)
+  // 2. dcut mode: stop when all dij above some threshold dcut. Is applied if fDCut > 0.
+  case 11:
+    fDefinition = new JetDefinition(ee_kt_algorithm);
+    break;
   }
 
   fPlugin = plugin;

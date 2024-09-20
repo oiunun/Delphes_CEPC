@@ -111,7 +111,9 @@ void TimeOfFlight::Process()
     const TLorentzVector &candidateInitialPosition = particle->Position;
     const TLorentzVector &candidateInitialPositionSmeared = candidate->InitialPosition;
     const TLorentzVector &candidateFinalPosition = candidate->Position;
+
     const TLorentzVector &candidateMomentum = particle->Momentum;
+
 
     // time at vertex from MC truth
     t_truth = candidateInitialPosition.T() * 1.0E-3 / c_light;

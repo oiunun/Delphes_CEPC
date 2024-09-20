@@ -159,7 +159,7 @@ void PdgCodeFilter::Process()
 		  }
 	  }
 
-	  if(can1 && can2 && 50<dm < 135) {
+	  if(can1 && can2) {
 		  fOutputArray2->Add(can1);
 		  fOutputArray2->Add(can2);
 	  }

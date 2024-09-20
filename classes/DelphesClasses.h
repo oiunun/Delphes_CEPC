@@ -679,6 +679,7 @@ public:
   Double_t Chi_pi;
   Double_t Counting_eff;
   Double_t L_DC;
+  Double_t Rout_DC;
   Double_t TOF;
   Float_t Prob_K;
   Float_t Prob_Pi;

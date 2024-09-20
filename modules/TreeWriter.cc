@@ -571,11 +571,12 @@ void TreeWriter::ProcessParticleFlowCandidates(ExRootTreeBranch *branch, TObjArr
     phi = momentum.Phi();
     m = momentum.M();
     ctgTheta = (TMath::Tan(momentum.Theta()) != 0) ? 1 / TMath::Tan(momentum.Theta()) : 1e10;
+    eta = (cosTheta == 1.0 ? signz * 999.9 : momentum.Eta());
 
     entry->E = e;
     entry->P = p;
     entry->PT = pt;
-    entry->Eta = momentum.Eta();
+    entry->Eta = eta;
     entry->Phi = phi;
     entry->CtgTheta = ctgTheta;
     entry->C = candidate->C;

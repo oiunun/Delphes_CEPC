@@ -204,111 +204,99 @@ module TrackCovariance TrackSmearing {
       # Resolution Lower side (meters) - 0 = no measurement
       # measurement flag = T, scattering only = F
 
-      # barrel  name     zmin     zmax   r        w (m)      X0        n_meas  th_up (rad) th_down (rad)    reso_up (m)   reso_down (m)  flag
-      1        PIPE     -3.0    3.0    0.014    0.00014   0.0937     0        0          0                0             0              0
-      1        VTX1A    -0.2   0.2   0.016    0.00014   0.0937     2          0          1.5708           3e-006        3e-006         1
-      1        VTX1B    -0.2   0.2   0.018    0.00014   0.0937     2          0          1.5708           6e-006        6e-006         1
-      1        VTX2A    -0.2   0.2   0.038    0.00014   0.0937     2          0          1.5708           4e-006        4e-006         1
-      1        VTX2B    -0.2   0.2   0.040    0.00014   0.0937     2          0          1.5708           4e-006        4e-006         1
-      1        VTX3A    -0.2   0.2   0.058    0.00014   0.0937     2          0          1.5708           4e-006        4e-006         1
-      1        VTX3B    -0.2   0.2   0.060    0.00014   0.0937     2          0          1.5708           4e-006        4e-006         1
-      1        SHELL    -0.2   0.2   0.065    0.00014   0.0937     0        0          0                0             0              0
-      1        SIT01    -0.241  0.241   0.12    0.00061   0.0937     2        0          1.5708           7e-006        86e-006        1
-      1        SIT02    -0.455  0.455   0.27     0.00061   0.0937     2        0          1.5708           7e-006        86e-006        1
-      1        SIT03    -0.721  0.721   0.42    0.00061   0.0937     2        0          1.5708           7e-006        86e-006        1
-      1        SIT04    -0.988  0.988   0.57    0.00061   0.0937     2        0          1.5708           7e-006        86e-006        1
+      # barrel  name     zmin     zmax     r        w (m)      X0       n_meas  th_up (rad) th_down (rad)    reso_up (m)   reso_down (m)  flag
+      1        PIPE     -3.0      3.0      0.014    0.00014   0.0937     0        0          0                0             0              0
+      1        VTX1A    -0.0625   0.0625   0.016    0.00014   0.0937     2        0          1.5708           3e-006        3e-006         1
+      1        VTX1B    -0.0625   0.0625   0.018    0.00014   0.0937     2        0          1.5708           6e-006        6e-006         1
+      1        VTX2A    -0.125    0.125    0.037    0.00014   0.0937     2        0          1.5708           4e-006        4e-006         1
+      1        VTX2B    -0.125    0.125    0.039    0.00014   0.0937     2        0          1.5708           4e-006        4e-006         1
+      1        VTX3A    -0.125    0.125    0.058    0.00014   0.0937     2        0          1.5708           4e-006        4e-006         1
+      1        VTX3B    -0.125    0.125    0.060    0.00014   0.0937     2        0          1.5708           4e-006        4e-006         1
+      1        SHELL    -0.145    0.145    0.065    0.00014   0.0937     0        0          0                0             0              0
+      1        SIT01    -0.241    0.241    0.12     0.00061   0.0937     2        0          1.5708           7e-006        86e-006        1
+      1        SIT02    -0.455    0.455    0.27     0.00061   0.0937     2        0          1.5708           7e-006        86e-006        1
+      1        SIT03    -0.721    0.721    0.42     0.00061   0.0937     2        0          1.5708           7e-006        86e-006        1
+      1        SIT04    -0.988    0.988    0.57     0.00061   0.0937     2        0          1.5708           7e-006        86e-006        1
 
-    # endcap  name     rmin   rmax       z       w (m)      X0       n_meas   th_up (rad)  th_down (rad)   reso_up (m)   reso_down (m) flag
-      2        DSK1A     0.0295     0.12    0.241      0.00061   0.0937     2        0          1.5708           7e-006        86e-006        1
-      2        DSK1B     0.0295     0.12    -0.241     0.00061   0.0937     2        0          1.5708           7e-006        86e-006        1
-      2        DSK2A     0.0305     0.27    0.455    0.00061   0.0937     2        0          1.5708           7e-006        86e-006        1
-      2        DSK2B     0.0305     0.27    -0.455   0.00061   0.0937     2        0          1.5708           7e-006        86e-006        1
-      2        DSK3A     0.0325     0.42    0.721    0.00061   0.0937     2        0          1.5708           7e-006        86e-006        1
-      2        DSK3B     0.0325     0.42    -0.721   0.00061   0.0937     2        0          1.5708           7e-006        86e-006        1
-      2        DSK4A     0.0340     0.57     0.988     0.00061   0.0937     2        0          1.5708           7e-006        86e-006        1
-      2        DSK4B     0.0340     0.57    -0.988    0.00061   0.0937     2        0          1.5708           7e-006        86e-006        1
+    # endcap   name     rmin     rmax       z       w (m)      X0    n_meas   th_up (rad)  th_down (rad)   reso_up (m)   reso_down (m) flag
+      2        DSK1A   0.0295    0.12     0.241    0.00061   0.0937     2        0          1.5708           7e-006        86e-006        1
+      2        DSK1B   0.0295    0.12    -0.241    0.00061   0.0937     2        0          1.5708           7e-006        86e-006        1
+      2        DSK2A   0.0305    0.27     0.455    0.00061   0.0937     2        0          1.5708           7e-006        86e-006        1
+      2        DSK2B   0.0305    0.27    -0.455    0.00061   0.0937     2        0          1.5708           7e-006        86e-006        1
+      2        DSK3A   0.0325    0.42     0.721    0.00061   0.0937     2        0          1.5708           7e-006        86e-006        1
+      2        DSK3B   0.0325    0.42    -0.721    0.00061   0.0937     2        0          1.5708           7e-006        86e-006        1
+      2        DSK4A   0.0340    0.57     0.988    0.00061   0.0937     2        0          1.5708           7e-006        86e-006        1
+      2        DSK4B   0.0340    0.57    -0.988    0.00061   0.0937     2        0          1.5708           7e-006        86e-006        1
+
       # Drift chamber 
-      1 DCHCANI  $DCHZMIN   $DCHZMAX    0.60478   0.00002   0.2797        0  0    0  0     0.0 0
-      1 DCH       -2.98       2.98       0.605     0.015     $RLENGTH      1  0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       0.62     0.015     $RLENGTH      1  0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       0.635     0.015     $RLENGTH      1  0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       0.65     0.015     $RLENGTH      1  0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       0.665     0.015     $RLENGTH      1  0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       0.68     0.015     $RLENGTH      1  0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       0.695     0.015     $RLENGTH      1  0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       0.71     0.015     $RLENGTH      1  0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       0.725     0.015     $RLENGTH      1  0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       0.74     0.015     $RLENGTH      1  0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       0.755     0.015     $RLENGTH      1  0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       0.77     0.015     $RLENGTH      1  0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       0.785     0.015     $RLENGTH      1  0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       0.8     0.015     $RLENGTH      1  0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       0.815     0.015     $RLENGTH      1 -0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       0.83     0.015     $RLENGTH      1  0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       0.845     0.015     $RLENGTH      1 -0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       0.86     0.015     $RLENGTH      1  0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       0.875     0.015     $RLENGTH      1 -0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       0.89     0.015     $RLENGTH      1  0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       0.905     0.015     $RLENGTH      1 -0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       0.92     0.015     $RLENGTH      1  0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       0.935     0.015     $RLENGTH      1 -0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       0.95     0.015     $RLENGTH      1  0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       0.965     0.015     $RLENGTH      1 -0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       0.98     0.015     $RLENGTH      1  0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       0.995     0.015     $RLENGTH      1 -0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       1.01     0.015     $RLENGTH      1  0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       1.025     0.015     $RLENGTH      1 -0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       1.04     0.015     $RLENGTH      1  0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       1.055     0.015     $RLENGTH      1 -0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       1.07     0.015     $RLENGTH      1  0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       1.085     0.015     $RLENGTH      1 -0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       1.1     0.015     $RLENGTH      1  0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       1.115     0.015     $RLENGTH      1 -0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       1.13     0.015     $RLENGTH      1  0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       1.145     0.015     $RLENGTH      1 -0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       1.16     0.015     $RLENGTH      1  0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       1.175     0.015     $RLENGTH      1 -0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       1.19     0.015     $RLENGTH      1  0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       1.205     0.015     $RLENGTH      1 -0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       1.22     0.015     $RLENGTH      1  0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       1.235     0.015     $RLENGTH      1 -0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       1.25     0.015     $RLENGTH      1  0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       1.265     0.015     $RLENGTH      1 -0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       1.28     0.015     $RLENGTH      1  0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       1.295     0.015     $RLENGTH      1 -0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       1.31     0.015     $RLENGTH      1  0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       1.325     0.015     $RLENGTH      1 -0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       1.34     0.015     $RLENGTH      1  0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       1.355     0.015     $RLENGTH      1 -0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       1.37     0.015     $RLENGTH      1  0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       1.385     0.015     $RLENGTH      1 -0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       1.4     0.015     $RLENGTH      1  0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       1.415     0.015     $RLENGTH      1 -0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       1.43     0.015     $RLENGTH      1  0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       1.445     0.015     $RLENGTH      1 -0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       1.46     0.015     $RLENGTH      1  0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       1.475     0.015     $RLENGTH      1 -0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       1.49     0.015     $RLENGTH      1  0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       1.505     0.015     $RLENGTH      1 -0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       1.52     0.015     $RLENGTH      1  0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       1.535     0.015     $RLENGTH      1 -0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       1.55     0.015     $RLENGTH      1  0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       1.565     0.015     $RLENGTH      1 -0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       1.58     0.015     $RLENGTH      1  0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       1.595     0.015     $RLENGTH      1 -0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       1.61     0.015     $RLENGTH      1  0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       1.625     0.015     $RLENGTH      1 -0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       1.64     0.015     $RLENGTH      1  0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       1.655     0.015     $RLENGTH      1 -0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       1.67     0.015     $RLENGTH      1  0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       1.685     0.015     $RLENGTH      1 -0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       1.7     0.015     $RLENGTH      1  0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       1.715     0.015     $RLENGTH      1 -0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       1.73     0.015     $RLENGTH      1  0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       1.745     0.015     $RLENGTH      1 -0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       1.76     0.015     $RLENGTH      1  0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       1.775     0.015     $RLENGTH      1 -0.05 0 0.0001 0 1
-      1 DCH       -2.98       2.98       1.79     0.01     $RLENGTH      1  0.05 0 0.0001 0 1
+      1 DCHCANI  $DCHZMIN   $DCHZMAX    0.59978    0.00002   0.2797        0  0    0  0     0.0 0
+      1 DCH       -2.98       2.98       0.6       0.018     $RLENGTH      1  0.05 0 0.0001 0 1
+      1 DCH       -2.98       2.98       0.618     0.018     $RLENGTH      1  0.05 0 0.0001 0 1
+      1 DCH       -2.98       2.98       0.636     0.018     $RLENGTH      1  0.05 0 0.0001 0 1
+      1 DCH       -2.98       2.98       0.654     0.018     $RLENGTH      1  0.05 0 0.0001 0 1
+      1 DCH       -2.98       2.98       0.672     0.018     $RLENGTH      1  0.05 0 0.0001 0 1
+      1 DCH       -2.98       2.98       0.69      0.018     $RLENGTH      1  0.05 0 0.0001 0 1
+      1 DCH       -2.98       2.98       0.708     0.018     $RLENGTH      1  0.05 0 0.0001 0 1
+      1 DCH       -2.98       2.98       0.726     0.018     $RLENGTH      1  0.05 0 0.0001 0 1
+      1 DCH       -2.98       2.98       0.744     0.018     $RLENGTH      1  0.05 0 0.0001 0 1
+      1 DCH       -2.98       2.98       0.762     0.018     $RLENGTH      1  0.05 0 0.0001 0 1
+      1 DCH       -2.98       2.98       0.78      0.018     $RLENGTH      1  0.05 0 0.0001 0 1
+      1 DCH       -2.98       2.98       0.798     0.018     $RLENGTH      1  0.05 0 0.0001 0 1
+      1 DCH       -2.98       2.98       0.816     0.018     $RLENGTH      1  0.05 0 0.0001 0 1
+      1 DCH       -2.98       2.98       0.834     0.018     $RLENGTH      1  0.05 0 0.0001 0 1
+      1 DCH       -2.98       2.98       0.852     0.018     $RLENGTH      1 -0.05 0 0.0001 0 1
+      1 DCH       -2.98       2.98       0.87      0.018     $RLENGTH      1  0.05 0 0.0001 0 1
+      1 DCH       -2.98       2.98       0.888     0.018     $RLENGTH      1 -0.05 0 0.0001 0 1
+      1 DCH       -2.98       2.98       0.906     0.018     $RLENGTH      1  0.05 0 0.0001 0 1
+      1 DCH       -2.98       2.98       0.924     0.018     $RLENGTH      1 -0.05 0 0.0001 0 1
+      1 DCH       -2.98       2.98       0.942     0.018     $RLENGTH      1 -0.05 0 0.0001 0 1
+      1 DCH       -2.98       2.98       0.96      0.018     $RLENGTH      1  0.05 0 0.0001 0 1
+      1 DCH       -2.98       2.98       0.978     0.018     $RLENGTH      1 -0.05 0 0.0001 0 1
+      1 DCH       -2.98       2.98       0.996     0.018     $RLENGTH      1  0.05 0 0.0001 0 1
+      1 DCH       -2.98       2.98       1.014     0.018     $RLENGTH      1 -0.05 0 0.0001 0 1
+      1 DCH       -2.98       2.98       1.032     0.018     $RLENGTH      1  0.05 0 0.0001 0 1
+      1 DCH       -2.98       2.98       1.05      0.018     $RLENGTH      1 -0.05 0 0.0001 0 1
+      1 DCH       -2.98       2.98       1.068     0.018     $RLENGTH      1  0.05 0 0.0001 0 1
+      1 DCH       -2.98       2.98       1.086     0.018     $RLENGTH      1 -0.05 0 0.0001 0 1
+      1 DCH       -2.98       2.98       1.104     0.018     $RLENGTH      1  0.05 0 0.0001 0 1
+      1 DCH       -2.98       2.98       1.122     0.018     $RLENGTH      1 -0.05 0 0.0001 0 1
+      1 DCH       -2.98       2.98       1.14      0.018     $RLENGTH      1  0.05 0 0.0001 0 1
+      1 DCH       -2.98       2.98       1.158     0.018     $RLENGTH      1 -0.05 0 0.0001 0 1
+      1 DCH       -2.98       2.98       1.176     0.018     $RLENGTH      1  0.05 0 0.0001 0 1
+      1 DCH       -2.98       2.98       1.194     0.018     $RLENGTH      1 -0.05 0 0.0001 0 1
+      1 DCH       -2.98       2.98       1.212     0.018     $RLENGTH      1  0.05 0 0.0001 0 1
+      1 DCH       -2.98       2.98       1.23      0.018     $RLENGTH      1 -0.05 0 0.0001 0 1
+      1 DCH       -2.98       2.98       1.248     0.018     $RLENGTH      1  0.05 0 0.0001 0 1
+      1 DCH       -2.98       2.98       1.266     0.018     $RLENGTH      1 -0.05 0 0.0001 0 1
+      1 DCH       -2.98       2.98       1.284     0.018     $RLENGTH      1  0.05 0 0.0001 0 1
+      1 DCH       -2.98       2.98       1.302     0.018     $RLENGTH      1 -0.05 0 0.0001 0 1
+      1 DCH       -2.98       2.98       1.32      0.018     $RLENGTH      1  0.05 0 0.0001 0 1
+      1 DCH       -2.98       2.98       1.338     0.018     $RLENGTH      1 -0.05 0 0.0001 0 1
+      1 DCH       -2.98       2.98       1.356     0.018     $RLENGTH      1  0.05 0 0.0001 0 1
+      1 DCH       -2.98       2.98       1.374     0.018     $RLENGTH      1 -0.05 0 0.0001 0 1
+      1 DCH       -2.98       2.98       1.392     0.018     $RLENGTH      1  0.05 0 0.0001 0 1
+      1 DCH       -2.98       2.98       1.41      0.018     $RLENGTH      1 -0.05 0 0.0001 0 1
+      1 DCH       -2.98       2.98       1.428     0.018     $RLENGTH      1  0.05 0 0.0001 0 1
+      1 DCH       -2.98       2.98       1.446     0.018     $RLENGTH      1  0.05 0 0.0001 0 1
+      1 DCH       -2.98       2.98       1.464     0.018     $RLENGTH      1  0.05 0 0.0001 0 1
+      1 DCH       -2.98       2.98       1.482     0.018     $RLENGTH      1  0.05 0 0.0001 0 1
+      1 DCH       -2.98       2.98       1.5       0.018     $RLENGTH      1 -0.05 0 0.0001 0 1
+      1 DCH       -2.98       2.98       1.518     0.018     $RLENGTH      1  0.05 0 0.0001 0 1
+      1 DCH       -2.98       2.98       1.536     0.018     $RLENGTH      1 -0.05 0 0.0001 0 1
+      1 DCH       -2.98       2.98       1.554     0.018     $RLENGTH      1  0.05 0 0.0001 0 1
+      1 DCH       -2.98       2.98       1.572     0.018     $RLENGTH      1 -0.05 0 0.0001 0 1
+      1 DCH       -2.98       2.98       1.59      0.018     $RLENGTH      1  0.05 0 0.0001 0 1
+      1 DCH       -2.98       2.98       1.608     0.018     $RLENGTH      1 -0.05 0 0.0001 0 1
+      1 DCH       -2.98       2.98       1.626     0.018     $RLENGTH      1  0.05 0 0.0001 0 1
+      1 DCH       -2.98       2.98       1.644     0.018     $RLENGTH      1 -0.05 0 0.0001 0 1
+      1 DCH       -2.98       2.98       1.662     0.018     $RLENGTH      1  0.05 0 0.0001 0 1
+      1 DCH       -2.98       2.98       1.68      0.018     $RLENGTH      1 -0.05 0 0.0001 0 1
+      1 DCH       -2.98       2.98       1.698     0.018     $RLENGTH      1  0.05 0 0.0001 0 1
+      1 DCH       -2.98       2.98       1.716     0.018     $RLENGTH      1 -0.05 0 0.0001 0 1
+      1 DCH       -2.98       2.98       1.734     0.018     $RLENGTH      1  0.05 0 0.0001 0 1
+      1 DCH       -2.98       2.98       1.752     0.018     $RLENGTH      1 -0.05 0 0.0001 0 1
+      1 DCH       -2.98       2.98       1.77      0.018     $RLENGTH      1  0.05 0 0.0001 0 1
+      1 DCH       -2.98       2.98       1.788     0.018     $RLENGTH      1 -0.05 0 0.0001 0 1
 
       1 DCHCANO $DCHZMIN  $DCHZMAX   1.80002      0.0028  0.2797         0  0    0 0      0.0 0
       # SET & ETD
@@ -318,6 +306,21 @@ module TrackCovariance TrackSmearing {
 
     }
 }
+
+###################
+##VertexFinder
+###################
+#
+#module VertexFinder VertexFinder {
+# 
+#  add InputArray  TrackSmearing/tracks
+#  set OutputArray tracks
+#  set VertexOutputArray vertices
+#}
+
+
+
+
 
 ###################
 # Cluster Counting
@@ -420,7 +423,7 @@ module DualReadoutCalorimeter Calorimeter {
     # the list ends with the higher edged of the last tower.
     # Barrel:  deta=0.01 towers up to |eta| <= 0.88 ( up to 45°)
     # Endcaps: deta=0.01 towers up to |eta| <= 3.0 (8.6° = 100 mrad)
-    # Cell size: about 2 cm x 3 cm
+    # Cell size: about 6 cm x 6 cm
 
     #barrel:
     set PhiBins {}
@@ -498,6 +501,10 @@ module IdentificationMap IdentificationMap {
   set InputArray TrackMerger/tracks
   set OutputArray tracks
 
+  set Rmin $DCHRMIN
+  set Rmax $DCHRMAX
+
+
 }
 ########################################
 #   Time Smearing Neutrals
@@ -527,7 +534,7 @@ module TimeOfFlight TimeOfFlightNeutralHadron {
   # 2: calculate vertex time as vertex TOF, assuming tPV=0
 
   ## TBF (add option to take hard vertex time)
-  set VertexTimeMode 1
+  set VertexTimeMode 0
 }
 
 ####################
@@ -721,11 +728,9 @@ module FastJetFinder GenJetFinder {
   set OutputArray jets
   set ExclusiveClustering true  
 
-  set JetAlgorithm 10
-  #set ParameterR   1.5
-  set ParameterP   1.0
+  set JetAlgorithm 11
   #set JetPTMin     1.0
-  set Njets       2
+  set NJets       2
 
 }
 
@@ -748,11 +753,9 @@ module FastJetFinder FastJetFinder {
   set ExclusiveClustering true
 
   # algorithm: 1 CDFJetClu, 2 MidPoint, 3 SIScone, 4 kt, 5 Cambridge/Aachen, 6 antikt
-  set JetAlgorithm 10
-  #set ParameterR   1.5
-  set ParameterP   1.0
-  set Njets        2
-  #set JetPTMin     0.0
+  set JetAlgorithm 11
+  #set JetPTMin     1.0
+  set Njets       2
 }
 
 ##################
@@ -835,8 +838,9 @@ module TreeWriter TreeWriter {
     # add Branch InputArray BranchName BranchClass
     add Branch Delphes/allParticles Particle GenParticle
     add Branch TruthVertexFinder/vertices GenVertex Vertex
+    #add Branch VertexFinder/vertices Vertex Vertex
 
-    #add Branch IdentificationMap/tracks Track Track
+    #add Branch IdentificationMap/tracks  Track Track
     #add Branch Calorimeter/towers Tower Tower
 
     #add Branch Calorimeter/eflowTracks EFlowTrack Track
